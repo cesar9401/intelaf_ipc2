@@ -7,7 +7,7 @@ package com.intelaf.main;
  */
 public class Intelaf {
     public static void main(String[] args) {
-        //Write code here
-
+        //Write your code here
+        
     }
 }
