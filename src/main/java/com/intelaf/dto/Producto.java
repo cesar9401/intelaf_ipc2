@@ -18,7 +18,11 @@ public class Producto {
     private int stock;
     private String codigoTienda;
 
-    //Constructor tiendas_has_productos
+    public Producto(String codigoProductos) {
+        this.codigoProductos = codigoProductos;
+    }
+
+    //Constructor tiendasProductos
     public Producto(int tiendasProdudctosId, String codigoTienda, String codigoProductos, int stock) {
         this.tiendasProductosId = tiendasProdudctosId;
         this.codigoTienda = codigoTienda;
@@ -31,14 +35,14 @@ public class Producto {
         this.codigoProductos = codigoProductos;
         this.stock = stock;
     }
-    
-    public Producto(String nombre, String fabricante, String codigoProductos, double precio, int stock, String codigoTienda) {
+
+    public Producto(String nombre, String fabricante, String codigoProductos, double precio, String descripcion, int garantia) {
         this.nombre = nombre;
         this.fabricante = fabricante;
         this.codigoProductos = codigoProductos;
         this.precio = precio;
-        this.stock = stock;
-        this.codigoTienda = codigoTienda;
+        this.descripcion = descripcion;
+        this.garantia = garantia;
     }
 
     public String getNombre() {

@@ -5,32 +5,32 @@ package com.intelaf.dto;
  *
  * @author cesar31
  */
-public class Tiempos {
+public class Tiempo {
     
     private int tiemposId;
     private String tiendaOrigen;
     private String tiendaDestino;
     private int tiempoDias;
 
-    public Tiempos(String tiendaOrigen, String tiendaDestino, int tiempoDias) {
+    public Tiempo(String tiendaOrigen, String tiendaDestino, int tiempoDias) {
         this.tiendaOrigen = tiendaOrigen;
         this.tiendaDestino = tiendaDestino;
         this.tiempoDias = tiempoDias;
     }
 
-    public Tiempos(int tiemposId, String tiendaOrigen, String tiendaDestino, int tiempoDias) {
+    public Tiempo(int tiemposId, String tiendaOrigen, String tiendaDestino, int tiempoDias) {
         this.tiemposId = tiemposId;
         this.tiendaOrigen = tiendaOrigen;
         this.tiendaDestino = tiendaDestino;
         this.tiempoDias = tiempoDias;
     }
 
-    public int getId_tiempos() {
+    public int getTiemposId() {
         return tiemposId;
     }
 
-    public void setId_tiempos(int id_tiempos) {
-        this.tiemposId = id_tiempos;
+    public void setTiemposId(int tiemposId) {
+        this.tiemposId = tiemposId;
     }
 
     public String getTiendaOrigen() {
@@ -59,6 +59,6 @@ public class Tiempos {
 
     @Override
     public String toString() {
-        return "Tiempos{" + "id_tiempos=" + tiemposId + ", tiendaOrigen=" + tiendaOrigen + ", tiendaDestino=" + tiendaDestino + ", tiempoDias=" + tiempoDias + '}';
+        return "Tiempos{" + "tiemposId=" + tiemposId + ", tiendaOrigen=" + tiendaOrigen + ", tiendaDestino=" + tiendaDestino + ", tiempoDias=" + tiempoDias + '}';
     }
 }
