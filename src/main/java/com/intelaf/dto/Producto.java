@@ -6,41 +6,39 @@ package com.intelaf.dto;
  * @author cesar31
  */
 public class Producto {
-    
-    private int id;
+        
     private String nombre;
     private String fabricante;
-    private String codigo;
+    private String codigoProductos;
     private double precio;
     private String descripcion;
     private int garantia;
     
+    private int tiendasProductosId;
     private int stock;
     private String codigoTienda;
-    private int idTienda;
 
     //Constructor tiendas_has_productos
-    public Producto(int id, int stock, int idTienda) {
-        this.id = id;
+    public Producto(int tiendasProdudctosId, String codigoTienda, String codigoProductos, int stock) {
+        this.tiendasProductosId = tiendasProdudctosId;
+        this.codigoTienda = codigoTienda;
+        this.codigoProductos = codigoProductos;
         this.stock = stock;
-        this.idTienda = idTienda;
     }
     
-    public Producto(String nombre, String fabricante, String codigo, double precio, int stock, String codigoTienda) {
+    public Producto(String codigoTienda, String codigoProductos, int stock) {
+        this.codigoTienda = codigoTienda;
+        this.codigoProductos = codigoProductos;
+        this.stock = stock;
+    }
+    
+    public Producto(String nombre, String fabricante, String codigoProductos, double precio, int stock, String codigoTienda) {
         this.nombre = nombre;
         this.fabricante = fabricante;
-        this.codigo = codigo;
+        this.codigoProductos = codigoProductos;
         this.precio = precio;
         this.stock = stock;
         this.codigoTienda = codigoTienda;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -59,12 +57,12 @@ public class Producto {
         this.fabricante = fabricante;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getCodigoProductos() {
+        return codigoProductos;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCodigoProductos(String codigoProductos) {
+        this.codigoProductos = codigoProductos;
     }
 
     public double getPrecio() {
@@ -91,6 +89,14 @@ public class Producto {
         this.garantia = garantia;
     }
 
+    public int getTiendasProductosId() {
+        return tiendasProductosId;
+    }
+
+    public void setTiendasProductosId(int tiendasProductosId) {
+        this.tiendasProductosId = tiendasProductosId;
+    }
+
     public int getStock() {
         return stock;
     }
@@ -107,16 +113,8 @@ public class Producto {
         this.codigoTienda = codigoTienda;
     }
 
-    public int getIdTienda() {
-        return idTienda;
-    }
-
-    public void setIdTienda(int idTienda) {
-        this.idTienda = idTienda;
-    }
-
     @Override
     public String toString() {
-        return "Producto{" + "nombre=" + nombre + ", fabricante=" + fabricante + ", codigo=" + codigo + ", precio=" + precio + '}';
+        return "Producto{" + "nombre=" + nombre + ", fabricante=" + fabricante + ", codigoProductos=" + codigoProductos + ", precio=" + precio + '}';
     }
 }

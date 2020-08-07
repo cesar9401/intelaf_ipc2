@@ -7,7 +7,6 @@ package com.intelaf.dto;
  */
 public class Persona {
     
-    private int id;
     private String nombre;
     private String telefono;
     private String nit;
@@ -18,20 +17,6 @@ public class Persona {
     public Persona(String nombre, String telefono) {
         this.nombre = nombre;
         this.telefono = telefono;
-    }
-
-    public Persona(int id, String nombre, String telefono) {
-        this.id = id;
-        this.nombre = nombre;
-        this.telefono = telefono;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -84,6 +69,6 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", nombre=" + nombre + ", telefono=" + telefono + ", nit=" + nit + ", dpi=" + dpi + ", email=" + email + ", direccion=" + direccion + '}';
+        return "Persona{" + "nombre=" + nombre + ", telefono=" + telefono + ", nit=" + nit + ", dpi=" + dpi + ", email=" + email + ", direccion=" + direccion + '}';
     }
 }

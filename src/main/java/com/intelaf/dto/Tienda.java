@@ -7,36 +7,24 @@ package com.intelaf.dto;
  */
 public class Tienda {
     
-    private int id;
+    private String codigo;
     private String nombre;
     private String direccion;
-    private String codigo;
     private String telefono1;
     private String telefono2;
     private String email;
     private String horario;
 
-    public Tienda(int id, String nombre, String direccion, String codigo, String telefono1) {
-        this.id = id;
+    //Constructor para tiendasDestinos
+    public Tienda(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Tienda(String codigo, String nombre, String direccion, String telefono1) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.codigo = codigo;
         this.telefono1 = telefono1;
-    }
-
-    public Tienda(String nombre, String direccion, String codigo, String telefono1) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.codigo = codigo;
-        this.telefono1 = telefono1;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -97,6 +85,6 @@ public class Tienda {
 
     @Override
     public String toString() {
-        return "Tienda{" + "id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", codigo=" + codigo + ", telefono1=" + telefono1 + ", telefono2=" + telefono2 + ", email=" + email + ", horario=" + horario + '}';
+        return "Tienda{" + nombre + ", direccion=" + direccion + ", codigo=" + codigo + ", telefono1=" + telefono1 + ", telefono2=" + telefono2 + ", email=" + email + ", horario=" + horario + '}';
     }
 }

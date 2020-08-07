@@ -14,11 +14,6 @@ public class Empleado extends Persona {
         this.codigo = codigo;
     }
     
-    public Empleado(int id, String nombre, String telefono, String codigo) {
-        super(id, nombre, telefono);
-        this.codigo = codigo;
-    }
-
     public String getCodigo() {
         return codigo;
     }

@@ -14,11 +14,6 @@ public class Cliente extends Persona {
         this.creditoCompra = creditoCompra;
     }
     
-    public Cliente(int id, String nombre, String telefono, double creditoCompra) {
-        super(id, nombre, telefono);
-        this.creditoCompra = creditoCompra;
-    }
-
     public double getCreditoCompra() {
         return creditoCompra;
     }

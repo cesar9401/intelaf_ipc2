@@ -9,7 +9,7 @@ import java.sql.*;
  */
 public class Conexion {
     
-    private static final String URL = "jdbc:mysql://localhost:3306/library";
+    private static final String URL = "jdbc:mysql://localhost:3306/intelaf_ipc2";
     private static final String USER = "cesar31";
     private static final String PASS = "Huevos94C";
     
