@@ -19,6 +19,12 @@ public class Persona {
         this.telefono = telefono;
     }
 
+    public Persona(String nombre, String telefono, String dpi) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.dpi = dpi;
+    }
+    
     public String getNombre() {
         return nombre;
     }

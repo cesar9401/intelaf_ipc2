@@ -44,6 +44,16 @@ public class Producto {
         this.descripcion = descripcion;
         this.garantia = garantia;
     }
+    
+    //Constructor para carga de archivos
+    public Producto(String nombre, String fabricante, String codigoProductos, int stock, double precio, String codigoTienda) {
+        this.nombre = nombre;
+        this.fabricante = fabricante;
+        this.codigoProductos = codigoProductos;
+        this.stock = stock;
+        this.precio = precio;
+        this.codigoTienda = codigoTienda;
+    }
 
     public String getNombre() {
         return nombre;

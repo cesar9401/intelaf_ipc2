@@ -20,10 +20,10 @@ public class Tienda {
         this.codigo = codigo;
     }
 
-    public Tienda(String codigo, String nombre, String direccion, String telefono1) {
-        this.codigo = codigo;
+    public Tienda(String nombre, String direccion, String codigo, String telefono1) {
         this.nombre = nombre;
         this.direccion = direccion;
+        this.codigo = codigo;
         this.telefono1 = telefono1;
     }
 
