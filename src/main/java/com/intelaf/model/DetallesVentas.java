@@ -1,5 +1,5 @@
 
-package com.intelaf.dto;
+package com.intelaf.model;
 
 /**
  *

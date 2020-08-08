@@ -2,7 +2,7 @@
 package com.intelaf.dao;
 
 import com.intelaf.conexion.Conexion;
-import com.intelaf.dto.Cliente;
+import com.intelaf.model.Cliente;
 import java.sql.*;
 
 /**

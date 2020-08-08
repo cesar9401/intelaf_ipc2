@@ -2,7 +2,7 @@
 package com.intelaf.dao;
 
 import com.intelaf.conexion.Conexion;
-import com.intelaf.dto.Producto;
+import com.intelaf.model.Producto;
 import java.sql.*;
 
 /**
@@ -50,6 +50,12 @@ public class ProductosDAO {
                 setProductos.setString(3, producto.getFabricante());
                 setProductos.setDouble(4, producto.getPrecio());
                 setProductos.executeUpdate();
+                
+                setProdTiendas = conexion.prepareStatement(queryProductoTienda);
+                setProdTiendas.setString(1, producto.getCodigoTienda());
+                setProdTiendas.setString(2, producto.getCodigoProductos());
+                setProdTiendas.setInt(3, producto.getStock());
+                setProdTiendas.executeUpdate();
             } else {
                 setProdTiendas = conexion.prepareStatement(queryProductoTienda);
                 setProdTiendas.setString(1, producto.getCodigoTienda());

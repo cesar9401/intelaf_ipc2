@@ -2,7 +2,7 @@
 package com.intelaf.dao;
 
 import com.intelaf.conexion.Conexion;
-import com.intelaf.dto.Tiempo;
+import com.intelaf.model.Tiempo;
 import java.sql.*;
 
 /**
@@ -30,5 +30,34 @@ public class TiempoDAO {
             Conexion.close(setTime);
             Conexion.close(conexion);
         }
+    }
+    
+    public Tiempo getTiempo(String origen, String destino) {
+        String query = "SELECT * FROM tiempos WHERE tiendasOrigen = ? AND tiendasDestino = ?";
+        Connection conexion = null;
+        PreparedStatement getTime = null;
+        ResultSet rs = null;
+        Tiempo time = null;
+        
+        try {
+            conexion = Conexion.getConnection();
+            getTime = conexion.prepareStatement(query);
+            getTime.setString(1, origen);
+            getTime.setString(2, destino);
+            rs = getTime.executeQuery();
+            
+            if(rs.next()) {
+                time = new Tiempo(rs.getInt("id"), rs.getString("tiendasOrigen"), rs.getString("tiendasDestino"), rs.getInt("tiempoDias"));
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getTime);
+            Conexion.close(conexion);
+        }
+
+        return time;
     }
 }
