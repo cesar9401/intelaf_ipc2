@@ -11,6 +11,15 @@ import java.sql.*;
  */
 public class ClienteDAO {
     
+    private Connection transaction;
+    
+    public ClienteDAO() {
+    }
+
+    public ClienteDAO(Connection transaction) {
+        this.transaction = transaction;
+    }
+    
     public void insertarCliente(Cliente cliente) {
         String query = "INSERT INTO clientes(nit, nombre, telefono, creditoCompra) VALUES(?, ?, ?, ?)";
 
@@ -18,7 +27,7 @@ public class ClienteDAO {
         PreparedStatement setCliente = null;
         
         try {
-            conexion = Conexion.getConnection();
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
             setCliente = conexion.prepareStatement(query);
             setCliente.setString(1, cliente.getNit());
             setCliente.setString(2, cliente.getNombre());
@@ -30,7 +39,9 @@ public class ClienteDAO {
             ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setCliente);
-            Conexion.close(conexion);
+            if(this.transaction == null) {
+                Conexion.close(conexion);
+            }
         }
     }
 }

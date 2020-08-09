@@ -11,13 +11,22 @@ import java.sql.*;
  */
 public class EmpleadoDAO {
     
+    private Connection transaction;
+
+    public EmpleadoDAO() {
+    }
+
+    public EmpleadoDAO(Connection transaction) {
+        this.transaction = transaction;
+    }
+    
     public void insertarEmpleado(Empleado empleado) {
-        String query = "INERT INTO empleados(codigo, nombres, telefono, dpi) VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO empleados(codigo, nombres, telefono, dpi) VALUES(?, ?, ?, ?)";
         
         Connection conexion = null;
         PreparedStatement setEmpleado = null;
         try {
-            conexion = Conexion.getConnection();
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
             setEmpleado = conexion.prepareStatement(query);
             setEmpleado.setString(1, empleado.getCodigo());
             setEmpleado.setString(2, empleado.getNombre());
@@ -29,7 +38,9 @@ public class EmpleadoDAO {
             ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setEmpleado);
-            Conexion.close(conexion);
+            if(this.transaction == null) {
+                Conexion.close(conexion);
+            }
         }
     }
 }

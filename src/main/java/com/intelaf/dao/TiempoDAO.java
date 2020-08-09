@@ -11,13 +11,22 @@ import java.sql.*;
  */
 public class TiempoDAO {
     
+    private Connection transaction;
+
+    public TiempoDAO() {
+    }
+
+    public TiempoDAO(Connection transaction) {
+        this.transaction = transaction;
+    }
+    
     public void insertarTiempo(Tiempo tiempo) {
         String query = "INSERT INTO tiempos(tiendasOrigen, tiendasDestino, tiempoDias) VALUES(?, ?, ?)";
         
         Connection conexion = null;
         PreparedStatement setTime = null;
         try {
-            conexion = Conexion.getConnection();
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
             setTime = conexion.prepareStatement(query);
             setTime.setString(1, tiempo.getTiendaOrigen());
             setTime.setString(2, tiempo.getTiendaDestino());
@@ -28,7 +37,9 @@ public class TiempoDAO {
             ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setTime);
-            Conexion.close(conexion);
+            if(this.transaction == null) {
+                Conexion.close(conexion);
+            }
         }
     }
     

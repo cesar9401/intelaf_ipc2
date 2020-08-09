@@ -39,9 +39,9 @@ public class LecturaArchivos {
             }
             br.close();
             
-            pedidos.forEach((p) -> {
-                System.out.println(p.toString());
-            });
+            EscrituraBD setData = new EscrituraBD(tiendas, tiempos, productos, empleados, clientes, pedidos);
+            setData.createData();
+
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.out);
         } catch (IOException ex) {
@@ -58,6 +58,8 @@ public class LecturaArchivos {
             case "TIEMPO":
                 int tiempo = Integer.parseInt(data[3]);
                 tiempos.add(new Tiempo(data[1], data[2], tiempo));
+                //Tiempo de "regreso"
+                tiempos.add(new Tiempo(data[2], data[1], tiempo));
             break;
             case "PRODUCTO":
                 int stock = Integer.parseInt(data[4]);
