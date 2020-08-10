@@ -20,7 +20,12 @@ public class TiendaDAO {
         this.transaction = transaction;
     }
     
-    public void insertarTienda(Tienda tienda) {
+    /**
+     * Metodo para insertar una nueva Tienda a la base de datos
+     * @param tienda
+     * @throws SQLException 
+     */
+    public void insertarTienda(Tienda tienda) throws SQLException {
         String query = "INSERT INTO tiendas(codigo, nombre, direccion, telefono1) VALUES(?, ?, ?, ?)";
         
         Connection conexion = null;
@@ -34,8 +39,6 @@ public class TiendaDAO {
             setTienda.setString(4, tienda.getTelefono1());
             
             setTienda.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setTienda);
             if(this.transaction == null) {
@@ -44,7 +47,12 @@ public class TiendaDAO {
         }
     }
     
-    public void insertarDestino(Tienda tienda) {
+    /**
+     * Metodo para insertar las tiendas que reciben pedidos a la base de datos
+     * @param tienda
+     * @throws SQLException 
+     */
+    public void insertarDestino(Tienda tienda) throws SQLException {
         String query = "INSERT INTO tiendasDestinos(tiendasCodigo) VALUES(?)";
         
         Connection conexion = null;
@@ -55,8 +63,6 @@ public class TiendaDAO {
             setDestino.setString(1, tienda.getCodigo());
             
             setDestino.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setDestino);
             if(this.transaction == null) {

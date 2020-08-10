@@ -39,7 +39,7 @@ public class LecturaArchivos {
             }
             br.close();
             
-            EscrituraBD setData = new EscrituraBD(tiendas, tiempos, productos, empleados, clientes, pedidos);
+            EscrituraDB setData = new EscrituraDB(tiendas, tiempos, productos, empleados, clientes, pedidos);
             setData.createData();
 
         } catch (FileNotFoundException ex) {
@@ -75,7 +75,7 @@ public class LecturaArchivos {
                 tmp.setNit(data[2]);
                 clientes.add(tmp);
             break;
-            case "PEDIDO":
+            case "PEDIDO":                
                 int codigo = Integer.parseInt(data[1]);
                 int cantidad = Integer.parseInt(data[7]);
                 double total = Double.parseDouble(data[8]);

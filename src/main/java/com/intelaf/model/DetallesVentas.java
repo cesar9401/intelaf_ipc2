@@ -7,6 +7,7 @@ package com.intelaf.model;
  */
 public class DetallesVentas {
     
+    private int id;
     private int idVentas;
     private int tiendasProductosId;
     private int cantidad;
@@ -26,6 +27,14 @@ public class DetallesVentas {
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.subTotal = subTotal;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdVentas() {

@@ -20,7 +20,12 @@ public class TiempoDAO {
         this.transaction = transaction;
     }
     
-    public void insertarTiempo(Tiempo tiempo) {
+    /**
+     * Metodo para insertar Tiempo entre tiendas a la base de datos
+     * @param tiempo
+     * @throws SQLException 
+     */
+    public void insertarTiempo(Tiempo tiempo) throws SQLException {
         String query = "INSERT INTO tiempos(tiendasOrigen, tiendasDestino, tiempoDias) VALUES(?, ?, ?)";
         
         Connection conexion = null;
@@ -33,8 +38,6 @@ public class TiempoDAO {
             setTime.setInt(3, tiempo.getTiempoDias());
             
             setTime.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setTime);
             if(this.transaction == null) {

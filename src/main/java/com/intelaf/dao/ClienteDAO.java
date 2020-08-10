@@ -20,7 +20,12 @@ public class ClienteDAO {
         this.transaction = transaction;
     }
     
-    public void insertarCliente(Cliente cliente) {
+    /**
+     * Metodo para insertar cliente a la base de datos
+     * @param cliente 
+     * @throws java.sql.SQLException 
+     */
+    public void insertarCliente(Cliente cliente) throws SQLException {
         String query = "INSERT INTO clientes(nit, nombre, telefono, creditoCompra) VALUES(?, ?, ?, ?)";
 
         Connection conexion = null;
@@ -35,8 +40,6 @@ public class ClienteDAO {
             setCliente.setDouble(4, cliente.getCreditoCompra());
             
             setCliente.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setCliente);
             if(this.transaction == null) {

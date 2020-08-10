@@ -20,7 +20,12 @@ public class ProductoDAO {
         this.transaction = transaction;
     }
     
-    public void insertarProductos(Producto producto) {
+    /**
+     * Metodo para insertar productos a la base de datos
+     * @param producto
+     * @throws SQLException 
+     */
+    public void insertarProductos(Producto producto) throws SQLException {
         String queryProducto = "INSERT INTO productos(codigo, nombre, fabricante, precio) VALUES(?, ?, ?, ?)  ON DUPLICATE KEY UPDATE codigo = codigo";
         String queryProductoTienda = "INSERT INTO tiendasProductos (tiendasCodigo, productosCodigo, stockProductos) VALUES(?, ?, ?)";
         
@@ -44,8 +49,6 @@ public class ProductoDAO {
             setProdTiendas.setInt(3, producto.getStock());
             setProdTiendas.executeUpdate();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setProdTiendas);
             Conexion.close(setProductos);

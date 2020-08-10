@@ -18,7 +18,7 @@ public class Pedido {
     private boolean entregado;
 
     //Detalles
-    private int tiendasProductosId;
+    private int idDetalle;
     private int cantidad;
     private double precioVentaPedido;
     private double subTotalPedido;  
@@ -28,16 +28,16 @@ public class Pedido {
     private String tiendaDestino;
     
     //Articulo
-    private String codigoArticulo;
+    private String codigoProducto;
             
     //Constructor para carga de Archivos
-    public Pedido(int id, String tiendaOrigen, String tiendaDestino, Date fechaPedido, String nitCliente, String codigoArticulo, int cantidad, double subTotalPedido, double anticipo) {
+    public Pedido(int id, String tiendaOrigen, String tiendaDestino, Date fechaPedido, String nitCliente, String codigoProducto, int cantidad, double subTotalPedido, double anticipo) {
         this.id = id;
         this.tiendaOrigen = tiendaOrigen;
         this.tiendaDestino = tiendaDestino;
         this.fechaPedido = fechaPedido;
         this.nitCliente = nitCliente;
-        this.codigoArticulo = codigoArticulo;
+        this.codigoProducto = codigoProducto;
         this.cantidad = cantidad;
         this.subTotalPedido = subTotalPedido;
         this.anticipo = anticipo;
@@ -60,15 +60,15 @@ public class Pedido {
     }
     
     //Constructores para detallesPedidos
-    public Pedido(int id, int tiendasProductosId, int cantidad, double subTotalPedido) {
+    public Pedido(int id, String codigoProducto, int cantidad, double subTotalPedido) {
         this.id = id;
-        this.tiendasProductosId = tiendasProductosId;
+        this.codigoProducto = codigoProducto;
         this.cantidad = cantidad;
         this.subTotalPedido = subTotalPedido;
     }
 
-    public Pedido(int tiendasProductosId, int cantidad, double subTotalPedido) {
-        this.tiendasProductosId = tiendasProductosId;
+    public Pedido(String codigoProducto, int cantidad, double subTotalPedido) {
+        this.codigoProducto = codigoProducto;
         this.cantidad = cantidad;
         this.subTotalPedido = subTotalPedido;
     }
@@ -129,12 +129,12 @@ public class Pedido {
         this.entregado = entregado;
     }
 
-    public int getTiendasProductosId() {
-        return tiendasProductosId;
+    public int getIdDetalle() {
+        return idDetalle;
     }
 
-    public void setTiendasProductosId(int tiendasProductosId) {
-        this.tiendasProductosId = tiendasProductosId;
+    public void setIdDetalle(int idDetalle) {
+        this.idDetalle = idDetalle;
     }
 
     public int getCantidad() {
@@ -161,11 +161,6 @@ public class Pedido {
         this.subTotalPedido = subTotalPedido;
     }
 
-    public Pedido(String tiendaOrigen, String tiendaDestino) {
-        this.tiendaOrigen = tiendaOrigen;
-        this.tiendaDestino = tiendaDestino;
-    }
-
     public String getTiendaOrigen() {
         return tiendaOrigen;
     }
@@ -182,16 +177,16 @@ public class Pedido {
         this.tiendaDestino = tiendaDestino;
     }
 
-    public String getCodigoArticulo() {
-        return codigoArticulo;
+    public String getCodigoProducto() {
+        return codigoProducto;
     }
 
-    public void setCodigoArticulo(String codigoArticulo) {
-        this.codigoArticulo = codigoArticulo;
+    public void setCodigoProducto(String codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
 
     @Override
     public String toString() {
-        return "Pedido{" + "id=" + id + ", nitCliente=" + nitCliente + ", fechaPedido=" + fechaPedido + ", anticipo=" + anticipo + ", cantidad=" + cantidad + ", subTotalPedido=" + subTotalPedido + ", tiendaOrigen=" + tiendaOrigen + ", tiendaDestino=" + tiendaDestino + ", codigoArticulo=" + codigoArticulo + '}';
+        return "Pedido{" + "id=" + id + ", tiendaOrigen=" + tiendaOrigen + ", tiendaDestino=" + tiendaDestino + ", fechaPedido=" + fechaPedido + ", nitCliente=" + nitCliente + ", codigoArticulo=" + codigoProducto + ", cantidad=" + cantidad + ", subTotalPedido=" + subTotalPedido + ", anticipo=" + anticipo + '}';
     }
 }

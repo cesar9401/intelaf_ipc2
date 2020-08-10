@@ -20,7 +20,12 @@ public class EmpleadoDAO {
         this.transaction = transaction;
     }
     
-    public void insertarEmpleado(Empleado empleado) {
+    /**
+     * Metodo para insertar empleados a la base de datos
+     * @param empleado
+     * @throws SQLException 
+     */
+    public void insertarEmpleado(Empleado empleado) throws SQLException {
         String query = "INSERT INTO empleados(codigo, nombres, telefono, dpi) VALUES(?, ?, ?, ?)";
         
         Connection conexion = null;
@@ -34,8 +39,6 @@ public class EmpleadoDAO {
             setEmpleado.setString(4, empleado.getDpi());
             
             setEmpleado.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setEmpleado);
             if(this.transaction == null) {

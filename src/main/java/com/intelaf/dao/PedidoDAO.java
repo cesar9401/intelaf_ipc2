@@ -11,68 +11,53 @@ import java.sql.*;
  */
 public class PedidoDAO {
     
-    public void insertarPedido(Pedido pedido) {
-        String queryConsulta = "SELECT * FROM pedidos WHERE id = ?";
-        String queryPedido = "INSERT INTO pedidos(id, clientesNit, tiemposId, fechaPedido, anticipo) VALUES (?, ?, ?, ?, ?)";
-        String queryDetallePedido = "INSERT INTO detallesPedidos(pedidosId, tiendasProductosId, cantidad, subTotalPedido) VALUES(?, ?, ?, ?)";
+    private Connection transaction;
+
+    public PedidoDAO() {
+    }
+
+    public PedidoDAO(Connection transaction) {
+        this.transaction = transaction;
+    }
+    
+    public void insertarPedido(Pedido pedido) throws SQLException {
+        String queryPedido = "INSERT INTO pedidos(id, clientesNit, tiemposId, fechaPedido, anticipo) "
+                + "VALUES (?, ?, "
+                + "(SELECT id FROM tiempos WHERE tiendasOrigen = ? AND tiendasDestino = ? LIMIT 1)"
+                + ", ?, ?)"
+                + " ON DUPLICATE KEY UPDATE id = id";
         
-        Pedido tmp = null;
+        String queryDetallePedido = "INSERT INTO detallesPedidos(pedidosId, productosCodigo, cantidad, subTotalPedido) VALUES(?, ?, ?, ?)";
+        
         Connection conexion = null;
-        PreparedStatement getPedido = null;
         PreparedStatement setPedido = null;
         PreparedStatement setDetalleP = null;
-        ResultSet rs = null;
         
         try {
-            conexion = Conexion.getConnection();
-            conexion.setAutoCommit(false);
-            
-            getPedido = conexion.prepareStatement(queryConsulta);
-            getPedido.setInt(1, pedido.getId());
-            rs = getPedido.executeQuery();
-            
-            if(rs.next()) {
-                tmp = new Pedido(rs.getInt("id"), rs.getString("clientesNit"), rs.getInt("tiemposId"), rs.getDate("fechaPedido"), rs.getDouble("anticipo"));
-            }
-            
-            if(tmp == null) {
-                setPedido = conexion.prepareStatement(queryPedido);
-                setPedido.setInt(1, pedido.getId());
-                setPedido.setString(2, pedido.getNitCliente());
-                setPedido.setInt(3, pedido.getTiemposId());
-                setPedido.setDate(4, pedido.getFechaPedido());
-                setPedido.setDouble(5, pedido.getAnticipo());
-                setPedido.executeUpdate();
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
+
+            setPedido = conexion.prepareStatement(queryPedido);
+            setPedido.setInt(1, pedido.getId());
+            setPedido.setString(2, pedido.getNitCliente());
+            setPedido.setString(3, pedido.getTiendaOrigen());
+            setPedido.setString(4, pedido.getTiendaDestino());
+            setPedido.setDate(5, pedido.getFechaPedido());
+            setPedido.setDouble(6, pedido.getAnticipo());
+            setPedido.executeUpdate();
                 
-                setDetalleP = conexion.prepareStatement(queryDetallePedido);
-                setDetalleP.setInt(1, pedido.getId());
-                setDetalleP.setInt(2, pedido.getTiendasProductosId());
-                setDetalleP.setInt(3, pedido.getCantidad());
-                setDetalleP.setDouble(4, pedido.getSubTotalPedido());
-                setDetalleP.executeUpdate();
-            } else {
-                setDetalleP = conexion.prepareStatement(queryDetallePedido);
-                setDetalleP.setInt(1, pedido.getId());
-                setDetalleP.setInt(2, pedido.getTiendasProductosId());
-                setDetalleP.setInt(3, pedido.getCantidad());
-                setDetalleP.setDouble(4, pedido.getSubTotalPedido());
-                setDetalleP.executeUpdate();
-            }
+            setDetalleP = conexion.prepareStatement(queryDetallePedido);
+            setDetalleP.setInt(1, pedido.getId());
+            setDetalleP.setString(2, pedido.getCodigoProducto());
+            setDetalleP.setInt(3, pedido.getCantidad());
+            setDetalleP.setDouble(4, pedido.getSubTotalPedido());
+            setDetalleP.executeUpdate();
             
-            conexion.commit();
-        } catch (SQLException ex) {
-            try {
-                conexion.rollback();
-            } catch (SQLException ex1) {
-                ex1.printStackTrace(System.out);
-            }
-            ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
             Conexion.close(setDetalleP);
             Conexion.close(setPedido);
-            Conexion.close(getPedido);
-            Conexion.close(conexion);
+            if(this.transaction == null) {
+                Conexion.close(conexion);
+            }
         }
     }
 }
