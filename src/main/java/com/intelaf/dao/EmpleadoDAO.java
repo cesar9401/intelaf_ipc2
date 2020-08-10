@@ -4,6 +4,7 @@ package com.intelaf.dao;
 import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Empleado;
 import java.sql.*;
+import java.util.*;
 
 /**
  *
@@ -45,5 +46,64 @@ public class EmpleadoDAO {
                 Conexion.close(conexion);
             }
         }
+    }
+    
+    public List<Empleado> getListEmpleado() {
+        String query = "SELECT * FROM empleados";
+        List<Empleado> empleados = new ArrayList<>();
+        
+        Connection conexion = null;
+        Statement getEmpleados = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getEmpleados = conexion.createStatement();
+            rs = getEmpleados.executeQuery(query);
+            
+            while(rs.next()) {
+                Empleado tmp = new Empleado(rs.getString("nombres"), rs.getString("codigo"), rs.getString("telefono"), rs.getString("dpi"));
+                tmp.setNit(rs.getString("nit"));
+                tmp.setEmail(rs.getString("email"));
+                tmp.setDireccion(rs.getString("direccion"));
+                
+                empleados.add(tmp);
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getEmpleados);
+            Conexion.close(conexion);
+        }
+        
+        return empleados;
+    }
+    
+    public int updateEmpleado(Empleado empleado) {
+        int row = 0;
+        String query = "UPDATE empleados SET nombres = ?, telefono = ?, nit = ?, email = ?, direccion = ? WHERE codigo = ?";
+        
+        Connection conexion = null;
+        PreparedStatement updateEmp = null;
+        try {
+            conexion = Conexion.getConnection();
+            updateEmp = conexion.prepareStatement(query);
+            updateEmp.setString(1, empleado.getNombre());
+            updateEmp.setString(2, empleado.getTelefono());
+            updateEmp.setString(3, empleado.getNit());
+            updateEmp.setString(4, empleado.getEmail());
+            updateEmp.setString(5, empleado.getDireccion());
+            updateEmp.setString(6, empleado.getCodigo());
+            
+            row = updateEmp.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(updateEmp);
+            Conexion.close(conexion);
+        }
+        
+        return row;
     }
 }

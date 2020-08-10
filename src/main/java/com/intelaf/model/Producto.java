@@ -14,6 +14,7 @@ public class Producto {
     private String descripcion;
     private int garantia;
     
+    //Tabla tiendasProductos
     private int tiendasProductosId;
     private int stock;
     private String codigoTienda;

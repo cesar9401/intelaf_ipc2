@@ -4,6 +4,7 @@ package com.intelaf.dao;
 import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Cliente;
 import java.sql.*;
+import java.util.*;
 
 /**
  *
@@ -46,5 +47,66 @@ public class ClienteDAO {
                 Conexion.close(conexion);
             }
         }
+    }
+    
+    public List<Cliente> getListCliente() {
+        String query = "SELECT * FROM clientes";
+        List<Cliente> clientes = new ArrayList<>();
+        
+        Connection conexion = null;
+        Statement getCli = null;
+        ResultSet rs = null;
+        
+        try {
+            conexion = Conexion.getConnection();
+            getCli = conexion.createStatement();
+            rs = getCli.executeQuery(query);
+            
+            while(rs.next()) {
+                Cliente tmp = new Cliente(rs.getString("nombre"), rs.getString("telefono"), rs.getDouble("creditoCompra"));
+                tmp.setNit(rs.getString("nit"));
+                tmp.setDpi(rs.getString("dpi"));
+                tmp.setEmail(rs.getString("email"));
+                tmp.setDireccion(rs.getString("direccion"));
+                
+                clientes.add(tmp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getCli);
+            Conexion.close(conexion);
+        }
+        return clientes;
+    }
+    
+    public int updateCliente(Cliente cliente) {
+        String query = "UPDATE clientes SET nombre = ?, telefono = ?, dpi = ?, creditoCompra = ?, email = ?, direccion = ? WHERE nit = ?";
+        int row = 0;
+
+        Connection conexion = null;
+        PreparedStatement updateCl = null;
+        
+        try {
+            conexion = Conexion.getConnection();
+            updateCl = conexion.prepareStatement(query);
+            updateCl.setString(1, cliente.getNombre());
+            updateCl.setString(2, cliente.getTelefono());
+            updateCl.setString(3, cliente.getDpi());
+            updateCl.setDouble(4, cliente.getCreditoCompra());
+            updateCl.setString(5, cliente.getEmail());
+            updateCl.setString(6, cliente.getDireccion());
+            updateCl.setString(7, cliente.getNit());
+            
+            row = updateCl.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(updateCl);
+            Conexion.close(conexion);
+        }
+        
+        return row;
     }
 }
