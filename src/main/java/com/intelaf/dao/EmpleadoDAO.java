@@ -48,6 +48,10 @@ public class EmpleadoDAO {
         }
     }
     
+    /**
+     * Metodo para obtener un listado de los empleados
+     * @return 
+     */
     public List<Empleado> getListEmpleado() {
         String query = "SELECT * FROM empleados";
         List<Empleado> empleados = new ArrayList<>();
@@ -80,6 +84,11 @@ public class EmpleadoDAO {
         return empleados;
     }
     
+    /**
+     * Metodo para actualizar la informacion de los empleados, el codigo no es actualizable
+     * @param empleado
+     * @return 
+     */
     public int updateEmpleado(Empleado empleado) {
         int row = 0;
         String query = "UPDATE empleados SET nombres = ?, telefono = ?, nit = ?, email = ?, direccion = ? WHERE codigo = ?";

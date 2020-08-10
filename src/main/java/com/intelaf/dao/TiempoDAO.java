@@ -46,6 +46,13 @@ public class TiempoDAO {
         }
     }
     
+    /**
+     * Metodo que obtiene la informacion del tiempo entre tiendas segun los parametros que son los codigos de
+     * las tiendas.
+     * @param origen
+     * @param destino
+     * @return 
+     */
     public Tiempo getTiempo(String origen, String destino) {
         String query = "SELECT * FROM tiempos WHERE tiendasOrigen = ? AND tiendasDestino = ?";
         Connection conexion = null;
@@ -73,5 +80,34 @@ public class TiempoDAO {
         }
 
         return time;
+    }
+    
+    /**
+     * Metodo para actualizar el tiempo entre dos tiendas
+     * @param tiempo
+     * @return 
+     */
+    public int updateTiempo(Tiempo tiempo) {
+        String query = "UPDATE tiempos SET tiempoDias = ? WHERE tiendasOrigen = ? AND tiendasDestino = ?";
+        int row = 0;
+        
+        Connection conexion = null;
+        PreparedStatement updT = null;
+        try {
+            conexion = Conexion.getConnection();
+            updT = conexion.prepareStatement(query);
+            updT.setInt(1, tiempo.getTiempoDias());
+            updT.setString(2, tiempo.getTiendaOrigen());
+            updT.setString(3, tiempo.getTiendaDestino());
+            
+            row = updT.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(updT);
+            Conexion.close(conexion);
+        }
+        
+        return row;
     }
 }

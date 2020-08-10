@@ -49,6 +49,10 @@ public class ClienteDAO {
         }
     }
     
+    /**
+     * Metodo para obtener el listado de clientes
+     * @return 
+     */
     public List<Cliente> getListCliente() {
         String query = "SELECT * FROM clientes";
         List<Cliente> clientes = new ArrayList<>();
@@ -81,6 +85,11 @@ public class ClienteDAO {
         return clientes;
     }
     
+    /**
+     * Metodo para actualizar la informacion de algun cliente, el nit no es actualizable
+     * @param cliente
+     * @return 
+     */
     public int updateCliente(Cliente cliente) {
         String query = "UPDATE clientes SET nombre = ?, telefono = ?, dpi = ?, creditoCompra = ?, email = ?, direccion = ? WHERE nit = ?";
         int row = 0;

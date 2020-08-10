@@ -20,6 +20,11 @@ public class PedidoDAO {
         this.transaction = transaction;
     }
     
+    /**
+     * Metodo para insertar pedidos a la base de datos
+     * @param pedido
+     * @throws SQLException 
+     */
     public void insertarPedido(Pedido pedido) throws SQLException {
         String queryPedido = "INSERT INTO pedidos(id, clientesNit, tiemposId, fechaPedido, anticipo) "
                 + "VALUES (?, ?, "

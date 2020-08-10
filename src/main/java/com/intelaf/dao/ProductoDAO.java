@@ -5,8 +5,6 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Producto;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -61,6 +59,11 @@ public class ProductoDAO {
         }
     }
     
+    /**
+     * Metodo para obtener un listado de productos según el codigo de tienda que se reciba como parametro
+     * @param codigoTienda
+     * @return 
+     */
     public List<Producto> getListProductobyStore(String codigoTienda) {
         String query = "SELECT codigo, nombre, fabricante, precio, descripcion, garantia, stockProductos "
                + "FROM productos INNER JOIN tiendasProductos ON productos.codigo = tiendasProductos.productosCodigo "
@@ -93,6 +96,11 @@ public class ProductoDAO {
         return productos;
     }
     
+    /**
+     * Metodo para actualizar la información de algun producto, el codigo no se puede actualizar.
+     * @param producto
+     * @return 
+     */
     public int updateProducto(Producto producto) {
         String query = "UPDATE productos SET nombre = ?, fabricante = ?, precio = ?, descripcion = ?, garantia = ? WHERE codigo = ?";
         int row = 0;
@@ -120,6 +128,12 @@ public class ProductoDAO {
         return row;
     }
     
+    /**
+     * Metodo para actualizar el stock de algun producto segun su codigo y la tienda donde se encuentre,
+     * estos son atributos del objeto producto.
+     * @param producto
+     * @return 
+     */
     public int updateStockProductos(Producto producto) {
         String query = "UPDATE tiendasProductos SET stockProductos = stockProductos + ? WHERE tiendasCodigo = ? AND productosCodigo = ?";
         int row = 0;

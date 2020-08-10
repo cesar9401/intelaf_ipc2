@@ -4,6 +4,8 @@ package com.intelaf.dao;
 import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Tienda;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -69,5 +71,32 @@ public class TiendaDAO {
                 Conexion.close(conexion);
             }
         }
+    }
+    
+    public int updateTienda(Tienda tienda) {
+        String query = "UPDATE tiendas SET nombre = ?, direccion = ?, telefono1 = ?, telefono2 = ?, email = ?, horario = ? WHERE codigo = ?";
+        int row = 0;
+        
+        Connection conexion = null;
+        PreparedStatement updT = null;
+        try {
+            conexion = Conexion.getConnection();
+            updT = conexion.prepareStatement(query);
+            updT.setString(1, tienda.getNombre());
+            updT.setString(2, tienda.getDireccion());
+            updT.setString(3, tienda.getTelefono1());
+            updT.setString(4, tienda.getTelefono2());
+            updT.setString(5, tienda.getEmail());
+            updT.setString(6, tienda.getHorario());
+            updT.setString(7, tienda.getCodigo());
+            
+            row = updT.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(updT);
+            Conexion.close(conexion);
+        }
+        return row;
     }
 }
