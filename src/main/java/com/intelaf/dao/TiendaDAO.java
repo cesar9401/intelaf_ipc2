@@ -4,8 +4,6 @@ package com.intelaf.dao;
 import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Tienda;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
