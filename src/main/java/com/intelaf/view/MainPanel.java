@@ -26,8 +26,8 @@ public class MainPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setMinimumSize(new java.awt.Dimension(1000, 640));
-        setPreferredSize(new java.awt.Dimension(1000, 640));
+        setMinimumSize(new java.awt.Dimension(800, 700));
+        setPreferredSize(new java.awt.Dimension(800, 700));
 
         jLabel1.setText("Holo");
 
@@ -47,7 +47,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(79, 79, 79)
                 .addComponent(jButton1)
-                .addContainerGap(349, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -56,7 +56,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(jLabel1))
-                .addContainerGap(411, Short.MAX_VALUE))
+                .addContainerGap(480, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
