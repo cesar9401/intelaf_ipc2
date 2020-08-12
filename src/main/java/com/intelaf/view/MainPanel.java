@@ -1,17 +1,26 @@
 
 package com.intelaf.view;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author cesar31
  */
 public class MainPanel extends javax.swing.JPanel {
 
+    
     /**
      * Creates new form NuevoPanel
      */
     public MainPanel() {
         initComponents();
+        ImageIcon img = new ImageIcon(getClass().getResource("/images/intelaf.jpg"));
+        System.out.println(imageLabel.getPreferredSize().height);
+        System.out.println(imageLabel.getPreferredSize().width);
+
+        imageLabel.setIcon(new ImageIcon(img.getImage().getScaledInstance(imageLabel.getPreferredSize().width, imageLabel.getPreferredSize().height, Image.SCALE_SMOOTH)));
     }
 
     /**
@@ -23,49 +32,35 @@ public class MainPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        imageLabel = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(800, 700));
         setPreferredSize(new java.awt.Dimension(800, 700));
 
-        jLabel1.setText("Holo");
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        imageLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        imageLabel.setMaximumSize(new java.awt.Dimension(790, 350));
+        imageLabel.setMinimumSize(new java.awt.Dimension(790, 350));
+        imageLabel.setPreferredSize(new java.awt.Dimension(790, 350));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(467, 467, 467)
-                .addComponent(jLabel1)
-                .addGap(79, 79, 79)
-                .addComponent(jButton1)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(206, 206, 206)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1))
-                .addContainerGap(480, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(344, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel imageLabel;
     // End of variables declaration//GEN-END:variables
 }

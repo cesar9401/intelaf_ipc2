@@ -36,8 +36,8 @@ public class MainView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 140, 0));
-        setMinimumSize(new java.awt.Dimension(1000, 700));
-        setPreferredSize(new java.awt.Dimension(1000, 700));
+        setMinimumSize(new java.awt.Dimension(1024, 700));
+        setPreferredSize(new java.awt.Dimension(1024, 700));
         setResizable(false);
 
         navPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -89,7 +89,7 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(navPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contenedorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(contenedorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,6 +104,7 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.contenedorPanel.setVisible(false);
         this.contenedorPanel.add(this.mainPanel);
+        mainPanel.setBounds(0, 0, this.contenedorPanel.getWidth(), this.contenedorPanel.getHeight());
         this.contenedorPanel.setVisible(true);
     }//GEN-LAST:event_inicioButtonActionPerformed
 
