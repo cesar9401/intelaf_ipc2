@@ -5,6 +5,8 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Empleado;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -82,6 +84,42 @@ public class EmpleadoDAO {
         }
         
         return empleados;
+    }
+    
+    /**
+     * Metodo para obtener a un empleado de la base de datos segun su codigo.
+     * @param codigo
+     * @return 
+     */
+    public Empleado getEmpleado(String codigo) {
+        String query = "SELECT * FROM empleados WHERE codigo = ?";
+        Empleado emp = null;
+        
+        Connection conexion = null;
+        PreparedStatement getE = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getE = conexion.prepareStatement(query);
+            getE.setString(1, codigo);
+            rs = getE.executeQuery();
+            
+            while(rs.next()) {
+                emp = new Empleado(rs.getString("nombres"), rs.getString("codigo"), rs.getString("telefono"), rs.getString("dpi"));
+                emp.setNit(rs.getString("nit"));
+                emp.setEmail(rs.getString("email"));
+                emp.setDireccion(rs.getString("direccion"));
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getE);
+            Conexion.close(conexion);
+        }
+        
+        return emp;
     }
     
     /**

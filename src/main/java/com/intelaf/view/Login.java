@@ -1,6 +1,7 @@
 
 package com.intelaf.view;
 
+import com.intelaf.controller.MainControl;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -11,17 +12,17 @@ import javax.swing.ImageIcon;
  */
 public class Login extends javax.swing.JFrame {
 
-    List<String> tiendas;
+    private MainControl control;
+    private List<String> tiendas;
     
     /**
      * Creates new form Login
-     * @param tiendas
+     * 
      */
-    public Login(List<String> tiendas) {
-        this.tiendas = tiendas;
+    public Login() {
         initComponents();
+        this.tiendasCombo.setVisible(false);
         this.setLocationRelativeTo(null);
-        setComponents();
     }
 
     /**
@@ -45,7 +46,6 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(248, 147, 31));
         setMinimumSize(new java.awt.Dimension(400, 650));
-        setPreferredSize(new java.awt.Dimension(400, 650));
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(248, 147, 31));
@@ -94,6 +94,11 @@ public class Login extends javax.swing.JFrame {
         usuarioRadio.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         usuarioRadio.setForeground(new java.awt.Color(255, 255, 255));
         usuarioRadio.setText("Empleado");
+        usuarioRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarioRadioActionPerformed(evt);
+            }
+        });
 
         tiendasCombo.setBackground(new java.awt.Color(248, 147, 31));
         tiendasCombo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
@@ -104,14 +109,11 @@ public class Login extends javax.swing.JFrame {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 50, Short.MAX_VALUE))
+                    .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -142,13 +144,13 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(codigoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(codigoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(usuarioRadio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tiendasCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tiendasCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usuarioRadio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(iniciarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -165,9 +167,49 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void initializeComponents(MainControl control, List<String> tiendas) {
+        this.control = control;
+        this.tiendas = tiendas;
+        setComponents();
+    }
+    
+    public void clear() {
+        this.codigoText.setText("");
+        this.usuarioRadio.setSelected(false);
+        this.tiendasCombo.setSelectedIndex(0);
+        this.tiendasCombo.setVisible(false);
+    }
+    
     private void iniciarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarButtonActionPerformed
         // TODO add your handling code here:
+        String codigo = codigoText.getText();
+        Boolean empleado = usuarioRadio.isSelected();
+        String codigoTienda = tiendasCombo.getSelectedItem().toString();
+        
+        if(!codigo.isEmpty()) {
+            System.out.println("codigo: " + codigo);
+            this.control.iniciarSesion(codigo, empleado, codigoTienda);
+        } else {
+            System.out.println("Ingresar codigo");
+        }
     }//GEN-LAST:event_iniciarButtonActionPerformed
+
+    private void setComponents() {
+        ImageIcon image = new ImageIcon(getClass().getResource("/images/empresa.png"));
+        this.logoLabel.setIcon(new ImageIcon(image.getImage().getScaledInstance(logoLabel.getPreferredSize().width, logoLabel.getPreferredSize().width, Image.SCALE_SMOOTH)));
+        tiendas.forEach((t) -> {
+            tiendasCombo.addItem(t);
+        });
+    }    
+    
+    private void usuarioRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioRadioActionPerformed
+        // TODO add your handling code here:
+        if(usuarioRadio.isSelected()) {
+            tiendasCombo.setVisible(true);
+        } else {
+            tiendasCombo.setVisible(false);
+        }
+    }//GEN-LAST:event_usuarioRadioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel codigoLabel;
@@ -179,12 +221,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> tiendasCombo;
     private javax.swing.JRadioButton usuarioRadio;
     // End of variables declaration//GEN-END:variables
-
-    private void setComponents() {
-        ImageIcon image = new ImageIcon(getClass().getResource("/images/empresa.png"));
-        this.logoLabel.setIcon(new ImageIcon(image.getImage().getScaledInstance(logoLabel.getPreferredSize().width, logoLabel.getPreferredSize().width, Image.SCALE_SMOOTH)));
-        tiendas.forEach((t) -> {
-            tiendasCombo.addItem(t);
-        });
-    }
 }

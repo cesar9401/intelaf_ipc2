@@ -5,8 +5,6 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Tienda;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -74,6 +72,11 @@ public class TiendaDAO {
         }
     }
     
+    /**
+     * Metodo para actualizar los datos de alguna tienda, el codigo no se puede actualizar
+     * @param tienda
+     * @return 
+     */
     public int updateTienda(Tienda tienda) {
         String query = "UPDATE tiendas SET nombre = ?, direccion = ?, telefono1 = ?, telefono2 = ?, email = ?, horario = ? WHERE codigo = ?";
         int row = 0;
@@ -99,6 +102,41 @@ public class TiendaDAO {
             Conexion.close(conexion);
         }
         return row;
+    }
+    
+    /**
+     * Metodo para obtener la informacion de una tienda en particular segun el codigo que se reciba como parametro
+     * @param codigo
+     * @return 
+     */
+    public Tienda getTienda(String codigo) {
+        String query = "SELECT * FROM tiendas WHERE codigo = ?";
+        Tienda tmp = null;
+        
+        Connection conexion = null;
+        PreparedStatement getT = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getT = conexion.prepareStatement(query);
+            getT.setString(1, codigo);
+            rs = getT.executeQuery();
+            
+            if(rs.next()) {
+                tmp = new Tienda(rs.getString("nombre"), rs.getString("direccion"), rs.getString("codigo"), rs.getString("telefono1"));
+                tmp.setTelefono2(rs.getString("telefono2"));
+                tmp.setEmail(rs.getString("email"));
+                tmp.setHorario(rs.getString("horario"));                
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getT);
+            Conexion.close(conexion);
+        }
+        
+        return tmp;
     }
     
     public List<Tienda> getTiendas() {

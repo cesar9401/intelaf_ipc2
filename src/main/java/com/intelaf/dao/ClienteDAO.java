@@ -86,7 +86,43 @@ public class ClienteDAO {
     }
     
     /**
-     * Metodo para actualizar la informacion de algun cliente, el nit no es actualizable
+     * Metodo para obtener un cliente segun el nit que reciba como parametro
+     * @param nit
+     * @return 
+     */
+    public Cliente getCliente(String nit) {
+        String query = "SELECT * FROM clientes WHERE nit = ?";
+        Cliente tmp = null;
+        
+        Connection conexion = null;
+        PreparedStatement getC = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getC = conexion.prepareStatement(query);
+            getC.setString(1, nit);
+            rs = getC.executeQuery();
+            
+            if(rs.next()) {
+                tmp = new Cliente(rs.getString("nombre"), rs.getString("telefono"), rs.getDouble("creditoCompra"));
+                tmp.setNit(rs.getString("nit"));
+                tmp.setDpi(rs.getString("dpi"));
+                tmp.setEmail(rs.getString("email"));
+                tmp.setDireccion(rs.getString("direccion"));      
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getC);
+            Conexion.close(conexion);
+        }
+        
+        return tmp;
+    }
+    
+    /**
+     * Metodo para actualgetCizar la informacion de algun cliente, el nit no es actualizable
      * @param cliente
      * @return 
      */

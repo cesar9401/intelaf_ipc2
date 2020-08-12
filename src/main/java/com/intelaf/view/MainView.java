@@ -1,6 +1,7 @@
 
 package com.intelaf.view;
 
+import com.intelaf.model.*;
 import javax.swing.JPanel;
 
 /**
@@ -9,6 +10,9 @@ import javax.swing.JPanel;
  */
 public class MainView extends javax.swing.JFrame {
 
+    private Tienda tienda;
+    private Empleado empleado;
+    
     private JPanel mainPanel;
     
     /**
@@ -100,6 +104,11 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void initializeComponents(Tienda tienda, Empleado empleado) {
+        this.tienda = tienda;
+        this.empleado = empleado;
+    }
+    
     private void inicioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inicioButtonActionPerformed
         // TODO add your handling code here:
         this.contenedorPanel.setVisible(false);
@@ -107,41 +116,6 @@ public class MainView extends javax.swing.JFrame {
         mainPanel.setBounds(0, 0, this.contenedorPanel.getWidth(), this.contenedorPanel.getHeight());
         this.contenedorPanel.setVisible(true);
     }//GEN-LAST:event_inicioButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorPanel;
