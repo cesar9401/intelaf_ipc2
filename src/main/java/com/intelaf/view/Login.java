@@ -22,6 +22,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.tiendasCombo.setVisible(false);
+        this.codigoText.setText("11111");
     }
 
     /**

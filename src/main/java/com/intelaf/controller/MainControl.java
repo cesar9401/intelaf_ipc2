@@ -78,4 +78,10 @@ public class MainControl {
         mainView = null;
         showLogin();
     }
+    
+    public List<Producto> getProductosTienda(String codigo) {
+        ProductoDAO operaciones = new ProductoDAO();
+        List<Producto> productos = operaciones.getListProductobyStore(codigo);
+        return productos;
+    }
 }

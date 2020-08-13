@@ -217,23 +217,23 @@ public class MainPanel extends javax.swing.JPanel {
         ImageIcon img = new ImageIcon(getClass().getResource("/images/intelaf.jpg"));
         imageLabel.setIcon(new ImageIcon(img.getImage().getScaledInstance(imageLabel.getPreferredSize().width, imageLabel.getPreferredSize().height, Image.SCALE_SMOOTH)));    
         //Tienda
-        ImageIcon imgT = new ImageIcon(getClass().getResource("/images/store3.png"));
-        imgTienda.setIcon(new ImageIcon(imgT.getImage().getScaledInstance(imgTienda.getPreferredSize().width, imgTienda.getPreferredSize().height, Image.SCALE_SMOOTH)));
-        //Direccion
-        ImageIcon imgD = new ImageIcon(getClass().getResource("/images/location2.png"));
-        imgDireccion.setIcon(new ImageIcon(imgD.getImage().getScaledInstance(imgDireccion.getPreferredSize().width, imgDireccion.getPreferredSize().height, Image.SCALE_SMOOTH)));
-        //Telefono1
-        ImageIcon imgTel1 = new ImageIcon(getClass().getResource("/images/telefono1.png"));
-        imgTelefono1.setIcon(new ImageIcon(imgTel1.getImage().getScaledInstance(imgTelefono1.getPreferredSize().width, imgTelefono1.getPreferredSize().height, Image.SCALE_SMOOTH)));
-        //Telefono2
-        ImageIcon imgTel2 = new ImageIcon(getClass().getResource("/images/telefono2.png"));
-        imgTelefono2.setIcon(new ImageIcon(imgTel2.getImage().getScaledInstance(imgTelefono2.getPreferredSize().width, imgTelefono2.getPreferredSize().height, Image.SCALE_SMOOTH)));
-        //Email
-        ImageIcon imgE = new ImageIcon(getClass().getResource("/images/email.png"));
-        imgEmail.setIcon(new ImageIcon(imgE.getImage().getScaledInstance(imgEmail.getPreferredSize().width, imgEmail.getPreferredSize().height, Image.SCALE_SMOOTH)));        
-        //Horario
-        ImageIcon imgH = new ImageIcon(getClass().getResource("/images/telefono2.png"));
-        imgHorario.setIcon(new ImageIcon(imgH.getImage().getScaledInstance(imgHorario.getPreferredSize().width, imgHorario.getPreferredSize().height, Image.SCALE_SMOOTH)));
+//        ImageIcon imgT = new ImageIcon(getClass().getResource("/images/store3.png"));
+//        imgTienda.setIcon(new ImageIcon(imgT.getImage().getScaledInstance(imgTienda.getPreferredSize().width, imgTienda.getPreferredSize().height, Image.SCALE_SMOOTH)));
+//        //Direccion
+//        ImageIcon imgD = new ImageIcon(getClass().getResource("/images/location2.png"));
+//        imgDireccion.setIcon(new ImageIcon(imgD.getImage().getScaledInstance(imgDireccion.getPreferredSize().width, imgDireccion.getPreferredSize().height, Image.SCALE_SMOOTH)));
+//        //Telefono1
+//        ImageIcon imgTel1 = new ImageIcon(getClass().getResource("/images/telefono1.png"));
+//        imgTelefono1.setIcon(new ImageIcon(imgTel1.getImage().getScaledInstance(imgTelefono1.getPreferredSize().width, imgTelefono1.getPreferredSize().height, Image.SCALE_SMOOTH)));
+//        //Telefono2
+//        ImageIcon imgTel2 = new ImageIcon(getClass().getResource("/images/telefono2.png"));
+//        imgTelefono2.setIcon(new ImageIcon(imgTel2.getImage().getScaledInstance(imgTelefono2.getPreferredSize().width, imgTelefono2.getPreferredSize().height, Image.SCALE_SMOOTH)));
+//        //Email
+//        ImageIcon imgE = new ImageIcon(getClass().getResource("/images/email.png"));
+//        imgEmail.setIcon(new ImageIcon(imgE.getImage().getScaledInstance(imgEmail.getPreferredSize().width, imgEmail.getPreferredSize().height, Image.SCALE_SMOOTH)));        
+//        //Horario
+//        ImageIcon imgH = new ImageIcon(getClass().getResource("/images/telefono2.png"));
+//        imgHorario.setIcon(new ImageIcon(imgH.getImage().getScaledInstance(imgHorario.getPreferredSize().width, imgHorario.getPreferredSize().height, Image.SCALE_SMOOTH)));
     }
     
     public void initializeComponents(Tienda tienda, Empleado empleado) {
