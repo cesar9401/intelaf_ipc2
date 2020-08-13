@@ -3,8 +3,7 @@ package com.intelaf.controller;
 
 import com.intelaf.dao.*;
 import com.intelaf.model.*;
-import com.intelaf.view.Login;
-import com.intelaf.view.MainView;
+import com.intelaf.view.*;
 import java.util.*;
 
 /**
@@ -13,8 +12,9 @@ import java.util.*;
  */
 public class MainControl {
     
-    List<Tienda> tiendas;
-    Login login;
+    private List<Tienda> tiendas;
+    private Login login;
+    private MainView mainView;
     
     public MainControl() {
         iniciarComponentes();
@@ -33,6 +33,7 @@ public class MainControl {
         });
         login = new Login();
         login.initializeComponents(this, codigos);
+        login.setLocationRelativeTo(null);
         login.setVisible(true);
     }
     
@@ -47,10 +48,11 @@ public class MainControl {
                 System.out.println(e.toString());
                 System.out.println(t.toString());
                 
-                MainView mainView = new MainView();
-                mainView.initializeComponents(t, e);
-                login.clear();
+                mainView = new MainView();
+                mainView.initializeComponents(this, t, e);
                 login.setVisible(false);
+                login = null;
+                mainView.setLocationRelativeTo(null);
                 mainView.setVisible(true);
                 
             } else {
@@ -69,5 +71,11 @@ public class MainControl {
                 System.out.println("Nit incorrecto");
             }
         }
+    }
+    
+    public void cerrarSesion() {
+        this.mainView.setVisible(false);
+        mainView = null;
+        showLogin();
     }
 }

@@ -22,7 +22,6 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.tiendasCombo.setVisible(false);
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -172,14 +171,7 @@ public class Login extends javax.swing.JFrame {
         this.tiendas = tiendas;
         setComponents();
     }
-    
-    public void clear() {
-        this.codigoText.setText("");
-        this.usuarioRadio.setSelected(false);
-        this.tiendasCombo.setSelectedIndex(0);
-        this.tiendasCombo.setVisible(false);
-    }
-    
+        
     private void iniciarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarButtonActionPerformed
         // TODO add your handling code here:
         String codigo = codigoText.getText();

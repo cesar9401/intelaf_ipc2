@@ -1,8 +1,8 @@
 
 package com.intelaf.view;
 
+import com.intelaf.controller.MainControl;
 import com.intelaf.model.*;
-import javax.swing.JPanel;
 
 /**
  *
@@ -10,19 +10,17 @@ import javax.swing.JPanel;
  */
 public class MainView extends javax.swing.JFrame {
 
+    private MainControl control;
     private Tienda tienda;
     private Empleado empleado;
     
-    private JPanel mainPanel;
+    private MainPanel mainPanel;
     
     /**
      * Creates new form MainView
      */
     public MainView() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.mainPanel = new MainPanel();
-        this.contenedorPanel.add(mainPanel);
     }
 
     /**
@@ -36,12 +34,12 @@ public class MainView extends javax.swing.JFrame {
 
         navPanel = new javax.swing.JPanel();
         inicioButton = new javax.swing.JButton();
+        salirButton = new javax.swing.JButton();
         contenedorPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 140, 0));
         setMinimumSize(new java.awt.Dimension(1024, 700));
-        setPreferredSize(new java.awt.Dimension(1024, 700));
         setResizable(false);
 
         navPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -64,21 +62,41 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        salirButton.setBackground(new java.awt.Color(255, 140, 0));
+        salirButton.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        salirButton.setForeground(new java.awt.Color(255, 255, 255));
+        salirButton.setText("Salir");
+        salirButton.setAlignmentY(0.0F);
+        salirButton.setBorder(null);
+        salirButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        salirButton.setMaximumSize(new java.awt.Dimension(120, 40));
+        salirButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        salirButton.setPreferredSize(new java.awt.Dimension(120, 40));
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
         navPanel.setLayout(navPanelLayout);
         navPanelLayout.setHorizontalGroup(
             navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navPanelLayout.createSequentialGroup()
+            .addGroup(navPanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(inicioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inicioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
         navPanelLayout.setVerticalGroup(
             navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(31, 31, 31)
                 .addComponent(inicioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(641, 641, 641))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
 
         contenedorPanel.setBackground(new java.awt.Color(235, 235, 235));
@@ -104,9 +122,15 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void initializeComponents(Tienda tienda, Empleado empleado) {
+    public void initializeComponents(MainControl control, Tienda tienda, Empleado empleado) {
+        this.control = control;
         this.tienda = tienda;
         this.empleado = empleado;
+        
+        //Inicializar MainPanel y componentes
+        this.mainPanel = new MainPanel();
+        mainPanel.initializeComponents(this.tienda, this.empleado);
+        this.contenedorPanel.add(mainPanel);
     }
     
     private void inicioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inicioButtonActionPerformed
@@ -117,9 +141,15 @@ public class MainView extends javax.swing.JFrame {
         this.contenedorPanel.setVisible(true);
     }//GEN-LAST:event_inicioButtonActionPerformed
 
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
+        // TODO add your handling code here:
+        control.cerrarSesion();
+    }//GEN-LAST:event_salirButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorPanel;
     private javax.swing.JButton inicioButton;
     private javax.swing.JPanel navPanel;
+    private javax.swing.JButton salirButton;
     // End of variables declaration//GEN-END:variables
 }

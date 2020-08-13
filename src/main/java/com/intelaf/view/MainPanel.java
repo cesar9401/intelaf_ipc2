@@ -1,6 +1,8 @@
 
 package com.intelaf.view;
 
+import com.intelaf.model.Empleado;
+import com.intelaf.model.Tienda;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -10,17 +12,15 @@ import javax.swing.ImageIcon;
  */
 public class MainPanel extends javax.swing.JPanel {
 
+    private Tienda tienda;
+    private Empleado empleado;
     
     /**
      * Creates new form NuevoPanel
      */
     public MainPanel() {
         initComponents();
-        ImageIcon img = new ImageIcon(getClass().getResource("/images/intelaf.jpg"));
-        System.out.println(imageLabel.getPreferredSize().height);
-        System.out.println(imageLabel.getPreferredSize().width);
-
-        imageLabel.setIcon(new ImageIcon(img.getImage().getScaledInstance(imageLabel.getPreferredSize().width, imageLabel.getPreferredSize().height, Image.SCALE_SMOOTH)));
+        setComponents();
     }
 
     /**
@@ -33,14 +33,119 @@ public class MainPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         imageLabel = new javax.swing.JLabel();
+        imgTienda = new javax.swing.JLabel();
+        nombreTienda = new javax.swing.JLabel();
+        imgDireccion = new javax.swing.JLabel();
+        direccionTienda = new javax.swing.JLabel();
+        imgTelefono1 = new javax.swing.JLabel();
+        telefono1Tienda = new javax.swing.JLabel();
+        imgTelefono2 = new javax.swing.JLabel();
+        telefono2Tienda = new javax.swing.JLabel();
+        imgEmail = new javax.swing.JLabel();
+        emailTienda = new javax.swing.JLabel();
+        imgHorario = new javax.swing.JLabel();
+        horarioTienda = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(248, 147, 31));
         setMinimumSize(new java.awt.Dimension(800, 700));
         setPreferredSize(new java.awt.Dimension(800, 700));
 
-        imageLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        imageLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(248, 165, 31)));
         imageLabel.setMaximumSize(new java.awt.Dimension(790, 350));
         imageLabel.setMinimumSize(new java.awt.Dimension(790, 350));
         imageLabel.setPreferredSize(new java.awt.Dimension(790, 350));
+
+        imgTienda.setBackground(new java.awt.Color(248, 147, 31));
+        imgTienda.setMaximumSize(new java.awt.Dimension(40, 40));
+        imgTienda.setMinimumSize(new java.awt.Dimension(40, 40));
+        imgTienda.setPreferredSize(new java.awt.Dimension(30, 30));
+
+        nombreTienda.setBackground(new java.awt.Color(248, 147, 31));
+        nombreTienda.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
+        nombreTienda.setForeground(new java.awt.Color(0, 0, 0));
+        nombreTienda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        nombreTienda.setText("Nombre Tienda");
+        nombreTienda.setMaximumSize(new java.awt.Dimension(300, 40));
+        nombreTienda.setMinimumSize(new java.awt.Dimension(300, 40));
+        nombreTienda.setPreferredSize(new java.awt.Dimension(300, 40));
+
+        imgDireccion.setBackground(new java.awt.Color(248, 147, 31));
+        imgDireccion.setMaximumSize(new java.awt.Dimension(25, 25));
+        imgDireccion.setMinimumSize(new java.awt.Dimension(25, 25));
+        imgDireccion.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        direccionTienda.setBackground(new java.awt.Color(248, 147, 31));
+        direccionTienda.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        direccionTienda.setForeground(new java.awt.Color(0, 0, 0));
+        direccionTienda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        direccionTienda.setText("Direccion Tienda");
+        direccionTienda.setMaximumSize(new java.awt.Dimension(300, 25));
+        direccionTienda.setMinimumSize(new java.awt.Dimension(300, 25));
+        direccionTienda.setPreferredSize(new java.awt.Dimension(300, 25));
+
+        imgTelefono1.setBackground(new java.awt.Color(248, 147, 31));
+        imgTelefono1.setMaximumSize(new java.awt.Dimension(25, 25));
+        imgTelefono1.setMinimumSize(new java.awt.Dimension(25, 25));
+        imgTelefono1.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        telefono1Tienda.setBackground(new java.awt.Color(248, 147, 31));
+        telefono1Tienda.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        telefono1Tienda.setForeground(new java.awt.Color(0, 0, 0));
+        telefono1Tienda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        telefono1Tienda.setText("Telefono Tienda");
+        telefono1Tienda.setAlignmentY(0.0F);
+        telefono1Tienda.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        telefono1Tienda.setMaximumSize(new java.awt.Dimension(300, 25));
+        telefono1Tienda.setMinimumSize(new java.awt.Dimension(300, 25));
+        telefono1Tienda.setPreferredSize(new java.awt.Dimension(300, 25));
+
+        imgTelefono2.setBackground(new java.awt.Color(248, 147, 31));
+        imgTelefono2.setMaximumSize(new java.awt.Dimension(25, 25));
+        imgTelefono2.setMinimumSize(new java.awt.Dimension(25, 25));
+        imgTelefono2.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        telefono2Tienda.setBackground(new java.awt.Color(248, 147, 31));
+        telefono2Tienda.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        telefono2Tienda.setForeground(new java.awt.Color(0, 0, 0));
+        telefono2Tienda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        telefono2Tienda.setText("Telefono Tienda");
+        telefono2Tienda.setAlignmentY(0.0F);
+        telefono2Tienda.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        telefono2Tienda.setMaximumSize(new java.awt.Dimension(300, 25));
+        telefono2Tienda.setMinimumSize(new java.awt.Dimension(300, 25));
+        telefono2Tienda.setPreferredSize(new java.awt.Dimension(300, 25));
+
+        imgEmail.setBackground(new java.awt.Color(248, 147, 31));
+        imgEmail.setMaximumSize(new java.awt.Dimension(25, 25));
+        imgEmail.setMinimumSize(new java.awt.Dimension(25, 25));
+        imgEmail.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        emailTienda.setBackground(new java.awt.Color(248, 147, 31));
+        emailTienda.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        emailTienda.setForeground(new java.awt.Color(0, 0, 0));
+        emailTienda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        emailTienda.setText("Email Tienda");
+        emailTienda.setAlignmentY(0.0F);
+        emailTienda.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        emailTienda.setMaximumSize(new java.awt.Dimension(300, 25));
+        emailTienda.setMinimumSize(new java.awt.Dimension(300, 25));
+        emailTienda.setPreferredSize(new java.awt.Dimension(300, 25));
+
+        imgHorario.setBackground(new java.awt.Color(248, 147, 31));
+        imgHorario.setMaximumSize(new java.awt.Dimension(25, 25));
+        imgHorario.setMinimumSize(new java.awt.Dimension(25, 25));
+        imgHorario.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        horarioTienda.setBackground(new java.awt.Color(248, 147, 31));
+        horarioTienda.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        horarioTienda.setForeground(new java.awt.Color(0, 0, 0));
+        horarioTienda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        horarioTienda.setText("Horario Tienda");
+        horarioTienda.setAlignmentY(0.0F);
+        horarioTienda.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        horarioTienda.setMaximumSize(new java.awt.Dimension(300, 25));
+        horarioTienda.setMinimumSize(new java.awt.Dimension(300, 25));
+        horarioTienda.setPreferredSize(new java.awt.Dimension(300, 25));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -48,7 +153,30 @@ public class MainPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nombreTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(imgDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(imgTelefono2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(imgTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(imgEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(imgHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(telefono1Tienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(telefono2Tienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(direccionTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(emailTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(horarioTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -56,11 +184,86 @@ public class MainPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imgTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(direccionTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(imgDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imgTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(telefono1Tienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(telefono2Tienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(imgTelefono2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(emailTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(imgEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imgHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(horarioTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setComponents() {
+        //Banner
+        ImageIcon img = new ImageIcon(getClass().getResource("/images/intelaf.jpg"));
+        imageLabel.setIcon(new ImageIcon(img.getImage().getScaledInstance(imageLabel.getPreferredSize().width, imageLabel.getPreferredSize().height, Image.SCALE_SMOOTH)));    
+        //Tienda
+        ImageIcon imgT = new ImageIcon(getClass().getResource("/images/store3.png"));
+        imgTienda.setIcon(new ImageIcon(imgT.getImage().getScaledInstance(imgTienda.getPreferredSize().width, imgTienda.getPreferredSize().height, Image.SCALE_SMOOTH)));
+        //Direccion
+        ImageIcon imgD = new ImageIcon(getClass().getResource("/images/location2.png"));
+        imgDireccion.setIcon(new ImageIcon(imgD.getImage().getScaledInstance(imgDireccion.getPreferredSize().width, imgDireccion.getPreferredSize().height, Image.SCALE_SMOOTH)));
+        //Telefono1
+        ImageIcon imgTel1 = new ImageIcon(getClass().getResource("/images/telefono1.png"));
+        imgTelefono1.setIcon(new ImageIcon(imgTel1.getImage().getScaledInstance(imgTelefono1.getPreferredSize().width, imgTelefono1.getPreferredSize().height, Image.SCALE_SMOOTH)));
+        //Telefono2
+        ImageIcon imgTel2 = new ImageIcon(getClass().getResource("/images/telefono2.png"));
+        imgTelefono2.setIcon(new ImageIcon(imgTel2.getImage().getScaledInstance(imgTelefono2.getPreferredSize().width, imgTelefono2.getPreferredSize().height, Image.SCALE_SMOOTH)));
+        //Email
+        ImageIcon imgE = new ImageIcon(getClass().getResource("/images/email.png"));
+        imgEmail.setIcon(new ImageIcon(imgE.getImage().getScaledInstance(imgEmail.getPreferredSize().width, imgEmail.getPreferredSize().height, Image.SCALE_SMOOTH)));        
+        //Horario
+        ImageIcon imgH = new ImageIcon(getClass().getResource("/images/telefono2.png"));
+        imgHorario.setIcon(new ImageIcon(imgH.getImage().getScaledInstance(imgHorario.getPreferredSize().width, imgHorario.getPreferredSize().height, Image.SCALE_SMOOTH)));
+    }
+    
+    public void initializeComponents(Tienda tienda, Empleado empleado) {
+        this.tienda = tienda;
+        this.empleado = empleado;
+        setDatos();
+    }
+    
+    private void setDatos() {
+        this.nombreTienda.setText(this.tienda.getNombre());
+        this.direccionTienda.setText(this.tienda.getDireccion());
+        this.telefono1Tienda.setText(this.tienda.getTelefono1());
+        this.telefono2Tienda.setText((this.tienda.getTelefono2() == null) ? "---" : this.tienda.getTelefono2());
+        this.emailTienda.setText((this.tienda.getEmail() == null) ? "---" : this.tienda.getEmail());
+        this.horarioTienda.setText((this.tienda.getHorario() == null) ? "---" : this.tienda.getHorario());
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel direccionTienda;
+    private javax.swing.JLabel emailTienda;
+    private javax.swing.JLabel horarioTienda;
     private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel imgDireccion;
+    private javax.swing.JLabel imgEmail;
+    private javax.swing.JLabel imgHorario;
+    private javax.swing.JLabel imgTelefono1;
+    private javax.swing.JLabel imgTelefono2;
+    private javax.swing.JLabel imgTienda;
+    private javax.swing.JLabel nombreTienda;
+    private javax.swing.JLabel telefono1Tienda;
+    private javax.swing.JLabel telefono2Tienda;
     // End of variables declaration//GEN-END:variables
 }
