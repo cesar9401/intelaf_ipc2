@@ -1,6 +1,8 @@
 
 package com.intelaf.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author cesar31
@@ -19,6 +21,9 @@ public class Producto {
     private int stock;
     private String codigoTienda;
 
+    //Para compras y pedidos
+    private double subTotal;
+    
     public Producto(String codigoProductos) {
         this.codigoProductos = codigoProductos;
     }
@@ -128,6 +133,39 @@ public class Producto {
         this.codigoTienda = codigoTienda;
     }
 
+    public double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.codigoProductos);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Producto other = (Producto) obj;
+        if (!Objects.equals(this.codigoProductos, other.codigoProductos)) {
+            return false;
+        }
+        return true;
+    }
+    
     @Override
     public String toString() {
         return "Producto{" + "nombre=" + nombre + ", fabricante=" + fabricante + ", codigoProductos=" + codigoProductos + ", precio=" + precio + '}';

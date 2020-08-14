@@ -65,7 +65,7 @@ public class ProductoDAO {
      * @return 
      */
     public List<Producto> getListProductobyStore(String codigoTienda) {
-        String query = "SELECT codigo, nombre, fabricante, precio, descripcion, garantia, stockProductos "
+        String query = "SELECT id, codigo, nombre, fabricante, precio, descripcion, garantia, stockProductos "
                + "FROM productos INNER JOIN tiendasProductos ON productos.codigo = tiendasProductos.productosCodigo "
                + "WHERE tiendasCodigo = ?";
        
@@ -73,7 +73,7 @@ public class ProductoDAO {
         Connection conexion = null;
         PreparedStatement getProd = null;
         ResultSet rs = null;
-        try {
+        try { 
             conexion = Conexion.getConnection();
             getProd = conexion.prepareStatement(query);
             getProd.setString(1, codigoTienda);
@@ -82,6 +82,7 @@ public class ProductoDAO {
             while(rs.next()) {
                 Producto tmp = new Producto(rs.getString("nombre"), rs.getString("fabricante"), rs.getString("codigo"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getInt("garantia"));
                 tmp.setStock(rs.getInt("stockProductos"));
+                tmp.setTiendasProductosId(rs.getInt("id"));
                 
                 productos.add(tmp);
             }
