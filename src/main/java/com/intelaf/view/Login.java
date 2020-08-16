@@ -180,10 +180,12 @@ public class Login extends javax.swing.JFrame {
         String codigoTienda = tiendasCombo.getSelectedItem().toString();
         
         if(!codigo.isEmpty()) {
-            System.out.println("codigo: " + codigo);
             this.control.iniciarSesion(codigo, empleado, codigoTienda);
         } else {
-            System.out.println("Ingresar codigo");
+            IntelafAlerta alert = new IntelafAlerta(this, true);
+            alert.setTitulo("Error");
+            alert.setMensaje("Debe ingresar su codigo o nit");
+            alert.setVisible(true);
         }
     }//GEN-LAST:event_iniciarButtonActionPerformed
 

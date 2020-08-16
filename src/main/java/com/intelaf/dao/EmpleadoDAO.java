@@ -5,8 +5,6 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Empleado;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

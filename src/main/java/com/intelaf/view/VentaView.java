@@ -20,6 +20,7 @@ public class VentaView extends javax.swing.JPanel {
     private List<Producto> productosCliente;
     private String[][] lista;
     private String[][] listaCliente;
+    private double total;
     
     /**
      * Creates new form VentaView
@@ -52,6 +53,7 @@ public class VentaView extends javax.swing.JPanel {
         editarButton = new javax.swing.JButton();
         procesarButton = new javax.swing.JButton();
         cancelarButton = new javax.swing.JButton();
+        totalLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(248, 147, 31));
         setMinimumSize(new java.awt.Dimension(800, 700));
@@ -221,6 +223,16 @@ public class VentaView extends javax.swing.JPanel {
             }
         });
 
+        totalLabel.setBackground(new java.awt.Color(248, 147, 31));
+        totalLabel.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        totalLabel.setForeground(new java.awt.Color(0, 0, 0));
+        totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        totalLabel.setText("Total: Q. ");
+        totalLabel.setMaximumSize(new java.awt.Dimension(225, 32));
+        totalLabel.setMinimumSize(new java.awt.Dimension(225, 32));
+        totalLabel.setPreferredSize(new java.awt.Dimension(225, 32));
+        totalLabel.setRequestFocusEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -236,14 +248,7 @@ public class VentaView extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(procesarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(productosTiendaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,7 +259,15 @@ public class VentaView extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(procesarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(42, 42, 42))))
         );
@@ -276,13 +289,14 @@ public class VentaView extends javax.swing.JPanel {
                 .addComponent(productosClienteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(procesarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -308,20 +322,26 @@ public class VentaView extends javax.swing.JPanel {
                 int count = 0;
                 try {
                     count = Integer.parseInt(cantidad);
+                    if(count > 0 && count <= productos.get(row).getStock()) {
+                        agregarProductoCliente(productos.get(row), count);
+                    } else {
+                        if(count == 0) {
+                            control.crearAlerta("Advertencia", "El valor ingresado no es valido", null);
+                        }else {
+                            control.crearAlerta("Advertencia", "No hay articulos suficientes para la venta", null);
+                        }
+                    }
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "El valor ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                if(count > 0 && count <= productos.get(row).getStock()) {
-                    //Agregar a lista productosCliente
-                    agregarProductoCliente(productos.get(row), count);
-                } else {
-                    System.out.println("No hay articulos suficientes para la venta");
+                    control.crearAlerta("Error", "El valor ingresado no es valido", null);
+                    cantidadText.setText("1");
                 }
             } else {
-                System.out.println("Ingrese la cantidad de articulos que desee");
+                control.crearAlerta("Error", "Ingrese la cantidad de articulos que desse", null);
+                //System.out.println("Ingrese la cantidad de articulos que desee");
             }
         } else {
-            System.out.println("Debe seleccionar algun producto para poder agregarlo al carrito");
+            control.crearAlerta("Error", "Debe seleccionar algun producto para poder agregarlo al carrito", null);
+            //System.out.println("Debe seleccionar algun producto para poder agregarlo al carrito");
         }
     }//GEN-LAST:event_carritoButtonActionPerformed
 
@@ -355,8 +375,7 @@ public class VentaView extends javax.swing.JPanel {
             setTableProductos();
             setTableCliente();
         } else {
-            System.out.println("Agregado");
-            System.out.println(producto.toString());
+            control.crearAlerta("Informacion", "El producto " + producto.getCodigoProductos() + "ya ha sido agregado", null);
         }
     }
     
@@ -364,6 +383,7 @@ public class VentaView extends javax.swing.JPanel {
      * Metodo para actualizar la tabla que muestra el carrito del cliente
      */
     private void setTableCliente() {
+        total = 0;
         listaCliente = new String[productosCliente.size()][6];
         
         for (int i = 0; i < productosCliente.size(); i++) {
@@ -371,9 +391,17 @@ public class VentaView extends javax.swing.JPanel {
             listaCliente[i][1] = productosCliente.get(i).getNombre();
             listaCliente[i][2] = productosCliente.get(i).getFabricante();
             listaCliente[i][3] = productosCliente.get(i).getStock()+ "";
+            
+            //Aproximar a dos decimales
+            double subTotal = obtenerDouble(productosCliente.get(i).getPrecio());
+            productosCliente.get(i).setPrecio(subTotal);
+            
             listaCliente[i][4] = "Q. " + productosCliente.get(i).getPrecio() + "";
             listaCliente[i][5] = "Q." + productosCliente.get(i).getSubTotal();
-        }  
+            total += productosCliente.get(i).getSubTotal();
+        }
+        total = obtenerDouble(total);
+        totalLabel.setText("Total: Q. " + total);
         
         productosClienteTable.setModel(new javax.swing.table.DefaultTableModel(
             listaCliente,
@@ -381,6 +409,10 @@ public class VentaView extends javax.swing.JPanel {
                 "Codigo", "Nombre", "Fabricante", "Cantidad", "Precio", "SubTotal"
             }
         ));
+    }
+    
+    private double obtenerDouble(Double subTotal) {
+        return Math.round(subTotal*100)/100D;
     }
     
     /**
@@ -427,7 +459,7 @@ public class VentaView extends javax.swing.JPanel {
             setTableProductos();
             setTableCliente();
         }else {
-            System.out.println("Debe seleccionar un articulo para poder eliminar");
+            control.crearAlerta("Error", "Debe seleccionar un producto para poder eliminarlo", null);
         }
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
@@ -445,7 +477,7 @@ public class VentaView extends javax.swing.JPanel {
             try {
                 count = Integer.parseInt(opcion);
             } catch(NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "El valor ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
+                control.crearAlerta("Error", "El valor ingresado no es valido", null);
             }
             if(count >= 0) {
                 int index = productos.indexOf(productosCliente.get(row));
@@ -468,22 +500,26 @@ public class VentaView extends javax.swing.JPanel {
                     setTableProductos();
                     
                 } else {
-                    JOptionPane.showMessageDialog(this, "No hay suficientes productos para procesar", "Error", JOptionPane.ERROR_MESSAGE);
+                    control.crearAlerta("Error", "No hay suficientes productos para procesasr", null);
+                    //JOptionPane.showMessageDialog(this, "No hay suficientes productos para procesar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "El valor ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
+                control.crearAlerta("Error", "El valor ingresado no es valido", null);
+                //JOptionPane.showMessageDialog(this, "El valor ingresado no es valido", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            System.out.println("Debe seleccionar un producto para poder editar");
+            control.crearAlerta("Alerta", "Debe seleccionar un producto para poder editar", null);
+            //System.out.println("Debe seleccionar un producto para poder editar");
         }
     }//GEN-LAST:event_editarButtonActionPerformed
 
     private void procesarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesarButtonActionPerformed
         // TODO add your handling code here:
         if(!productosCliente.isEmpty()) {
-            System.out.println("Productos size= " + productosCliente.size());
+            control.modalOperacionesCliente();
         }else {
-            System.out.println("Debe agregar productos para poder procesar la venta");
+            control.crearAlerta("Informacion", "Debe agregar productos al carrito para procesar la venta", null);
+            //System.out.println("Debe agregar productos para poder procesar la venta");
         }
     }//GEN-LAST:event_procesarButtonActionPerformed
 
@@ -560,5 +596,6 @@ public class VentaView extends javax.swing.JPanel {
     private javax.swing.JTable productosClienteTable;
     private javax.swing.JTable productosTable;
     private javax.swing.JLabel productosTiendaLabel;
+    private javax.swing.JLabel totalLabel;
     // End of variables declaration//GEN-END:variables
 }

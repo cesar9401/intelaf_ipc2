@@ -12,9 +12,11 @@ import java.util.*;
  */
 public class MainControl {
     
+    private java.sql.Date date;
     private List<Tienda> tiendas;
     private Login login;
     private MainView mainView;
+    private IntelafModal modal;    
     
     public MainControl() {
         iniciarComponentes();
@@ -51,13 +53,13 @@ public class MainControl {
                 mainView = new MainView();
                 mainView.initializeComponents(this, t, e);
                 login.setVisible(false);
-                login = null;
+                login.dispose();
                 mainView.setLocationRelativeTo(null);
                 mainView.setVisible(true);
                 
             } else {
                 //Enviar codigo incorrecto a ventana login
-                System.out.println("Codigo incorrecto");
+                crearAlerta("Error", "Codigo Incorrecto", login);
             }
         } else {
             System.out.println("Cliente " + codigo);
@@ -68,20 +70,63 @@ public class MainControl {
                 System.out.println(c.toString());
                 
             } else {
-                System.out.println("Nit incorrecto");
+                crearAlerta("Advertencia", "El nit ingresado es incorrecto", login);
             }
         }
+    }
+        
+    public void modalOperacionesCliente() {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.setLocationRelativeTo(null);
+        modal.setResizable(false);
+        modal.initOperationCliente();
+        modal.setVisible(true);
+    }
+    
+    /**
+     * Metodo para procesar una venta de productos
+     * @param cliente
+     * @param productos 
+     */
+    public void procesarVenta(Cliente cliente, List<Producto> productos) {
+        //Write your code here
+    }
+    
+    public void closeModal() {
+        modal.dispose();
+    }
+    
+    public void crearAlerta(String titulo, String mensaje, java.awt.Frame parent) {
+        IntelafAlerta alert = new IntelafAlerta((parent != null) ? parent : mainView, true);
+        alert.setTitulo(titulo);
+        alert.setMensaje(mensaje);
+        alert.setVisible(true);
     }
     
     public void cerrarSesion() {
         this.mainView.setVisible(false);
-        mainView = null;
+        mainView.dispose();
         showLogin();
+    }
+    
+    public Cliente getCliente(String nit) {
+        ClienteDAO operaciones = new ClienteDAO();
+        Cliente cliente = operaciones.getCliente(nit);
+        return cliente;
     }
     
     public List<Producto> getProductosTienda(String codigo) {
         ProductoDAO operaciones = new ProductoDAO();
         List<Producto> productos = operaciones.getListProductobyStore(codigo);
         return productos;
+    }
+
+    public java.sql.Date getDate() {
+        return date;
+    }
+
+    public void setDate(java.sql.Date date) {
+        this.date = date;
     }
 }

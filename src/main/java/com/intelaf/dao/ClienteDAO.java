@@ -27,7 +27,7 @@ public class ClienteDAO {
      * @throws java.sql.SQLException 
      */
     public void insertarCliente(Cliente cliente) throws SQLException {
-        String query = "INSERT INTO clientes(nit, nombre, telefono, creditoCompra) VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO clientes (nit, nombre, telefono, dpi, creditoCompra, email, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         Connection conexion = null;
         PreparedStatement setCliente = null;
@@ -38,7 +38,10 @@ public class ClienteDAO {
             setCliente.setString(1, cliente.getNit());
             setCliente.setString(2, cliente.getNombre());
             setCliente.setString(3, cliente.getTelefono());
-            setCliente.setDouble(4, cliente.getCreditoCompra());
+            setCliente.setString(4, cliente.getDpi());
+            setCliente.setDouble(5, cliente.getCreditoCompra());
+            setCliente.setString(6, cliente.getEmail());
+            setCliente.setString(7, cliente.getDireccion());
             
             setCliente.executeUpdate();
         } finally {
@@ -46,6 +49,18 @@ public class ClienteDAO {
             if(this.transaction == null) {
                 Conexion.close(conexion);
             }
+        }
+    }
+    
+    /**
+     * Se llama al metodo insertarCliente y se captura la excepcion con try catch
+     * @param cliente 
+     */
+    public void createCliente(Cliente cliente) {
+        try {
+            insertarCliente(cliente);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
         }
     }
     

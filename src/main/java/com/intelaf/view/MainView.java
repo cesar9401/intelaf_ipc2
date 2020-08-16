@@ -3,6 +3,9 @@ package com.intelaf.view;
 
 import com.intelaf.controller.MainControl;
 import com.intelaf.model.*;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
+import java.util.Date;
 
 /**
  *
@@ -10,6 +13,7 @@ import com.intelaf.model.*;
  */
 public class MainView extends javax.swing.JFrame {
 
+    private JDateChooser calendario;
     private MainControl control;
     private Tienda tienda;
     private Empleado empleado;
@@ -22,6 +26,7 @@ public class MainView extends javax.swing.JFrame {
      */
     public MainView() {
         initComponents();
+        initCalendar();
     }
 
     /**
@@ -38,6 +43,7 @@ public class MainView extends javax.swing.JFrame {
         salirButton = new javax.swing.JButton();
         ventasButton = new javax.swing.JButton();
         pedidosButton = new javax.swing.JButton();
+        setDateButton = new javax.swing.JButton();
         contenedorPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,9 +71,9 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        salirButton.setBackground(new java.awt.Color(255, 140, 0));
-        salirButton.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
-        salirButton.setForeground(new java.awt.Color(255, 255, 255));
+        salirButton.setBackground(new java.awt.Color(0, 0, 0));
+        salirButton.setFont(new java.awt.Font("sansserif", 1, 20)); // NOI18N
+        salirButton.setForeground(new java.awt.Color(255, 140, 0));
         salirButton.setText("Salir");
         salirButton.setAlignmentY(0.0F);
         salirButton.setBorder(null);
@@ -111,6 +117,21 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        setDateButton.setBackground(new java.awt.Color(0, 0, 0));
+        setDateButton.setFont(new java.awt.Font("sansserif", 1, 20)); // NOI18N
+        setDateButton.setForeground(new java.awt.Color(255, 140, 0));
+        setDateButton.setText("set Date");
+        setDateButton.setAlignmentY(0.0F);
+        setDateButton.setBorder(null);
+        setDateButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        setDateButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        setDateButton.setPreferredSize(new java.awt.Dimension(120, 40));
+        setDateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setDateButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
         navPanel.setLayout(navPanelLayout);
         navPanelLayout.setHorizontalGroup(
@@ -121,17 +142,20 @@ public class MainView extends javax.swing.JFrame {
                     .addComponent(inicioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ventasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pedidosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pedidosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(setDateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
         navPanelLayout.setVerticalGroup(
             navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navPanelLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(80, 80, 80)
+                .addComponent(setDateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(inicioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(ventasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(pedidosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,6 +185,18 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initCalendar() {
+        calendario = new JDateChooser(new Date());
+        calendario.setBackground(Color.ORANGE);
+        calendario.setForeground(Color.black);
+        calendario.setBounds(40, 40, 120, 30);
+        this.navPanel.add(this.calendario);
+    }
+    
+    public void setDateCalendar(Date date) {
+        this.calendario.setDate(date);
+    }
+    
     public void initializeComponents(MainControl control, Tienda tienda, Empleado empleado) {
         this.control = control;
         this.tienda = tienda;
@@ -202,12 +238,25 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pedidosButtonActionPerformed
 
+    private void setDateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setDateButtonActionPerformed
+        // TODO add your handling code here:
+        Date newDate = calendario.getDate();
+        if(newDate != null) {
+            java.sql.Date date = new java.sql.Date(newDate.getTime());
+            control.setDate(date);
+            control.crearAlerta("Informacion", "La fecha " + date + " ha sido agregada" , this);
+        } else {
+            control.crearAlerta("Advertencia", "Debe escoger una fecha", this);
+        }
+    }//GEN-LAST:event_setDateButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorPanel;
     private javax.swing.JButton inicioButton;
     private javax.swing.JPanel navPanel;
     private javax.swing.JButton pedidosButton;
     private javax.swing.JButton salirButton;
+    private javax.swing.JButton setDateButton;
     private javax.swing.JButton ventasButton;
     // End of variables declaration//GEN-END:variables
 }
