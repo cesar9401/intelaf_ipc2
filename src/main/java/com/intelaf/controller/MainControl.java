@@ -75,12 +75,12 @@ public class MainControl {
         }
     }
         
-    public void modalOperacionesCliente() {
+    public void modalOperacionesCliente(double total) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
         modal.setLocationRelativeTo(null);
         modal.setResizable(false);
-        modal.initOperationCliente();
+        modal.initOperationCliente(this, total);
         modal.setVisible(true);
     }
     

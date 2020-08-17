@@ -64,9 +64,9 @@ public class IntelafModal extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void initOperationCliente() {
+    public void initOperationCliente(MainControl control, double total) {
         CreateCliente operCliente = new CreateCliente();
-        operCliente.initializeControl(control);
+        operCliente.initializeControl(this.control, total);
         this.contenedor.setVisible(false);
         this.contenedor.removeAll();
         this.contenedor.add(operCliente);

@@ -516,7 +516,7 @@ public class VentaView extends javax.swing.JPanel {
     private void procesarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesarButtonActionPerformed
         // TODO add your handling code here:
         if(!productosCliente.isEmpty()) {
-            control.modalOperacionesCliente();
+            control.modalOperacionesCliente(total);
         }else {
             control.crearAlerta("Informacion", "Debe agregar productos al carrito para procesar la venta", null);
             //System.out.println("Debe agregar productos para poder procesar la venta");

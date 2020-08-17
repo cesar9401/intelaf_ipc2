@@ -12,16 +12,19 @@ public class CreateCliente extends javax.swing.JPanel {
 
     private MainControl control;
     private Cliente cliente;
+    private double total;
     
     /**
      * Creates new form createCliente
      */
     public CreateCliente() {
         initComponents();
+        descuentoText.setText("0");
     }
     
-    public void initializeControl(MainControl control) {
+    public void initializeControl(MainControl control, double total) {
         this.control = control;
+        this.total = total;
     }
         
     private void setDatos() {
@@ -31,7 +34,7 @@ public class CreateCliente extends javax.swing.JPanel {
             dpiText.setText((cliente.getDpi() != null) ? cliente.getDpi() : "");
             emailText.setText((cliente.getEmail() != null) ? cliente.getEmail() : "");
             direccionText.setText((cliente.getDireccion() != null) ? cliente.getDireccion() : "");
-            creditoText.setText("Q. " + cliente.getCreditoCompra());    
+            creditoText.setText("Q. " + cliente.getCreditoCompra());
         }else {
             nombreText.setText("");
             telefonoText.setText("");
@@ -40,7 +43,8 @@ public class CreateCliente extends javax.swing.JPanel {
             direccionText.setText("");
             creditoText.setText("Q. 0.00");
         }
-    }
+        descuentoText.setText("0");
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -373,27 +377,70 @@ public class CreateCliente extends javax.swing.JPanel {
         String dpi = dpiText.getText();
         String email = emailText.getText();
         String direccion = direccionText.getText();
-        String descuento = descuentoText.getText();
-        
+        String descString = descuentoText.getText();
         if(!nit.isEmpty() && !nombre.isEmpty() && !telefono.isEmpty()) {
-            if(cliente != null) {
-                cliente.setNombre(nombre);
-                cliente.setTelefono(telefono);
-                cliente.setDpi(dpi);
-                cliente.setEmail(email);
-                cliente.setDireccion(direccion);
+            double descuento = getDescuentoDouble(descString);
+            if(descuento >= 0) {
+                if(verificarCredito(descuento)) {
+                    if(descuento <= this.total) {
+                        boolean nuevo = false;
+                        if(cliente != null) {
+                            cliente.setNombre(nombre);
+                            cliente.setTelefono(telefono);
+                            cliente.setDpi(dpi);
+                            cliente.setEmail(email);
+                            cliente.setDireccion(direccion);
+                        } else {
+                            cliente = new Cliente(nombre, telefono, 0);
+                            cliente.setDpi(dpi);
+                            cliente.setEmail(email);
+                            cliente.setDireccion(direccion);
+                            nuevo = true;
+                        }
+                        //Enviar cliente y listado de productos
+                        System.out.println(cliente.toString());
+                        System.out.println("Nuevo: " + nuevo);
+                        System.out.println("Descuento: " + descuento);
+                        System.out.println("Total: " + total);
+                    } else {
+                        control.crearAlerta("Advertencia", "El descuento(Q. " + descuento + ") no puede ser mayor que el total(Q. " + this.total + ")", null);
+                    }
+                }else {
+                    control.crearAlerta("Error", "El cliente no cuenta con credito sufuciente para esta transacción", null);
+                }
             } else {
-                cliente = new Cliente(nombre, telefono, 0);
-                cliente.setDpi(dpi);
-                cliente.setEmail(email);
-                cliente.setDireccion(direccion);
+                control.crearAlerta("Error", "El valor ingresado para descuento no es valido", null);
+                descuentoText.setText("");
             }
-            System.out.println(cliente.toString());
         } else {
             control.crearAlerta("Error", "Debe llenar los campos nit, nombre y telefono", null);
         }
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
+    private boolean verificarCredito(double descuento) {
+        if(descuento == 0) {
+            return true;
+        }
+        
+        if(cliente == null && descuento > 0) {
+            return false;
+        }
+        
+        return cliente.getCreditoCompra() >= descuento;
+    }
+    
+    private double getDescuentoDouble(String descString) {
+        if(descString.isEmpty() || descString.isBlank()) {
+            return 0;
+        }
+        
+        try {
+            return Double.parseDouble(descString);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+    
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
         // TODO add your handling code here:
         control.closeModal();
@@ -407,6 +454,8 @@ public class CreateCliente extends javax.swing.JPanel {
             setDatos();
             if(this.cliente == null){
                 control.crearAlerta("Advertencia", "No hay coincidencias", null);
+            } else {
+                control.crearAlerta("Informacion", "El cliente: " + cliente.getNit() + " ha sido agregado", null);
             }
         } else {
             control.crearAlerta("Advertencia", "Debe llenar el campo nit", null);
@@ -445,8 +494,6 @@ public class CreateCliente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_descuentoTextKeyReleased
 
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarButton;
     private javax.swing.JButton buscarButton;
