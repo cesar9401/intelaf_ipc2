@@ -121,10 +121,11 @@ public class MainControl {
             }
             
             VentaDAO setV = new VentaDAO(conexion);
-            setV.insertarVenta(venta);
+            int id = setV.insertarVenta(venta);
             
             for(DetalleVenta d: detalles) {
-                setV.insertarDetalleVenta(venta, d);
+                d.setIdVentas(id);
+                setV.insertarDetalleVenta(d);
             }
             
             conexion.commit();

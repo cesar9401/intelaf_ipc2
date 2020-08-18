@@ -3,9 +3,7 @@ package com.intelaf.dao;
 
 import com.intelaf.conexion.Conexion;
 import com.intelaf.model.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  *
@@ -23,29 +21,36 @@ public class VentaDAO {
     }
     
     public int insertarVenta(Venta venta) throws SQLException {
-        int row = 0;
+        int id = 0;
         String query = "INSERT INTO ventas(clientesNit, fechaVenta, totalVenta, descuentoPorCredito) VALUES(?, ?, ?, ?)";
         
         Connection conexion = null;
         PreparedStatement setVenta = null;
+        ResultSet rs = null;
         try {
             conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
-            setVenta = conexion.prepareStatement(query);
-            //setVenta.setInt(1, venta.getPedidosId());
+            setVenta = conexion.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             setVenta.setString(1, venta.getNitCliente());
             setVenta.setDate(2, venta.getFechaVenta());
             setVenta.setDouble(3, venta.getTotalVenta());
             setVenta.setDouble(4, venta.getDescuentoCredito());
             
-            row = setVenta.executeUpdate();
+            setVenta.executeUpdate();
+            rs = setVenta.getGeneratedKeys();
+            if(rs.next()) {
+                id = rs.getInt(1);
+                System.out.println("id: " + id);
+            }
             
         } finally {
+            Conexion.close(rs);
             Conexion.close(setVenta);
             if(this.transaction == null) {
                 Conexion.close(conexion);
             }
         }
-        return row;
+        System.out.println("id: " + id);
+        return id;
     }
     
     public int setVenta(Venta venta) {
@@ -57,10 +62,8 @@ public class VentaDAO {
         return 0;
     }
     
-    public void insertarDetalleVenta(Venta venta, DetalleVenta detalle) throws SQLException {
-        String query = "INSERT INTO detallesVentas(ventasId, tiendasProductosId, cantidad, precioVenta, subTotal) VALUES("
-                + "(SELECT id FROM ventas WHERE clientesNit = ? AND fechaVenta = ? AND totalVenta = ? AND descuentoPorCredito = ? ORDER BY id DESC LIMIT 1)"
-                + ", ?, ?, ?, ?)";
+    public void insertarDetalleVenta(DetalleVenta detalle) throws SQLException {
+        String query = "INSERT INTO detallesVentas(ventasId, tiendasProductosId, cantidad, precioVenta, subTotal) VALUES(?, ?, ?, ?, ?)";
         
         String queryExistencias = "UPDATE tiendasProductos SET stockProductos = stockProductos - ? WHERE id = ?";
         
@@ -71,16 +74,12 @@ public class VentaDAO {
             conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
            
             setD = conexion.prepareStatement(query);
-            setD.setString(1, venta.getNitCliente());
-            setD.setDate(2, venta.getFechaVenta());
-            setD.setDouble(3, venta.getTotalVenta());
-            setD.setDouble(4, venta.getDescuentoCredito());
-            
-            setD.setInt(5, detalle.getTiendasProductosId());
-            setD.setInt(6, detalle.getCantidad());
-            setD.setDouble(7, detalle.getPrecioVenta());
-            setD.setDouble(8, detalle.getSubTotal());
-            
+
+            setD.setInt(1, detalle.getIdVentas());
+            setD.setInt(2, detalle.getTiendasProductosId());
+            setD.setInt(3, detalle.getCantidad());
+            setD.setDouble(4, detalle.getPrecioVenta());
+            setD.setDouble(5, detalle.getSubTotal());
             setD.executeUpdate();
             
             setE = conexion.prepareStatement(queryExistencias);
@@ -97,9 +96,9 @@ public class VentaDAO {
         }
     }
     
-    public void setDetalleVenta(Venta venta, DetalleVenta detalle) {
+    public void setDetalleVenta(DetalleVenta detalle) {
         try {
-            insertarDetalleVenta(venta, detalle);
+            insertarDetalleVenta(detalle);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         }
