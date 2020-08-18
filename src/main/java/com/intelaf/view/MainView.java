@@ -192,11 +192,7 @@ public class MainView extends javax.swing.JFrame {
         calendario.setBounds(40, 40, 120, 30);
         this.navPanel.add(this.calendario);
     }
-    
-    public void setDateCalendar(Date date) {
-        this.calendario.setDate(date);
-    }
-    
+        
     public void initializeComponents(MainControl control, Tienda tienda, Empleado empleado) {
         this.control = control;
         this.tienda = tienda;
@@ -223,7 +219,12 @@ public class MainView extends javax.swing.JFrame {
 
     private void ventasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ventasButtonActionPerformed
         // TODO add your handling code here:
+        actualizarVentas();
+    }//GEN-LAST:event_ventasButtonActionPerformed
+
+    public void actualizarVentas() {
         //Iniciarlizar ventas
+        venta = null;
         venta = new VentaView();
         
         //Agregar a los componentes
@@ -231,9 +232,9 @@ public class MainView extends javax.swing.JFrame {
         this.contenedorPanel.setVisible(false);
         venta.initializeComponents(control, tienda);
         this.contenedorPanel.add(venta);
-        this.contenedorPanel.setVisible(true);
-    }//GEN-LAST:event_ventasButtonActionPerformed
-
+        this.contenedorPanel.setVisible(true);        
+    }
+    
     private void pedidosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pedidosButtonActionPerformed

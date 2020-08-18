@@ -139,34 +139,45 @@ public class ClienteDAO {
     /**
      * Metodo para actualgetCizar la informacion de algun cliente, el nit no es actualizable
      * @param cliente
+     * @param credito
      * @return 
+     * @throws java.sql.SQLException 
      */
-    public int updateCliente(Cliente cliente) {
-        String query = "UPDATE clientes SET nombre = ?, telefono = ?, dpi = ?, creditoCompra = ?, email = ?, direccion = ? WHERE nit = ?";
+    public int updateCliente(Cliente cliente, double credito) throws SQLException {
+        String query = "UPDATE clientes SET nombre = ?, telefono = ?, dpi = ?, creditoCompra = creditoCompra + ?, email = ?, direccion = ? WHERE nit = ?";
         int row = 0;
 
         Connection conexion = null;
         PreparedStatement updateCl = null;
         
         try {
-            conexion = Conexion.getConnection();
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
             updateCl = conexion.prepareStatement(query);
             updateCl.setString(1, cliente.getNombre());
             updateCl.setString(2, cliente.getTelefono());
             updateCl.setString(3, cliente.getDpi());
-            updateCl.setDouble(4, cliente.getCreditoCompra());
+            updateCl.setDouble(4, credito);
             updateCl.setString(5, cliente.getEmail());
             updateCl.setString(6, cliente.getDireccion());
             updateCl.setString(7, cliente.getNit());
             
             row = updateCl.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(updateCl);
-            Conexion.close(conexion);
+            if(this.transaction == null) {
+                Conexion.close(conexion);
+            }
         }
         
         return row;
+    }
+    
+    public int updateClienteEx(Cliente cliente, double credito) {
+        try {
+            return updateCliente(cliente, credito);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
+        return 0;
     }
 }

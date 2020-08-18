@@ -5,7 +5,7 @@ package com.intelaf.model;
  *
  * @author cesar31
  */
-public class DetallesVentas {
+public class DetalleVenta {
     
     private int id;
     private int idVentas;
@@ -14,16 +14,16 @@ public class DetallesVentas {
     private double precioVenta;
     private double subTotal;
 
-    public DetallesVentas(int tiendasHasProductos, int cantidad, double precioVenta, double subTotal) {
-        this.tiendasProductosId = tiendasHasProductos;
+    public DetalleVenta(int tiendasProductosId, int cantidad, double precioVenta, double subTotal) {
+        this.tiendasProductosId = tiendasProductosId;
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.subTotal = subTotal;
     }
 
-    public DetallesVentas(int idVentas, int tiendasHasProductos, int cantidad, double precioVenta, double subTotal) {
+    public DetalleVenta(int idVentas, int tiendasProductosId, int cantidad, double precioVenta, double subTotal) {
         this.idVentas = idVentas;
-        this.tiendasProductosId = tiendasHasProductos;
+        this.tiendasProductosId = tiendasProductosId;
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.subTotal = subTotal;

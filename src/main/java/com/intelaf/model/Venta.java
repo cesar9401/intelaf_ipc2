@@ -7,26 +7,29 @@ import java.sql.Date;
  *
  * @author cesar31
  */
-public class Ventas {
+public class Venta {
     
     private int id;
     private int pedidosId;
     private String nitCliente;
     private java.sql.Date fechaVenta;
+    private double totalVenta;
     private double descuentoCredito;
 
-    public Ventas(int pedidosId, String nitCliente, Date fechaVenta, double descuentoCredito) {
+    public Venta(int pedidosId, String nitCliente, Date fechaVenta, double totalVenta, double descuentoCredito) {
         this.pedidosId = pedidosId;
         this.nitCliente = nitCliente;
         this.fechaVenta = fechaVenta;
+        this.totalVenta = totalVenta;
         this.descuentoCredito = descuentoCredito;
     }
 
-    public Ventas(int id, int pedidosId, String nitCliente, Date fechaVenta, double descuentoCredito) {
+    public Venta(int id, int pedidosId, String nitCliente, Date fechaVenta, double totalVenta, double descuentoCredito) {
         this.id = id;
         this.pedidosId = pedidosId;
         this.nitCliente = nitCliente;
         this.fechaVenta = fechaVenta;
+        this.totalVenta = totalVenta;
         this.descuentoCredito = descuentoCredito;
     }
 
@@ -62,6 +65,14 @@ public class Ventas {
         this.fechaVenta = fechaVenta;
     }
 
+    public double getTotalVenta() {
+        return totalVenta;
+    }
+
+    public void setTotalVenta(double totalVenta) {
+        this.totalVenta = totalVenta;
+    }
+
     public double getDescuentoCredito() {
         return descuentoCredito;
     }
@@ -72,6 +83,6 @@ public class Ventas {
 
     @Override
     public String toString() {
-        return "Ventas{" + "id=" + id + ", pedidosId=" + pedidosId + ", nitCliente=" + nitCliente + ", fechaVenta=" + fechaVenta + ", descuentoCredito=" + descuentoCredito + '}';
+        return "Venta{" + "id=" + id + ", pedidosId=" + pedidosId + ", nitCliente=" + nitCliente + ", fechaVenta=" + fechaVenta + ", totalVenta=" + totalVenta + ", descuentoCredito=" + descuentoCredito + '}';
     }
 }

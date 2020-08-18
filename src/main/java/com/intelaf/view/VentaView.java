@@ -393,11 +393,14 @@ public class VentaView extends javax.swing.JPanel {
             listaCliente[i][3] = productosCliente.get(i).getStock()+ "";
             
             //Aproximar a dos decimales
-            double subTotal = obtenerDouble(productosCliente.get(i).getPrecio());
-            productosCliente.get(i).setPrecio(subTotal);
-            
+            double precio = obtenerDouble(productosCliente.get(i).getPrecio());
+            productosCliente.get(i).setPrecio(precio);
             listaCliente[i][4] = "Q. " + productosCliente.get(i).getPrecio() + "";
+            
+            double subTotal = obtenerDouble(productosCliente.get(i).getSubTotal());
+            productosCliente.get(i).setSubTotal(subTotal);
             listaCliente[i][5] = "Q." + productosCliente.get(i).getSubTotal();
+            
             total += productosCliente.get(i).getSubTotal();
         }
         total = obtenerDouble(total);
@@ -516,7 +519,7 @@ public class VentaView extends javax.swing.JPanel {
     private void procesarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesarButtonActionPerformed
         // TODO add your handling code here:
         if(!productosCliente.isEmpty()) {
-            control.modalOperacionesCliente(total);
+            control.modalOperacionesCliente(productosCliente, total);
         }else {
             control.crearAlerta("Informacion", "Debe agregar productos al carrito para procesar la venta", null);
             //System.out.println("Debe agregar productos para poder procesar la venta");
@@ -538,7 +541,7 @@ public class VentaView extends javax.swing.JPanel {
         setTableCliente();
         setTableProductos();
     }//GEN-LAST:event_cancelarButtonActionPerformed
-
+    
     /**
      * Metodo para inicializar componentes necesarios para mostrar informacion de la tienda
      * @param control

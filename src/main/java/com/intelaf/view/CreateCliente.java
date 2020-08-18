@@ -3,6 +3,8 @@ package com.intelaf.view;
 
 import com.intelaf.controller.MainControl;
 import com.intelaf.model.Cliente;
+import com.intelaf.model.Producto;
+import java.util.List;
 
 /**
  *
@@ -12,6 +14,7 @@ public class CreateCliente extends javax.swing.JPanel {
 
     private MainControl control;
     private Cliente cliente;
+    private List<Producto> productosCliente;
     private double total;
     
     /**
@@ -22,8 +25,9 @@ public class CreateCliente extends javax.swing.JPanel {
         descuentoText.setText("0");
     }
     
-    public void initializeControl(MainControl control, double total) {
+    public void initializeControl(MainControl control, List<Producto> productosCliente, double total) {
         this.control = control;
+        this.productosCliente = productosCliente;
         this.total = total;
     }
         
@@ -392,16 +396,15 @@ public class CreateCliente extends javax.swing.JPanel {
                             cliente.setDireccion(direccion);
                         } else {
                             cliente = new Cliente(nombre, telefono, 0);
+                            cliente.setNit(nit);
                             cliente.setDpi(dpi);
                             cliente.setEmail(email);
                             cliente.setDireccion(direccion);
                             nuevo = true;
                         }
                         //Enviar cliente y listado de productos
-                        System.out.println(cliente.toString());
-                        System.out.println("Nuevo: " + nuevo);
-                        System.out.println("Descuento: " + descuento);
-                        System.out.println("Total: " + total);
+                        control.procesarVenta(cliente, nuevo, descuento, total, productosCliente);
+                        
                     } else {
                         control.crearAlerta("Advertencia", "El descuento(Q. " + descuento + ") no puede ser mayor que el total(Q. " + this.total + ")", null);
                     }

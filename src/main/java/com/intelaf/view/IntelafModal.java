@@ -6,6 +6,8 @@
 package com.intelaf.view;
 
 import com.intelaf.controller.MainControl;
+import com.intelaf.model.Producto;
+import java.util.List;
 
 /**
  *
@@ -64,9 +66,9 @@ public class IntelafModal extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void initOperationCliente(MainControl control, double total) {
+    public void initOperationCliente(MainControl control, List<Producto> productosCliente, double total) {
         CreateCliente operCliente = new CreateCliente();
-        operCliente.initializeControl(this.control, total);
+        operCliente.initializeControl(this.control, productosCliente, total);
         this.contenedor.setVisible(false);
         this.contenedor.removeAll();
         this.contenedor.add(operCliente);

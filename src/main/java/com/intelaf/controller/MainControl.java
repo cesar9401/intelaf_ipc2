@@ -1,10 +1,15 @@
 
 package com.intelaf.controller;
 
+import com.intelaf.conexion.Conexion;
 import com.intelaf.dao.*;
 import com.intelaf.model.*;
 import com.intelaf.view.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -75,22 +80,69 @@ public class MainControl {
         }
     }
         
-    public void modalOperacionesCliente(double total) {
+    public void modalOperacionesCliente(List<Producto> productosCliente, double total) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
         modal.setLocationRelativeTo(null);
         modal.setResizable(false);
-        modal.initOperationCliente(this, total);
+        modal.initOperationCliente(this, productosCliente ,total);
         modal.setVisible(true);
     }
     
     /**
      * Metodo para procesar una venta de productos
      * @param cliente
+     * @param nuevo
+     * @param descuento
      * @param productos 
+     * @param total 
      */
-    public void procesarVenta(Cliente cliente, List<Producto> productos) {
+    public void procesarVenta(Cliente cliente, boolean nuevo, double descuento, double total, List<Producto> productos) {
         //Write your code here
+        Venta venta = new Venta(0, cliente.getNit(), this.date, total, descuento);
+        List<DetalleVenta> detalles = new ArrayList<>();
+        
+        productos.forEach((p) -> {
+            detalles.add(new DetalleVenta(p.getTiendasProductosId(), p.getStock(), p.getPrecio(), p.getSubTotal()));
+        });
+        
+        double credito = descuento * -1;
+        setNewVenta(cliente, credito, venta, detalles, nuevo);
+    }
+    
+    private void setNewVenta(Cliente cliente, double credito, Venta venta, List<DetalleVenta> detalles, boolean nuevo) {
+        Connection conexion = null;
+        try {
+            conexion = Conexion.getConnection();
+            conexion.setAutoCommit(false);
+            ClienteDAO setC = new ClienteDAO(conexion);
+            if(nuevo) {
+                setC.insertarCliente(cliente);
+            }else {
+                setC.updateCliente(cliente, credito);
+            }
+            
+            VentaDAO setV = new VentaDAO(conexion);
+            setV.insertarVenta(venta);
+            
+            for(DetalleVenta d: detalles) {
+                setV.insertarDetalleVenta(venta, d);
+            }
+            
+            conexion.commit();
+            //Venta Procesada
+            this.closeModal();
+            this.crearAlerta("Informacion", "La venta ha sido procesada por un total de Q." + venta.getTotalVenta() , mainView);
+            mainView.actualizarVentas();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            try {
+                conexion.rollback();
+            } catch (SQLException ex1) {
+                ex1.printStackTrace(System.out);
+            }
+        }
     }
     
     public void closeModal() {
