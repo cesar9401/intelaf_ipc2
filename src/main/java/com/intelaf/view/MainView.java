@@ -20,6 +20,8 @@ public class MainView extends javax.swing.JFrame {
     
     private MainPanel mainPanel;
     private VentaView venta;
+    private UsuarioView usuario;
+    private TiendaView tiendaView;
     
     /**
      * Creates new form MainView
@@ -44,6 +46,10 @@ public class MainView extends javax.swing.JFrame {
         ventasButton = new javax.swing.JButton();
         pedidosButton = new javax.swing.JButton();
         setDateButton = new javax.swing.JButton();
+        usuariosButton = new javax.swing.JButton();
+        tiendasButton = new javax.swing.JButton();
+        productosButton = new javax.swing.JButton();
+        reportesButton = new javax.swing.JButton();
         contenedorPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -132,6 +138,67 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        usuariosButton.setBackground(new java.awt.Color(255, 140, 0));
+        usuariosButton.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        usuariosButton.setForeground(new java.awt.Color(255, 255, 255));
+        usuariosButton.setText("Usuarios");
+        usuariosButton.setAlignmentY(0.0F);
+        usuariosButton.setBorder(null);
+        usuariosButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        usuariosButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        usuariosButton.setPreferredSize(new java.awt.Dimension(120, 40));
+        usuariosButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuariosButtonActionPerformed(evt);
+            }
+        });
+
+        tiendasButton.setBackground(new java.awt.Color(255, 140, 0));
+        tiendasButton.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        tiendasButton.setForeground(new java.awt.Color(255, 255, 255));
+        tiendasButton.setText("Tiendas");
+        tiendasButton.setAlignmentY(0.0F);
+        tiendasButton.setBorder(null);
+        tiendasButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        tiendasButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        tiendasButton.setPreferredSize(new java.awt.Dimension(120, 40));
+        tiendasButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tiendasButtonActionPerformed(evt);
+            }
+        });
+
+        productosButton.setBackground(new java.awt.Color(255, 140, 0));
+        productosButton.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        productosButton.setForeground(new java.awt.Color(255, 255, 255));
+        productosButton.setText("Productos");
+        productosButton.setAlignmentY(0.0F);
+        productosButton.setBorder(null);
+        productosButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        productosButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        productosButton.setPreferredSize(new java.awt.Dimension(120, 40));
+        productosButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productosButtonActionPerformed(evt);
+            }
+        });
+
+        reportesButton.setBackground(new java.awt.Color(0, 0, 0));
+        reportesButton.setFont(new java.awt.Font("sansserif", 1, 20)); // NOI18N
+        reportesButton.setForeground(new java.awt.Color(255, 140, 0));
+        reportesButton.setText("Reportes");
+        reportesButton.setAlignmentY(0.0F);
+        reportesButton.setBorder(null);
+        reportesButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        reportesButton.setMaximumSize(new java.awt.Dimension(120, 40));
+        reportesButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        reportesButton.setPreferredSize(new java.awt.Dimension(120, 40));
+        reportesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportesButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
         navPanel.setLayout(navPanelLayout);
         navPanelLayout.setHorizontalGroup(
@@ -143,7 +210,11 @@ public class MainView extends javax.swing.JFrame {
                     .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ventasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pedidosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(setDateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(setDateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usuariosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tiendasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reportesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
         navPanelLayout.setVerticalGroup(
@@ -157,9 +228,17 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(ventasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(pedidosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(usuariosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(tiendasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(productosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(reportesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(35, 35, 35))
         );
 
         contenedorPanel.setBackground(new java.awt.Color(235, 235, 235));
@@ -251,13 +330,59 @@ public class MainView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_setDateButtonActionPerformed
 
+    private void usuariosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariosButtonActionPerformed
+        // TODO add your handling code here:
+        actualizarUsuarios();
+    }//GEN-LAST:event_usuariosButtonActionPerformed
+
+    public void actualizarUsuarios() {
+        usuario = null;
+        usuario = new UsuarioView();
+        
+        //Agregar al panel contenedor
+        this.contenedorPanel.removeAll();
+        this.contenedorPanel.setVisible(false);
+        usuario.initializeComponents(control);
+        this.contenedorPanel.add(usuario);
+        this.contenedorPanel.setVisible(true);
+    }
+    
+    private void tiendasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiendasButtonActionPerformed
+        // TODO add your handling code here:
+        actualizarTiendas();
+    }//GEN-LAST:event_tiendasButtonActionPerformed
+
+    public void actualizarTiendas() {
+        tiendaView = null;
+        tiendaView = new TiendaView();
+        
+        //Agregar al contenedor
+        this.contenedorPanel.removeAll();
+        this.contenedorPanel.setVisible(false);
+        tiendaView.initializeComponents(control);
+        this.contenedorPanel.add(tiendaView);
+        this.contenedorPanel.setVisible(true);
+    }
+    
+    private void productosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productosButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productosButtonActionPerformed
+
+    private void reportesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportesButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorPanel;
     private javax.swing.JButton inicioButton;
     private javax.swing.JPanel navPanel;
     private javax.swing.JButton pedidosButton;
+    private javax.swing.JButton productosButton;
+    private javax.swing.JButton reportesButton;
     private javax.swing.JButton salirButton;
     private javax.swing.JButton setDateButton;
+    private javax.swing.JButton tiendasButton;
+    private javax.swing.JButton usuariosButton;
     private javax.swing.JButton ventasButton;
     // End of variables declaration//GEN-END:variables
 }

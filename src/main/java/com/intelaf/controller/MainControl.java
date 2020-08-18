@@ -8,8 +8,6 @@ import com.intelaf.view.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -160,6 +158,21 @@ public class MainControl {
         this.mainView.setVisible(false);
         mainView.dispose();
         showLogin();
+    }
+    
+    public List<Empleado> getEmpleados() {
+        EmpleadoDAO operE = new EmpleadoDAO();
+        return operE.getListEmpleado();
+    }
+    
+    public List<Cliente> getClientes() {
+        ClienteDAO operC = new ClienteDAO();
+        return operC.getListCliente();
+    }
+    
+    public List<Tienda> getTiendas() {
+        TiendaDAO operT = new TiendaDAO();
+        return operT.getTiendas();
     }
     
     public Cliente getCliente(String nit) {
