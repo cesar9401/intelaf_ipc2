@@ -27,32 +27,19 @@ public class TiendasForModal extends javax.swing.JPanel {
     
     public void initializeTienda(Tienda tienda) {
         this.tienda = tienda;
-        setEditar();
-    }
-        
-    private void setEditar() {
         isEdit = true;
         codigoText.setEditable(false);
-        setDatos();
+        setDatos();        
     }
-        
+
     private void setDatos() {
-        if(tienda != null) {
-//            codigoText.setText(isEmpleado ? codigo : persona.getNit());
-//            nombreText.setText(persona.getNombre());
-//            telefono1Text.setText(persona.getTelefono());
-//            telefono2Text.setText((persona.getDpi() != null) ? persona.getDpi() : "");
-//            emailText.setText((persona.getEmail() != null) ? persona.getEmail() : "");
-//            direccionText.setText((persona.getDireccion() != null) ? persona.getDireccion() : "");
-//            creditoText.setText(isEmpleado ? persona.getNit() : "Q. " + credito);
-        }else {
-//            nombreText.setText("");
-//            telefono1Text.setText("");
-//            telefono2Text.setText("");
-//            emailText.setText("");
-//            direccionText.setText("");
-//            creditoText.setText(isEmpleado ? "" : "Q. 0.00");
-        }
+        codigoText.setText(tienda.getCodigo());
+        nombreText.setText(tienda.getNombre());
+        telefono1Text.setText(tienda.getTelefono1());
+        direccionText.setText(tienda.getDireccion());
+        telefono2Text.setText(tienda.getTelefono2() == null ? "" : tienda.getTelefono2());
+        emailText.setText(tienda.getEmail() == null ? "" : tienda.getEmail());
+        horarioText.setText(tienda.getHorario() == null ? "" : tienda.getHorario());
     }
 
     /**
@@ -342,16 +329,27 @@ public class TiendasForModal extends javax.swing.JPanel {
         String horario = horarioText.getText();
         
         if(!nombre.isEmpty() && !direccion.isEmpty() && !codigo.isEmpty() && !telefono1.isEmpty()) {
-            if(tienda == null) {
-                Tienda tmp = new Tienda(nombre, direccion, codigo, telefono1);
-                tmp.setTelefono2(telefono2.isEmpty() ? null : telefono2);
-                tmp.setEmail(email.isEmpty() ? null : email);
-                tmp.setHorario(horario.isEmpty() ? null : horario);
+            if(isEdit) {
+                tienda.setNombre(nombre);
+                tienda.setDireccion(direccion);
+                tienda.setTelefono1(telefono1);
+                tienda.setTelefono2(telefono2.isEmpty() ? null : telefono2);
+                tienda.setEmail(email.isEmpty() ? null : email);
+                tienda.setHorario(horario.isEmpty() ? null : horario);
                 
-                System.out.println(tmp.toString());
+                control.setUpdateTienda(tienda);
             } else {
-                control.crearAlerta("Error", "Ya existe una tienda con ese codigo", null);
-                codigoText.setText("");
+                if(tienda == null) {
+                    Tienda tmp = new Tienda(nombre, direccion, codigo, telefono1);
+                    tmp.setTelefono2(telefono2.isEmpty() ? null : telefono2);
+                    tmp.setEmail(email.isEmpty() ? null : email);
+                    tmp.setHorario(horario.isEmpty() ? null : horario);
+
+                    control.setTienda(tmp);
+                } else {
+                    control.crearAlerta("Error", "Ya existe una tienda con ese codigo", null);
+                    codigoText.setText("");
+                }
             }
         } else {
             control.crearAlerta("Error", "Debe de llenar todos los campos obligatorios(*)", null);

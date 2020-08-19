@@ -177,7 +177,7 @@ public class TiendaView extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = tiendasTable.getSelectedRow();
         if(row != -1) {
-            System.out.println(tiendas.get(row).toString());
+            control.modalOperacionesTienda(tiendas.get(row));
         } else {
             control.crearAlerta("Alerta", "Debe seleccionar una tienda para poder editarla", null);
         }

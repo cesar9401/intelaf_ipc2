@@ -58,7 +58,9 @@ public class MainControl {
                 login.dispose();
                 mainView.setLocationRelativeTo(null);
                 mainView.setVisible(true);
-                setInitialDate();
+                if(this.date == null) {
+                    setInitialDate();
+                 }
                 
             } else {
                 //Enviar codigo incorrecto a ventana login
@@ -105,6 +107,10 @@ public class MainControl {
         modal.initOperationTienda(tienda);
         modal.setVisible(true);
     }
+    
+    public void closeModal() {
+        modal.dispose();
+    }    
     
     /**
      * Metodo para procesar una venta de productos
@@ -163,10 +169,6 @@ public class MainControl {
         }
     }
     
-    public void closeModal() {
-        modal.dispose();
-    }
-    
     public void setEmpleado(Empleado empleado) {
         EmpleadoDAO operE = new EmpleadoDAO();
         int row = operE.createEmpleado(empleado);
@@ -177,6 +179,31 @@ public class MainControl {
         ClienteDAO operC = new ClienteDAO();
         int row = operC.createCliente(cliente);
         updateViewUsuarios(row, "Se ha ingresado correctamente al cliente: " + cliente.getNit());
+    }
+    
+    public void setTienda(Tienda tienda) {
+        Connection conexion = null;
+        try {
+            conexion = Conexion.getConnection();
+            conexion.setAutoCommit(false);
+            TiendaDAO operT = new TiendaDAO();
+            operT.insertarTienda(tienda);
+            operT.insertarDestino(tienda);
+            conexion.commit();
+            
+            this.closeModal();
+            this.crearAlerta("Informacion", "Se ha agregado exitosamente a la tienda: " + tienda.getCodigo(), mainView);
+            mainView.actualizarTiendas();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            try {
+                conexion.rollback();
+            } catch (SQLException ex1) {
+                ex1.printStackTrace(System.out);
+            }
+        } finally {
+            Conexion.close(conexion);
+        }
     }
     
     public void setUpdateEmpleado(Empleado empleado) {
@@ -191,15 +218,30 @@ public class MainControl {
         updateViewUsuarios(row, "Se actualizo al cliente: " + cliente.getNit());
     }
     
+    
     private void updateViewUsuarios(int row, String message) {
         if(row > 0) {
             this.closeModal();
-            this.crearAlerta("Informacion", message, null);
+            this.crearAlerta("Informacion", message, mainView);
             mainView.actualizarUsuarios();
         }else {
             this.closeModal();
-            this.crearAlerta("Error", "Error con el sistema, intente mas tarde", null);
+            this.crearAlerta("Error", "Error con el sistema, intente mas tarde", mainView);
         }          
+    }
+    
+    public void setUpdateTienda(Tienda tienda) {
+        TiendaDAO operT = new TiendaDAO();
+        int row = operT.updateTienda(tienda);
+        
+        if(row > 0) {
+            this.closeModal();
+            this.crearAlerta("Informacion", "Se ha actualizado correctamente la informacion de tienda: " + tienda.getCodigo(), mainView);
+            mainView.actualizarTiendas();
+        }else {
+            this.closeModal();
+            this.crearAlerta("Error", "Error en el sistema, intente mas tarde", mainView);
+        }
     }
     
     public void crearAlerta(String titulo, String mensaje, java.awt.Frame parent) {

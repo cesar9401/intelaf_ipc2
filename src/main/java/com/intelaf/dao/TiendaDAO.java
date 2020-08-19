@@ -27,7 +27,7 @@ public class TiendaDAO {
      * @throws SQLException 
      */
     public void insertarTienda(Tienda tienda) throws SQLException {
-        String query = "INSERT INTO tiendas(codigo, nombre, direccion, telefono1) VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO tiendas(codigo, nombre, direccion, telefono1, telefono2, email, horario) VALUES(?, ?, ?, ?, ?, ?, ?)";
         
         Connection conexion = null;
         PreparedStatement setTienda = null;
@@ -38,6 +38,9 @@ public class TiendaDAO {
             setTienda.setString(2, tienda.getNombre());
             setTienda.setString(3, tienda.getDireccion());
             setTienda.setString(4, tienda.getTelefono1());
+            setTienda.setString(5, tienda.getTelefono2());
+            setTienda.setString(6, tienda.getEmail());
+            setTienda.setString(7, tienda.getHorario());
             
             setTienda.executeUpdate();
         } finally {
