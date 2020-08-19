@@ -185,6 +185,7 @@ public class TiendaView extends javax.swing.JPanel {
 
     private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
         // TODO add your handling code here:
+        control.modalOperacionesTienda(null);
     }//GEN-LAST:event_agregarButtonActionPerformed
 
     private void editarTiemposLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarTiemposLabelActionPerformed

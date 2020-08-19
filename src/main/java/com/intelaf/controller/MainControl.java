@@ -5,8 +5,7 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.dao.*;
 import com.intelaf.model.*;
 import com.intelaf.view.*;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 /**
@@ -97,6 +96,13 @@ public class MainControl {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
         modal.initOperationUsuario(isEmpleado, empleado, cliente);
+        modal.setVisible(true);
+    }
+    
+    public void modalOperacionesTienda(Tienda tienda) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationTienda(tienda);
         modal.setVisible(true);
     }
     
@@ -237,6 +243,11 @@ public class MainControl {
     public List<Producto> getProductosTienda(String codigo) {
         ProductoDAO operaciones = new ProductoDAO();
         return operaciones.getListProductobyStore(codigo);
+    }
+    
+    public Tienda getTienda(String codigo) {
+        TiendaDAO operT = new TiendaDAO();
+        return operT.getTienda(codigo);
     }
 
     public java.sql.Date getDate() {

@@ -90,6 +90,19 @@ public class IntelafModal extends javax.swing.JDialog {
         this.contenedor.setVisible(true);
     }
     
+    public void initOperationTienda(Tienda tienda) {
+        TiendasForModal operT = new TiendasForModal();
+        operT.initializeControl(this.control);
+        if(tienda != null) {
+            operT.initializeTienda(tienda);
+        }
+        
+        this.contenedor.setVisible(false);
+        this.contenedor.removeAll();
+        this.contenedor.add(operT);
+        this.contenedor.setVisible(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedor;
     // End of variables declaration//GEN-END:variables
