@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.intelaf.view;
 
 import com.intelaf.controller.MainControl;
-import com.intelaf.model.Producto;
+import com.intelaf.model.*;
 import java.util.List;
 
 /**
@@ -77,9 +73,17 @@ public class IntelafModal extends javax.swing.JDialog {
         this.contenedor.setVisible(true);
     }
     
-    public void initOperationUsuario(boolean isEmpleado) {
+    public void initOperationUsuario(boolean isEmpleado, Empleado empleado, Cliente cliente) {
         UsuarioForModal operUsuario = new UsuarioForModal();
         operUsuario.initializeControl(this.control, isEmpleado);
+        if(empleado != null) {
+            operUsuario.initializeEmpleado(empleado);
+        }
+        
+        if(cliente != null) {
+            operUsuario.initializeCliente(cliente);
+        }
+        
         this.contenedor.setVisible(false);
         this.contenedor.removeAll();
         this.contenedor.add(operUsuario);

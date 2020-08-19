@@ -221,7 +221,7 @@ public class TiendaView extends javax.swing.JPanel {
             listTiendas[i][4] = tiendas.get(i).getEmail();
             listTiendas[i][5] = tiendas.get(i).getHorario();
         }
-        
+        tiendasTable.setPreferredSize(new java.awt.Dimension(700, 36*tiendas.size()));
         tiendasTable.setModel(new javax.swing.table.DefaultTableModel(
             listTiendas,
             new String [] {

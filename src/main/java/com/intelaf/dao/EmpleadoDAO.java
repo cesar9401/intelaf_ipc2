@@ -142,7 +142,7 @@ public class EmpleadoDAO {
      */
     public int updateEmpleado(Empleado empleado) {
         int row = 0;
-        String query = "UPDATE empleados SET nombres = ?, telefono = ?, nit = ?, email = ?, direccion = ? WHERE codigo = ?";
+        String query = "UPDATE empleados SET nombres = ?, telefono = ?, nit = ?, dpi = ?, email = ?, direccion = ? WHERE codigo = ?";
         
         Connection conexion = null;
         PreparedStatement updateEmp = null;
@@ -152,9 +152,10 @@ public class EmpleadoDAO {
             updateEmp.setString(1, empleado.getNombre());
             updateEmp.setString(2, empleado.getTelefono());
             updateEmp.setString(3, empleado.getNit());
-            updateEmp.setString(4, empleado.getEmail());
-            updateEmp.setString(5, empleado.getDireccion());
-            updateEmp.setString(6, empleado.getCodigo());
+            updateEmp.setString(4, empleado.getDpi());
+            updateEmp.setString(5, empleado.getEmail());
+            updateEmp.setString(6, empleado.getDireccion());
+            updateEmp.setString(7, empleado.getCodigo());
             
             row = updateEmp.executeUpdate();
         } catch (SQLException ex) {
@@ -163,7 +164,6 @@ public class EmpleadoDAO {
             Conexion.close(updateEmp);
             Conexion.close(conexion);
         }
-        
         return row;
     }
 }

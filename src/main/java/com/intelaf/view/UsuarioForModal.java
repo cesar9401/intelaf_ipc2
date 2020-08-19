@@ -12,6 +12,7 @@ public class UsuarioForModal extends javax.swing.JPanel {
 
     private MainControl control;
     private boolean isEmpleado;
+    private boolean isEdit;
     private Empleado empleado;
     private Cliente cliente;
     
@@ -26,10 +27,10 @@ public class UsuarioForModal extends javax.swing.JPanel {
         this.control = control;
         this.isEmpleado = isEmpleado;
         setComponents();
-
     }
     
     private void setComponents() {
+        isEdit = false;
         if(isEmpleado) {
             informacionLabel.setText("Informacion del Empleado");
             codigoLabel.setText("Codigo*");
@@ -46,10 +47,18 @@ public class UsuarioForModal extends javax.swing.JPanel {
     
     public void initializeEmpleado(Empleado empleado) {
         this.empleado = empleado;
+        setEditar();
     }
     
     public void initializeCliente(Cliente cliente) {
         this.cliente = cliente;
+        setEditar();
+    }
+    
+    private void setEditar() {
+        isEdit = true;
+        codigoText.setEditable(false);
+        setDatos();
     }
         
     private void setDatos() {
@@ -69,6 +78,7 @@ public class UsuarioForModal extends javax.swing.JPanel {
         }
         
         if(persona != null) {
+            codigoText.setText(isEmpleado ? codigo : persona.getNit());
             nombreText.setText(persona.getNombre());
             telefonoText.setText(persona.getTelefono());
             dpiText.setText((persona.getDpi() != null) ? persona.getDpi() : "");
@@ -367,39 +377,60 @@ public class UsuarioForModal extends javax.swing.JPanel {
         
         if(isEmpleado) {
             if(!id.isEmpty() && !nombre.isEmpty() && !telefono.isEmpty() && !dpi.isEmpty() && !email.isEmpty() && !direccion.isEmpty()) {
-                if(empleado == null) {
-                    //Code for new user
-                    Empleado tmp =new Empleado(nombre, id, telefono, dpi);
-                    tmp.setEmail(email);
-                    tmp.setDireccion(direccion);
-                    tmp.setNit(!nitOrCredito.isEmpty() ? nitOrCredito : null);
+                if(isEdit) {
+                    empleado.setNombre(nombre);
+                    empleado.setTelefono(telefono);
+                    empleado.setDpi(dpi);
+                    empleado.setEmail(email);
+                    empleado.setDireccion(direccion);
                     
-                    control.setEmpleado(tmp);
+                    empleado.setNit(!nitOrCredito.isEmpty() ? nitOrCredito : null);
+                    
+                    control.setUpdateEmpleado(empleado);
                 } else {
-                    control.crearAlerta("Error", "Ya existe un empleado con ese codigo", null);
+                    if(empleado == null) {
+                        //Code for new user
+                        Empleado tmp =new Empleado(nombre, id, telefono, dpi);
+                        tmp.setEmail(email);
+                        tmp.setDireccion(direccion);
+                        tmp.setNit(!nitOrCredito.isEmpty() ? nitOrCredito : null);
+
+                        control.setEmpleado(tmp);
+                    } else {
+                        control.crearAlerta("Error", "Ya existe un empleado con ese codigo", null);
+                    }
                 }
             } else {
                 control.crearAlerta("Error", "Debe de llenar todos los campos obligatorios(*)", null);
             }
         } else {
             if(!id.isEmpty() && !nombre.isEmpty() && !telefono.isEmpty()) {
-                if(cliente == null) {
-                    //Code for new client
-                    Cliente tmp = new Cliente(nombre, telefono, 0);
-                    tmp.setNit(id);
-                    tmp.setDpi(!dpi.isEmpty() ? dpi : null);
-                    tmp.setEmail(!email.isEmpty() ? email : null);
-                    tmp.setDireccion(!direccion.isEmpty() ? direccion : null);
-
-                    control.setCliente(tmp);
+                if(isEdit) {
+                    cliente.setNombre(nombre);
+                    cliente.setTelefono(telefono);
+                    cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                    cliente.setEmail(!email.isEmpty() ? email : null);
+                    cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+                    
+                    control.setUpdateCliente(cliente);
                 } else {
-                    control.crearAlerta("Error", "Ya existe un cliente con ese codigo", null);
+                    if(cliente == null) {
+                        //Code for new client
+                        Cliente tmp = new Cliente(nombre, telefono, 0);
+                        tmp.setNit(id);
+                        tmp.setDpi(!dpi.isEmpty() ? dpi : null);
+                        tmp.setEmail(!email.isEmpty() ? email : null);
+                        tmp.setDireccion(!direccion.isEmpty() ? direccion : null);
+
+                        control.setCliente(tmp);
+                    } else {
+                        control.crearAlerta("Error", "Ya existe un cliente con ese codigo", null);
+                    }
                 }
             } else {
                 control.crearAlerta("Error", "Debe llenar los campos nit, nombre y telefono", null);
             }
         }
-        
     }//GEN-LAST:event_aceptarButtonActionPerformed
     
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed

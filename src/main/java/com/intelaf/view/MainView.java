@@ -5,6 +5,7 @@ import com.intelaf.controller.MainControl;
 import com.intelaf.model.*;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.event.FocusEvent;
 import java.util.Date;
 
 /**
@@ -270,6 +271,7 @@ public class MainView extends javax.swing.JFrame {
         calendario.setForeground(Color.black);
         calendario.setBounds(40, 40, 120, 30);
         this.navPanel.add(this.calendario);
+        calendario.requestFocusInWindow(FocusEvent.Cause.CLEAR_GLOBAL_FOCUS_OWNER);
     }
         
     public void initializeComponents(MainControl control, Tienda tienda, Empleado empleado) {

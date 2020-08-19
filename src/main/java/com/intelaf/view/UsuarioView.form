@@ -105,6 +105,9 @@
             </Property>
             <Property name="editingColumn" type="int" value="0"/>
             <Property name="editingRow" type="int" value="0"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[700, 1000]"/>
+            </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[700, 250]"/>
             </Property>
@@ -149,6 +152,9 @@
             </Property>
             <Property name="editingColumn" type="int" value="0"/>
             <Property name="editingRow" type="int" value="0"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[700, 1000]"/>
+            </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[700, 200]"/>
             </Property>

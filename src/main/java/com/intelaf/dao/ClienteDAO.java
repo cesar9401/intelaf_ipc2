@@ -182,7 +182,7 @@ public class ClienteDAO {
             return updateCliente(cliente, credito);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
+            return 0;
         }
-        return 0;
     }
 }

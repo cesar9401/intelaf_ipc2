@@ -58,6 +58,7 @@ public class UsuarioView extends javax.swing.JPanel {
         ));
         empleadosTable.setEditingColumn(0);
         empleadosTable.setEditingRow(0);
+        empleadosTable.setMaximumSize(new java.awt.Dimension(700, 1000));
         empleadosTable.setMinimumSize(new java.awt.Dimension(700, 250));
         empleadosTable.setPreferredSize(new java.awt.Dimension(700, 250));
         empleadosTable.setRowHeight(36);
@@ -82,6 +83,7 @@ public class UsuarioView extends javax.swing.JPanel {
         ));
         clientesTable.setEditingColumn(0);
         clientesTable.setEditingRow(0);
+        clientesTable.setMaximumSize(new java.awt.Dimension(700, 1000));
         clientesTable.setMinimumSize(new java.awt.Dimension(700, 200));
         clientesTable.setPreferredSize(new java.awt.Dimension(700, 200));
         clientesTable.setRowHeight(36);
@@ -236,7 +238,7 @@ public class UsuarioView extends javax.swing.JPanel {
             listClientes[i][5] = clientes.get(i).getEmail();
 
         }
-        
+        clientesTable.setPreferredSize(new java.awt.Dimension(700, 36*clientes.size()));
         clientesTable.setModel(new javax.swing.table.DefaultTableModel(
             listClientes,
             new String [] {
@@ -253,7 +255,7 @@ public class UsuarioView extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = empleadosTable.getSelectedRow();
         if(row != -1) {
-            System.out.println(empleados.get(row).toString());
+            control.modalOperacionesUsuario(true, empleados.get(row), null);
         } else {
             control.crearAlerta("Alerta", "Debe seleccionar un empleado para poder editarlo", null);
         }
@@ -261,14 +263,14 @@ public class UsuarioView extends javax.swing.JPanel {
 
     private void agregarEmpleadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarEmpleadoButtonActionPerformed
         // TODO add your handling code here:
-        control.modalOperacionesUsuario(true);
+        control.modalOperacionesUsuario(true, null, null);
     }//GEN-LAST:event_agregarEmpleadoButtonActionPerformed
 
     private void editarClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarClienteButtonActionPerformed
         // TODO add your handling code here:
         int row = clientesTable.getSelectedRow();
         if(row != -1) {
-            System.out.println(clientes.get(row).toString());
+            control.modalOperacionesUsuario(false, null, clientes.get(row));
         } else {
             control.crearAlerta("Alerta", "Debe seleccionar un cliente para poder editarlo", null);
         }
@@ -276,7 +278,7 @@ public class UsuarioView extends javax.swing.JPanel {
 
     private void agregarClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarClienteButtonActionPerformed
         // TODO add your handling code here:
-        control.modalOperacionesUsuario(false);
+        control.modalOperacionesUsuario(false, null, null);
     }//GEN-LAST:event_agregarClienteButtonActionPerformed
     
     /**
@@ -313,7 +315,7 @@ public class UsuarioView extends javax.swing.JPanel {
             listEmpleados[i][4] = empleados.get(i).getDpi();
             listEmpleados[i][5] = empleados.get(i).getEmail();
         }
-        
+        empleadosTable.setPreferredSize(new java.awt.Dimension(700, 36*empleados.size()));
         empleadosTable.setModel(new javax.swing.table.DefaultTableModel(
             listEmpleados,
             new String [] {

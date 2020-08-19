@@ -405,6 +405,7 @@ public class VentaView extends javax.swing.JPanel {
         total = obtenerDouble(total);
         totalLabel.setText("Total: Q. " + total);
         
+        productosClienteTable.setPreferredSize(new java.awt.Dimension(700, 36*productosCliente.size()));
         productosClienteTable.setModel(new javax.swing.table.DefaultTableModel(
             listaCliente,
             new String [] {
@@ -552,6 +553,7 @@ public class VentaView extends javax.swing.JPanel {
 
         obtenerProductos();
         setTableProductos();
+        setTableCliente();
     }
     
     /**
@@ -574,7 +576,7 @@ public class VentaView extends javax.swing.JPanel {
             lista[i][4] = productos.get(i).getGarantia()+ "";
             lista[i][5] = productos.get(i).getStock()+ "";
         }
-        
+        productosTable.setPreferredSize(new java.awt.Dimension(700, 36*productos.size()));
         productosTable.setModel(new javax.swing.table.DefaultTableModel(
             lista,
             new String [] {

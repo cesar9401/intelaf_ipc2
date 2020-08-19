@@ -22,7 +22,6 @@ public class MainControl {
     private IntelafModal modal;    
     
     public MainControl() {
-        iniciarComponentes();
     }
     
     private void iniciarComponentes() {
@@ -31,6 +30,7 @@ public class MainControl {
     }
     
     public void showLogin() {
+        iniciarComponentes();
         List<String> codigos = new ArrayList<>();
         
         tiendas.forEach((t) -> {
@@ -59,6 +59,7 @@ public class MainControl {
                 login.dispose();
                 mainView.setLocationRelativeTo(null);
                 mainView.setVisible(true);
+                setInitialDate();
                 
             } else {
                 //Enviar codigo incorrecto a ventana login
@@ -77,6 +78,13 @@ public class MainControl {
             }
         }
     }
+    
+    private void setInitialDate() {
+        java.util.Date fecha = new java.util.Date();
+        java.sql.Date today = new java.sql.Date(fecha.getTime());
+        setDate(today);
+        this.crearAlerta("Informacion", "La fecha actual es: " + getDate(), mainView);
+    }
         
     public void modalOperacionesCliente(List<Producto> productosCliente, double total) {
         modal = new IntelafModal(mainView, true);
@@ -85,10 +93,10 @@ public class MainControl {
         modal.setVisible(true);
     }
     
-    public void modalOperacionesUsuario(boolean isEmpleado) {
+    public void modalOperacionesUsuario(boolean isEmpleado, Empleado empleado, Cliente cliente) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
-        modal.initOperationUsuario(isEmpleado);
+        modal.initOperationUsuario(isEmpleado, empleado, cliente);
         modal.setVisible(true);
     }
     
@@ -165,9 +173,20 @@ public class MainControl {
         updateViewUsuarios(row, "Se ha ingresado correctamente al cliente: " + cliente.getNit());
     }
     
+    public void setUpdateEmpleado(Empleado empleado) {
+        EmpleadoDAO operE = new EmpleadoDAO();
+        int row = operE.updateEmpleado(empleado);
+        updateViewUsuarios(row, "Se actualizo al empleado: " + empleado.getCodigo());
+    }
+    
+    public void setUpdateCliente(Cliente cliente) {
+        ClienteDAO operC = new ClienteDAO();
+        int row = operC.updateClienteEx(cliente, 0);
+        updateViewUsuarios(row, "Se actualizo al cliente: " + cliente.getNit());
+    }
+    
     private void updateViewUsuarios(int row, String message) {
         if(row > 0) {
-            System.out.println("row" + row);
             this.closeModal();
             this.crearAlerta("Informacion", message, null);
             mainView.actualizarUsuarios();
