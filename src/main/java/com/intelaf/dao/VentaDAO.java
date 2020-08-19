@@ -39,7 +39,6 @@ public class VentaDAO {
             rs = setVenta.getGeneratedKeys();
             if(rs.next()) {
                 id = rs.getInt(1);
-                System.out.println("id: " + id);
             }
             
         } finally {
@@ -49,7 +48,6 @@ public class VentaDAO {
                 Conexion.close(conexion);
             }
         }
-        System.out.println("id: " + id);
         return id;
     }
     

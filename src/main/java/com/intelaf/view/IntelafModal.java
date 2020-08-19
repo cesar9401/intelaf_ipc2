@@ -18,11 +18,13 @@ public class IntelafModal extends javax.swing.JDialog {
     private MainControl control;
     
     /**
-     * Creates new form CreateCliente
+     * Creates new form ClienteForVenta
      */
     public IntelafModal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
     
     public void initializeControl(MainControl control) {
@@ -66,12 +68,21 @@ public class IntelafModal extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void initOperationCliente(MainControl control, List<Producto> productosCliente, double total) {
-        CreateCliente operCliente = new CreateCliente();
+    public void initOperationCliente(List<Producto> productosCliente, double total) {
+        ClienteForVenta operCliente = new ClienteForVenta();
         operCliente.initializeControl(this.control, productosCliente, total);
         this.contenedor.setVisible(false);
         this.contenedor.removeAll();
         this.contenedor.add(operCliente);
+        this.contenedor.setVisible(true);
+    }
+    
+    public void initOperationUsuario(boolean isEmpleado) {
+        UsuarioForModal operUsuario = new UsuarioForModal();
+        operUsuario.initializeControl(this.control, isEmpleado);
+        this.contenedor.setVisible(false);
+        this.contenedor.removeAll();
+        this.contenedor.add(operUsuario);
         this.contenedor.setVisible(true);
     }
     

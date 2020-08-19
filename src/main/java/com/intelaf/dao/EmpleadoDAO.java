@@ -24,10 +24,12 @@ public class EmpleadoDAO {
     /**
      * Metodo para insertar empleados a la base de datos
      * @param empleado
+     * @return 
      * @throws SQLException 
      */
-    public void insertarEmpleado(Empleado empleado) throws SQLException {
-        String query = "INSERT INTO empleados(codigo, nombres, telefono, dpi) VALUES(?, ?, ?, ?)";
+    public int insertarEmpleado(Empleado empleado) throws SQLException {
+        int row = 0;
+        String query = "INSERT INTO empleados(codigo, nombres, telefono, nit, dpi, email, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
         
         Connection conexion = null;
         PreparedStatement setEmpleado = null;
@@ -37,14 +39,27 @@ public class EmpleadoDAO {
             setEmpleado.setString(1, empleado.getCodigo());
             setEmpleado.setString(2, empleado.getNombre());
             setEmpleado.setString(3, empleado.getTelefono());
-            setEmpleado.setString(4, empleado.getDpi());
+            setEmpleado.setString(4, empleado.getNit());
+            setEmpleado.setString(5, empleado.getDpi());
+            setEmpleado.setString(6, empleado.getEmail());
+            setEmpleado.setString(7, empleado.getDireccion());
             
-            setEmpleado.executeUpdate();
+            row = setEmpleado.executeUpdate();
         } finally {
             Conexion.close(setEmpleado);
             if(this.transaction == null) {
                 Conexion.close(conexion);
             }
+        }
+        return row;
+    }
+    
+    public int createEmpleado(Empleado empleado) {
+        try {
+            return insertarEmpleado(empleado);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            return 0;
         }
     }
     

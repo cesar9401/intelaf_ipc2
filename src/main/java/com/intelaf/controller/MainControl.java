@@ -81,9 +81,14 @@ public class MainControl {
     public void modalOperacionesCliente(List<Producto> productosCliente, double total) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
-        modal.setLocationRelativeTo(null);
-        modal.setResizable(false);
-        modal.initOperationCliente(this, productosCliente ,total);
+        modal.initOperationCliente(productosCliente ,total);
+        modal.setVisible(true);
+    }
+    
+    public void modalOperacionesUsuario(boolean isEmpleado) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationUsuario(isEmpleado);
         modal.setVisible(true);
     }
     
@@ -148,6 +153,30 @@ public class MainControl {
         modal.dispose();
     }
     
+    public void setEmpleado(Empleado empleado) {
+        EmpleadoDAO operE = new EmpleadoDAO();
+        int row = operE.createEmpleado(empleado);
+        updateViewUsuarios(row, "Se ha ingresado correctamente al empleado: " + empleado.getCodigo());
+    }
+    
+    public void setCliente(Cliente cliente) {
+        ClienteDAO operC = new ClienteDAO();
+        int row = operC.createCliente(cliente);
+        updateViewUsuarios(row, "Se ha ingresado correctamente al cliente: " + cliente.getNit());
+    }
+    
+    private void updateViewUsuarios(int row, String message) {
+        if(row > 0) {
+            System.out.println("row" + row);
+            this.closeModal();
+            this.crearAlerta("Informacion", message, null);
+            mainView.actualizarUsuarios();
+        }else {
+            this.closeModal();
+            this.crearAlerta("Error", "Error con el sistema, intente mas tarde", null);
+        }          
+    }
+    
     public void crearAlerta(String titulo, String mensaje, java.awt.Frame parent) {
         IntelafAlerta alert = new IntelafAlerta((parent != null) ? parent : mainView, true);
         alert.setTitulo(titulo);
@@ -178,14 +207,17 @@ public class MainControl {
     
     public Cliente getCliente(String nit) {
         ClienteDAO operaciones = new ClienteDAO();
-        Cliente cliente = operaciones.getCliente(nit);
-        return cliente;
+        return operaciones.getCliente(nit);
+    }
+    
+    public Empleado getEmpleado(String codigo) {
+        EmpleadoDAO operE = new EmpleadoDAO();
+        return operE.getEmpleado(codigo);
     }
     
     public List<Producto> getProductosTienda(String codigo) {
         ProductoDAO operaciones = new ProductoDAO();
-        List<Producto> productos = operaciones.getListProductobyStore(codigo);
-        return productos;
+        return operaciones.getListProductobyStore(codigo);
     }
 
     public java.sql.Date getDate() {

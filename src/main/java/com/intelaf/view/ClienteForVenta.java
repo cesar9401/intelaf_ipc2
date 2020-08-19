@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author cesar31
  */
-public class CreateCliente extends javax.swing.JPanel {
+public class ClienteForVenta extends javax.swing.JPanel {
 
     private MainControl control;
     private Cliente cliente;
@@ -20,7 +20,7 @@ public class CreateCliente extends javax.swing.JPanel {
     /**
      * Creates new form createCliente
      */
-    public CreateCliente() {
+    public ClienteForVenta() {
         initComponents();
         descuentoText.setText("0");
     }
@@ -391,15 +391,15 @@ public class CreateCliente extends javax.swing.JPanel {
                         if(cliente != null) {
                             cliente.setNombre(nombre);
                             cliente.setTelefono(telefono);
-                            cliente.setDpi(dpi);
-                            cliente.setEmail(email);
-                            cliente.setDireccion(direccion);
+                            cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                            cliente.setEmail(!email.isEmpty() ? email : null);
+                            cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
                         } else {
                             cliente = new Cliente(nombre, telefono, 0);
                             cliente.setNit(nit);
-                            cliente.setDpi(dpi);
-                            cliente.setEmail(email);
-                            cliente.setDireccion(direccion);
+                            cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                            cliente.setEmail(!email.isEmpty() ? email : null);
+                            cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
                             nuevo = true;
                         }
                         //Enviar cliente y listado de productos

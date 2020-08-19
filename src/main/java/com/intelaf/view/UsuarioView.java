@@ -261,6 +261,7 @@ public class UsuarioView extends javax.swing.JPanel {
 
     private void agregarEmpleadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarEmpleadoButtonActionPerformed
         // TODO add your handling code here:
+        control.modalOperacionesUsuario(true);
     }//GEN-LAST:event_agregarEmpleadoButtonActionPerformed
 
     private void editarClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarClienteButtonActionPerformed
@@ -275,6 +276,7 @@ public class UsuarioView extends javax.swing.JPanel {
 
     private void agregarClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarClienteButtonActionPerformed
         // TODO add your handling code here:
+        control.modalOperacionesUsuario(false);
     }//GEN-LAST:event_agregarClienteButtonActionPerformed
     
     /**

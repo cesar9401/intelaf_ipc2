@@ -363,7 +363,6 @@ public class VentaView extends javax.swing.JPanel {
             tmp.setGarantia(producto.getGarantia());
             tmp.setPrecio(producto.getPrecio());
             tmp.setTiendasProductosId(producto.getTiendasProductosId());
-            System.out.println("idTiendasProductos: " + tmp.getTiendasProductosId());
 
             //Establecer subtotal
             tmp.setSubTotal(tmp.getPrecio() * tmp.getStock());

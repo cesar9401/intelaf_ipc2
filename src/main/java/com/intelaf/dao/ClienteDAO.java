@@ -24,9 +24,11 @@ public class ClienteDAO {
     /**
      * Metodo para insertar cliente a la base de datos
      * @param cliente 
+     * @return  
      * @throws java.sql.SQLException 
      */
-    public void insertarCliente(Cliente cliente) throws SQLException {
+    public int insertarCliente(Cliente cliente) throws SQLException {
+        int row = 0;
         String query = "INSERT INTO clientes (nit, nombre, telefono, dpi, creditoCompra, email, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         Connection conexion = null;
@@ -43,24 +45,27 @@ public class ClienteDAO {
             setCliente.setString(6, cliente.getEmail());
             setCliente.setString(7, cliente.getDireccion());
             
-            setCliente.executeUpdate();
+            row = setCliente.executeUpdate();
         } finally {
             Conexion.close(setCliente);
             if(this.transaction == null) {
                 Conexion.close(conexion);
             }
         }
+        return row;
     }
     
     /**
      * Se llama al metodo insertarCliente y se captura la excepcion con try catch
      * @param cliente 
+     * @return  
      */
-    public void createCliente(Cliente cliente) {
+    public int createCliente(Cliente cliente) {
         try {
-            insertarCliente(cliente);
+            return insertarCliente(cliente);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
+            return 0;
         }
     }
     
