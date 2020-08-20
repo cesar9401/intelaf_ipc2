@@ -103,6 +103,16 @@ public class IntelafModal extends javax.swing.JDialog {
         this.contenedor.setVisible(true);
     }
     
+    public void initOperationTiempo(Tienda tienda) {
+        TiempoForModal operT = new TiempoForModal();
+        operT.initializeControl(control);
+        operT.initializeTienda(tienda);
+        this.contenedor.setVisible(false);
+        this.contenedor.removeAll();
+        this.contenedor.add(operT);
+        this.contenedor.setVisible(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedor;
     // End of variables declaration//GEN-END:variables

@@ -36,7 +36,6 @@ public class TiendaView extends javax.swing.JPanel {
         sucursalesLabel = new javax.swing.JLabel();
         editarButton = new javax.swing.JButton();
         agregarButton = new javax.swing.JButton();
-        tiemposLabel = new javax.swing.JLabel();
         editarTiemposLabel = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(248, 147, 31));
@@ -102,15 +101,6 @@ public class TiendaView extends javax.swing.JPanel {
             }
         });
 
-        tiemposLabel.setBackground(new java.awt.Color(248, 147, 31));
-        tiemposLabel.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        tiemposLabel.setForeground(new java.awt.Color(255, 255, 255));
-        tiemposLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tiemposLabel.setText("Tiempos");
-        tiemposLabel.setMaximumSize(new java.awt.Dimension(150, 36));
-        tiemposLabel.setMinimumSize(new java.awt.Dimension(150, 36));
-        tiemposLabel.setPreferredSize(new java.awt.Dimension(150, 36));
-
         editarTiemposLabel.setBackground(new java.awt.Color(0, 0, 0));
         editarTiemposLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         editarTiemposLabel.setForeground(new java.awt.Color(248, 147, 31));
@@ -137,10 +127,6 @@ public class TiendaView extends javax.swing.JPanel {
                         .addComponent(scrollTiendas, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
                         .addGap(42, 42, 42))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(286, 286, 286)
-                        .addComponent(tiemposLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(sucursalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -156,16 +142,14 @@ public class TiendaView extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(sucursalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollTiendas, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(scrollTiendas, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(agregarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editarTiemposLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(tiemposLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
                 
@@ -192,7 +176,7 @@ public class TiendaView extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = tiendasTable.getSelectedRow();
         if(row != -1) {
-            System.out.println(tiendas.get(row).toString());
+            control.modalOperacionesTiempo(tiendas.get(row));
         } else {
             control.crearAlerta("Alerta", "Debe seleccionar una tienda para poder verificar tiempos", null);
         }
@@ -237,7 +221,6 @@ public class TiendaView extends javax.swing.JPanel {
     private javax.swing.JButton editarTiemposLabel;
     private javax.swing.JScrollPane scrollTiendas;
     private javax.swing.JLabel sucursalesLabel;
-    private javax.swing.JLabel tiemposLabel;
     private javax.swing.JTable tiendasTable;
     // End of variables declaration//GEN-END:variables
 }

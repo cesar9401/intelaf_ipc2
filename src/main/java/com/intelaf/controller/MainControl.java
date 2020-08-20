@@ -7,6 +7,8 @@ import com.intelaf.model.*;
 import com.intelaf.view.*;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +21,7 @@ public class MainControl {
     private Login login;
     private MainView mainView;
     private IntelafModal modal;    
-    
+  
     public MainControl() {
     }
     
@@ -60,7 +62,7 @@ public class MainControl {
                 mainView.setVisible(true);
                 if(this.date == null) {
                     setInitialDate();
-                 }
+                }
                 
             } else {
                 //Enviar codigo incorrecto a ventana login
@@ -105,6 +107,13 @@ public class MainControl {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
         modal.initOperationTienda(tienda);
+        modal.setVisible(true);
+    }
+    
+    public void modalOperacionesTiempo(Tienda tienda) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationTiempo(tienda);
         modal.setVisible(true);
     }
     
@@ -189,6 +198,7 @@ public class MainControl {
             TiendaDAO operT = new TiendaDAO();
             operT.insertarTienda(tienda);
             operT.insertarDestino(tienda);
+            
             conexion.commit();
             
             this.closeModal();
@@ -204,6 +214,61 @@ public class MainControl {
         } finally {
             Conexion.close(conexion);
         }
+    }
+    
+    public void setTiempo(Tiempo tiempo) {
+        Tiempo tmp = new Tiempo(tiempo.getTiendaDestino(), tiempo.getTiendaOrigen(), tiempo.getTiempoDias());
+        Connection conexion = null;
+        try {
+            conexion = Conexion.getConnection();
+            conexion.setAutoCommit(false);
+            TiempoDAO operT = new TiempoDAO(conexion);
+            operT.insertarTiempo(tiempo);
+            operT.insertarTiempo(tmp);
+            conexion.commit();
+            updateTablesTiempos(tiempo);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            try {
+                conexion.rollback();
+            } catch (SQLException ex1) {
+                ex1.printStackTrace(System.out);
+            }
+        } finally {
+            Conexion.close(conexion);
+        }
+    }
+    
+    public void setUpdateTiempo(Tiempo tiempo) {
+        Tiempo tmp = new Tiempo(tiempo.getTiendaDestino(), tiempo.getTiendaOrigen(), tiempo.getTiempoDias());
+        Connection conexion = null;
+        try {
+            conexion = Conexion.getConnection();
+            conexion.setAutoCommit(false);
+            TiempoDAO operT = new TiempoDAO();
+            operT.updateTiempo(tiempo);
+            operT.updateTiempo(tmp);
+            conexion.commit();
+            updateTablesTiempos(tiempo);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            try {
+                conexion.rollback();
+            } catch (SQLException ex1) {
+                ex1.printStackTrace(System.out);
+            }
+        } finally {
+            Conexion.close(conexion);
+        }
+    }
+    
+    private void updateTablesTiempos(Tiempo tiempo) {
+
+        //Write code for update Store
+        this.crearAlerta("Informacion", "Se ha actualizado correctamente el tiempo a: " + tiempo.getTiempoDias(), mainView);
+        this.closeModal();
+        Tienda tmp = getTienda(tiempo.getTiendaOrigen());
+        this.modalOperacionesTiempo(tmp);
     }
     
     public void setUpdateEmpleado(Empleado empleado) {
@@ -270,6 +335,16 @@ public class MainControl {
     public List<Tienda> getTiendas() {
         TiendaDAO operT = new TiendaDAO();
         return operT.getTiendas();
+    }
+    
+    public List<Tienda> getTiendasExcept(String codigo) {
+        TiendaDAO operT = new TiendaDAO();
+        return operT.getTiendasExcept(codigo);
+    }
+    
+    public Tiempo getTiempo(String origen, String destino) {
+        TiempoDAO operT = new TiempoDAO();
+        return operT.getTiempo(origen, destino);
     }
     
     public Cliente getCliente(String nit) {

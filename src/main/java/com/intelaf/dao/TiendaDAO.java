@@ -174,4 +174,36 @@ public class TiendaDAO {
         
         return tiendas;
     }
+    
+    public List<Tienda> getTiendasExcept(String codigo) {
+        String query = "SELECT * FROM tiendas WHERE codigo != ?";
+        List<Tienda> tiendas = new ArrayList<>();
+        
+        Connection conexion = null;
+        PreparedStatement getT = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getT = conexion.prepareStatement(query);
+            getT.setString(1, codigo);
+            rs = getT.executeQuery();
+            
+            while(rs.next()) {
+                Tienda tmp = new Tienda(rs.getString("nombre"), rs.getString("direccion"), rs.getString("codigo"), rs.getString("telefono1"));
+                tmp.setTelefono2(rs.getString("telefono2"));
+                tmp.setEmail(rs.getString("email"));
+                tmp.setHorario(rs.getString("horario"));     
+                
+                tiendas.add(tmp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getT);
+            Conexion.close(conexion);
+        }
+        
+        return tiendas;
+    }    
 }

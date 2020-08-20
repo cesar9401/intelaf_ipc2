@@ -4,6 +4,9 @@ package com.intelaf.dao;
 import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Tiempo;
 import java.sql.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +28,8 @@ public class TiempoDAO {
      * @param tiempo
      * @throws SQLException 
      */
-    public void insertarTiempo(Tiempo tiempo) throws SQLException {
+    public int insertarTiempo(Tiempo tiempo) throws SQLException {
+        int row = 0;
         String query = "INSERT INTO tiempos(tiendasOrigen, tiendasDestino, tiempoDias) VALUES(?, ?, ?)";
         
         Connection conexion = null;
@@ -37,12 +41,22 @@ public class TiempoDAO {
             setTime.setString(2, tiempo.getTiendaDestino());
             setTime.setInt(3, tiempo.getTiempoDias());
             
-            setTime.executeUpdate();
+            row = setTime.executeUpdate();
         } finally {
             Conexion.close(setTime);
             if(this.transaction == null) {
                 Conexion.close(conexion);
             }
+        }
+        return row;
+    }
+    
+    public int createTiempo(Tiempo tiempo) {
+        try {
+            return insertarTiempo(tiempo);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            return 0;
         }
     }
     
@@ -83,31 +97,69 @@ public class TiempoDAO {
     }
     
     /**
+     * Metodo para obtener listado de tiempos entre tiendas
+     * @return 
+     */
+    public List<Tiempo> getTiempos() {
+        String query = "SELECT * FROM tiempos";
+        List<Tiempo> tiempos = new ArrayList<>();
+        
+        Connection conexion = null;
+        Statement getT = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getT = conexion.createStatement();
+            rs = getT.executeQuery(query);
+            
+            while(rs.next()) {
+                Tiempo tiempo = new Tiempo(rs.getInt("id"), rs.getString("tiendasOrigen"), rs.getString("tiendasDestino"), rs.getInt("tiempoDias"));
+                tiempos.add(tiempo);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getT);
+            Conexion.close(conexion);
+        }
+        return tiempos;
+    }
+    
+    /**
      * Metodo para actualizar el tiempo entre dos tiendas
      * @param tiempo
      * @return 
+     * @throws java.sql.SQLException 
      */
-    public int updateTiempo(Tiempo tiempo) {
+    public int updateTiempo(Tiempo tiempo) throws SQLException {
         String query = "UPDATE tiempos SET tiempoDias = ? WHERE tiendasOrigen = ? AND tiendasDestino = ?";
         int row = 0;
         
         Connection conexion = null;
         PreparedStatement updT = null;
         try {
-            conexion = Conexion.getConnection();
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
             updT = conexion.prepareStatement(query);
             updT.setInt(1, tiempo.getTiempoDias());
             updT.setString(2, tiempo.getTiendaOrigen());
             updT.setString(3, tiempo.getTiendaDestino());
             
             row = updT.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(updT);
             Conexion.close(conexion);
         }
         
         return row;
+    }
+    
+    public int updateTiempoException(Tiempo tiempo) {
+        try {
+            return updateTiempo(tiempo);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            return 0;
+        }
     }
 }

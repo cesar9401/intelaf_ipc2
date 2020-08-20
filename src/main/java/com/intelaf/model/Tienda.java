@@ -14,6 +14,9 @@ public class Tienda {
     private String telefono2;
     private String email;
     private String horario;
+    
+    //Atributo para guardar tiempo y mostrar en tabla
+    private int tiempo;
 
     //Constructor para tiendasDestinos
     public Tienda(String codigo) {
@@ -83,6 +86,14 @@ public class Tienda {
         this.horario = horario;
     }
 
+    public int getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(int tiempo) {
+        this.tiempo = tiempo;
+    }
+    
     @Override
     public String toString() {
         return "Tienda{" + nombre + ", direccion=" + direccion + ", codigo=" + codigo + ", telefono1=" + telefono1 + ", telefono2=" + telefono2 + ", email=" + email + ", horario=" + horario + '}';

@@ -117,7 +117,7 @@ public class EmpleadoDAO {
             getE.setString(1, codigo);
             rs = getE.executeQuery();
             
-            while(rs.next()) {
+            if(rs.next()) {
                 emp = new Empleado(rs.getString("nombres"), rs.getString("codigo"), rs.getString("telefono"), rs.getString("dpi"));
                 emp.setNit(rs.getString("nit"));
                 emp.setEmail(rs.getString("email"));
