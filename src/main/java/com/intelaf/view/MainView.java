@@ -23,6 +23,7 @@ public class MainView extends javax.swing.JFrame {
     private VentaView venta;
     private UsuarioView usuario;
     private TiendaView tiendaView;
+    private PedidoView pedido;
     
     /**
      * Creates new form MainView
@@ -318,8 +319,21 @@ public class MainView extends javax.swing.JFrame {
     
     private void pedidosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosButtonActionPerformed
         // TODO add your handling code here:
+        actualizarPedidos();
     }//GEN-LAST:event_pedidosButtonActionPerformed
 
+    public void actualizarPedidos() {
+        pedido = null;
+        pedido = new PedidoView();
+        
+        //Agregar a los componenetes
+        this.contenedorPanel.removeAll();
+        this.contenedorPanel.setVisible(false);
+        pedido.initializeComponents(control, tienda);
+        this.contenedorPanel.add(pedido);
+        this.contenedorPanel.setVisible(true);
+    }
+    
     private void setDateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setDateButtonActionPerformed
         // TODO add your handling code here:
         Date newDate = calendario.getDate();

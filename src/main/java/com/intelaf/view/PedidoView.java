@@ -12,10 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author cesar31
  */
-public class VentaView extends javax.swing.JPanel {
+public class PedidoView extends javax.swing.JPanel {
 
     private MainControl control;
     private Tienda tienda;
+    private List<Tienda> tiendas;
+    private Tiempo tiempo;
     private List<Producto> productos;
     private List<Producto> productosCliente;
     private String[][] lista;
@@ -25,7 +27,7 @@ public class VentaView extends javax.swing.JPanel {
     /**
      * Creates new form VentaView
      */
-    public VentaView() {
+    public PedidoView() {
         initComponents();
         setComponents();
     }
@@ -54,6 +56,8 @@ public class VentaView extends javax.swing.JPanel {
         procesarButton = new javax.swing.JButton();
         cancelarButton = new javax.swing.JButton();
         totalLabel = new javax.swing.JLabel();
+        tiendasCombo = new javax.swing.JComboBox<>();
+        tiempoLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(248, 147, 31));
         setMinimumSize(new java.awt.Dimension(800, 700));
@@ -233,6 +237,27 @@ public class VentaView extends javax.swing.JPanel {
         totalLabel.setPreferredSize(new java.awt.Dimension(225, 32));
         totalLabel.setRequestFocusEnabled(false);
 
+        tiendasCombo.setBackground(new java.awt.Color(0, 0, 0));
+        tiendasCombo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        tiendasCombo.setForeground(new java.awt.Color(248, 147, 31));
+        tiendasCombo.setMinimumSize(new java.awt.Dimension(150, 32));
+        tiendasCombo.setPreferredSize(new java.awt.Dimension(150, 32));
+        tiendasCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                tiendasComboItemStateChanged(evt);
+            }
+        });
+
+        tiempoLabel.setBackground(new java.awt.Color(248, 147, 31));
+        tiempoLabel.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        tiempoLabel.setForeground(new java.awt.Color(0, 0, 0));
+        tiempoLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        tiempoLabel.setText("Dias: ");
+        tiempoLabel.setMaximumSize(new java.awt.Dimension(225, 32));
+        tiempoLabel.setMinimumSize(new java.awt.Dimension(225, 32));
+        tiempoLabel.setPreferredSize(new java.awt.Dimension(225, 32));
+        tiempoLabel.setRequestFocusEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -243,15 +268,16 @@ public class VentaView extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(descriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(productosClienteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(productosTiendaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tiendasCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tiempoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(carritoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -259,15 +285,20 @@ public class VentaView extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(procesarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(productosClienteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(79, 79, 79))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(procesarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(42, 42, 42))))
         );
@@ -280,7 +311,10 @@ public class VentaView extends javax.swing.JPanel {
                         .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cantidadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(carritoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(productosTiendaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(productosTiendaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tiendasCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tiempoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -301,18 +335,25 @@ public class VentaView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metodo para inicializar componentes necesarios para mostrar informacion de la tienda
+     * Metodo para inicializar componentes necesarios para mostrar informacion de las tiendas de donde se hacen pedidos
      * @param control
      * @param tienda 
      */
     public void initializeComponents(MainControl control, Tienda tienda) {
         this.control = control;
         this.tienda = tienda;
-
-        obtenerProductos();
-        setTableProductos();
-        setTableCliente();
-    }    
+        
+        this.tiendas = this.control.getTiendasExcept(this.tienda.getCodigo());
+        tiendas.forEach((t) -> {
+            tiendasCombo.addItem(t.getCodigo());
+        });
+        getTiempo();
+    }
+    
+    private void getTiempo() {
+        this.tiempo = control.getTiempo(this.tienda.getCodigo(), this.tiendasCombo.getSelectedItem().toString());
+        tiempoLabel.setText("Dias: " + tiempo.getTiempoDias());
+    }
     
     /**
      * Metodo para agregar imagenes e inicializar las variables a utilizar
@@ -533,7 +574,10 @@ public class VentaView extends javax.swing.JPanel {
     private void procesarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesarButtonActionPerformed
         // TODO add your handling code here:
         if(!productosCliente.isEmpty()) {
-            control.modalOperacionesCliente(productosCliente, total);
+            //control.modalOperacionesCliente(productosCliente, total);
+            productosCliente.forEach((p) -> {
+                System.out.println(p.toString());
+            });
         }else {
             control.crearAlerta("Informacion", "Debe agregar productos al carrito para procesar la venta", null);
             //System.out.println("Debe agregar productos para poder procesar la venta");
@@ -547,20 +591,26 @@ public class VentaView extends javax.swing.JPanel {
      */
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
         // TODO add your handling code here:
-        //Actualizar informacion de productos
-        obtenerProductos();
+        actualizarDatos();
+    }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void tiendasComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tiendasComboItemStateChanged
+        // TODO add your handling code here:
+        actualizarDatos();
+    }//GEN-LAST:event_tiendasComboItemStateChanged
+    
+    private void actualizarDatos() {
+        //Limpiar tabla clientes
         productosCliente.clear();
         
+        //Obtener productos de la base de datos
+        String codigo = tiendasCombo.getSelectedItem().toString();
+        productos = this.control.getProductosTienda(codigo);
+        getTiempo();
+        
         //Actualizar tablas
-        setTableCliente();
         setTableProductos();
-    }//GEN-LAST:event_cancelarButtonActionPerformed
-    
-    /**
-     * Metodo para obtener productos de la base de datos
-     */
-    private void obtenerProductos() {
-        productos = this.control.getProductosTienda(tienda.getCodigo());
+        setTableCliente();     
     }
     
     /**
@@ -600,6 +650,8 @@ public class VentaView extends javax.swing.JPanel {
     private javax.swing.JTable productosClienteTable;
     private javax.swing.JTable productosTable;
     private javax.swing.JLabel productosTiendaLabel;
+    private javax.swing.JLabel tiempoLabel;
+    private javax.swing.JComboBox<String> tiendasCombo;
     private javax.swing.JLabel totalLabel;
     // End of variables declaration//GEN-END:variables
 }
