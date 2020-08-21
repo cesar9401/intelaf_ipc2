@@ -96,6 +96,13 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    public void modalOperacionesPedido(List<Producto> productosC, double total, double min, Tiempo tiempo) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationPedido(productosC, total, min, tiempo);
+        modal.setVisible(true);
+    }
+    
     public void modalOperacionesUsuario(boolean isEmpleado, Empleado empleado, Cliente cliente) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
@@ -340,6 +347,11 @@ public class MainControl {
     public List<Tienda> getTiendasExcept(String codigo) {
         TiendaDAO operT = new TiendaDAO();
         return operT.getTiendasExcept(codigo);
+    }
+    
+    public List<Tienda> getTiendasWithTime(String codigo) {
+        TiendaDAO operT = new TiendaDAO();
+        return operT.getTiendasWithTime(codigo);
     }
     
     public Tiempo getTiempo(String origen, String destino) {

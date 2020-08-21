@@ -20,10 +20,10 @@ public class MainView extends javax.swing.JFrame {
     private Empleado empleado;
     
     private MainPanel mainPanel;
-    private VentaView venta;
+    //private VentaView venta;
     private UsuarioView usuario;
     private TiendaView tiendaView;
-    private PedidoView pedido;
+    private VentaPedidoView ventaPedido;
     
     /**
      * Creates new form MainView
@@ -306,14 +306,14 @@ public class MainView extends javax.swing.JFrame {
 
     public void actualizarVentas() {
         //Iniciarlizar ventas
-        venta = null;
-        venta = new VentaView();
+        ventaPedido = null;
+        ventaPedido = new VentaPedidoView();
         
         //Agregar a los componentes
         this.contenedorPanel.removeAll();
         this.contenedorPanel.setVisible(false);
-        venta.initializeComponents(control, tienda);
-        this.contenedorPanel.add(venta);
+        ventaPedido.initializeComponents(control, tienda, false);
+        this.contenedorPanel.add(ventaPedido);
         this.contenedorPanel.setVisible(true);        
     }
     
@@ -323,14 +323,14 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_pedidosButtonActionPerformed
 
     public void actualizarPedidos() {
-        pedido = null;
-        pedido = new PedidoView();
+        ventaPedido = null;
+        ventaPedido = new VentaPedidoView();
         
         //Agregar a los componenetes
         this.contenedorPanel.removeAll();
         this.contenedorPanel.setVisible(false);
-        pedido.initializeComponents(control, tienda);
-        this.contenedorPanel.add(pedido);
+        ventaPedido.initializeComponents(control, tienda, true);
+        this.contenedorPanel.add(ventaPedido);
         this.contenedorPanel.setVisible(true);
     }
     

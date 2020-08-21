@@ -205,5 +205,37 @@ public class TiendaDAO {
         }
         
         return tiendas;
-    }    
+    }   
+    
+    public List<Tienda> getTiendasWithTime(String tiendasDestino) {
+        String query = "SELECT * FROM tiendas INNER JOIN tiempos ON tiendas.codigo = tiempos.tiendasOrigen WHERE tiempos.tiendasDestino = ?";
+        List<Tienda> destinos = new ArrayList<>();
+        
+        Connection conexion = null;
+        PreparedStatement getT = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getT = conexion.prepareStatement(query);
+            getT.setString(1, tiendasDestino);
+            rs = getT.executeQuery();
+            
+            while(rs.next()) {
+                Tienda tmp = new Tienda(rs.getString("nombre"), rs.getString("direccion"), rs.getString("codigo"), rs.getString("telefono1"));
+                tmp.setTelefono2(rs.getString("telefono2"));
+                tmp.setEmail(rs.getString("email"));
+                tmp.setHorario(rs.getString("horario"));     
+                
+                destinos.add(tmp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getT);
+            Conexion.close(conexion);
+        }
+        
+        return destinos;
+    }
 }

@@ -73,6 +73,15 @@ public class IntelafModal extends javax.swing.JDialog {
         this.contenedor.setVisible(true);
     }
     
+    public void initOperationPedido(List<Producto> productosC, double total, double min, Tiempo tiempo) {
+        ClienteForPedido operPedido = new ClienteForPedido();
+        operPedido.initializeControl(this.control, productosC, total, min, tiempo);
+        this.contenedor.setVisible(true);
+        this.contenedor.removeAll();
+        this.contenedor.add(operPedido);
+        this.contenedor.setVisible(true);
+    }
+    
     public void initOperationUsuario(boolean isEmpleado, Empleado empleado, Cliente cliente) {
         UsuarioForModal operUsuario = new UsuarioForModal();
         operUsuario.initializeControl(this.control, isEmpleado);
