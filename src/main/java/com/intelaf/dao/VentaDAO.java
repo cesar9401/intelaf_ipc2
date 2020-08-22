@@ -61,18 +61,21 @@ public class VentaDAO {
     }
     
     public void insertarDetalleVenta(DetalleVenta detalle) throws SQLException {
+        String queryExistencias = "UPDATE tiendasProductos SET stockProductos = stockProductos - ? WHERE id = ?";
         String query = "INSERT INTO detallesVentas(ventasId, tiendasProductosId, cantidad, precioVenta, subTotal) VALUES(?, ?, ?, ?, ?)";
         
-        String queryExistencias = "UPDATE tiendasProductos SET stockProductos = stockProductos - ? WHERE id = ?";
-        
         Connection conexion = null;
-        PreparedStatement setD = null;
         PreparedStatement setE = null;
+        PreparedStatement setD = null;
         try {
             conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
-           
+            
+            setE = conexion.prepareStatement(queryExistencias);
+            setE.setInt(1, detalle.getCantidad());
+            setE.setInt(2, detalle.getTiendasProductosId());
+            setE.executeUpdate();           
+            
             setD = conexion.prepareStatement(query);
-
             setD.setInt(1, detalle.getIdVentas());
             setD.setInt(2, detalle.getTiendasProductosId());
             setD.setInt(3, detalle.getCantidad());
@@ -80,14 +83,9 @@ public class VentaDAO {
             setD.setDouble(5, detalle.getSubTotal());
             setD.executeUpdate();
             
-            setE = conexion.prepareStatement(queryExistencias);
-            setE.setInt(1, detalle.getCantidad());
-            setE.setInt(2, detalle.getTiendasProductosId());
-            setE.executeUpdate();
-            
         } finally {
-            Conexion.close(setE);
             Conexion.close(setD);
+            Conexion.close(setE);
             if(this.transaction == null) {
                 Conexion.close(conexion);
             }

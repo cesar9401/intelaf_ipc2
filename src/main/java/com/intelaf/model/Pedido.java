@@ -23,6 +23,7 @@ public class Pedido {
     private int cantidad;
     private double precioVentaPedido;
     private double subTotalPedido;  
+    private int tiendasProductosId;
 
     //Tiendas
     private String tiendaOrigen;
@@ -61,8 +62,9 @@ public class Pedido {
         this.anticipo = anticipo;
     }
     
-    //Constructos para detallesPedidos
-    public Pedido(String codigoProducto, int cantidad, double precioVentaPedido, double subTotalPedido) {
+    //Constructor para detallesPedidos
+    public Pedido(int tiendasProductosId, String codigoProducto, int cantidad, double precioVentaPedido, double subTotalPedido) {
+        this.tiendasProductosId = tiendasProductosId;
         this.codigoProducto = codigoProducto;
         this.cantidad = cantidad;
         this.precioVentaPedido = precioVentaPedido;
@@ -163,6 +165,14 @@ public class Pedido {
 
     public void setSubTotalPedido(double subTotalPedido) {
         this.subTotalPedido = subTotalPedido;
+    }
+
+    public int getTiendasProductosId() {
+        return tiendasProductosId;
+    }
+
+    public void setTiendasProductosId(int tiendasProductosId) {
+        this.tiendasProductosId = tiendasProductosId;
     }
 
     public String getTiendaOrigen() {

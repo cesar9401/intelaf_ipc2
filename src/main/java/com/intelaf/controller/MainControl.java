@@ -7,8 +7,6 @@ import com.intelaf.model.*;
 import com.intelaf.view.*;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -149,6 +147,16 @@ public class MainControl {
         setNewVenta(cliente, credito, venta, detalles, nuevo);
     }
     
+    /**
+     * Metodo para insertar una nueva venta e ingresar un cliente nuevo o actualizar alguno que ya este en la base
+     * de datos, segun los parametros que reciba
+     * 
+     * @param cliente
+     * @param credito
+     * @param venta
+     * @param detalles
+     * @param nuevo 
+     */
     private void setNewVenta(Cliente cliente, double credito, Venta venta, List<DetalleVenta> detalles, boolean nuevo) {
         Connection conexion = null;
         try {
@@ -164,12 +172,14 @@ public class MainControl {
             VentaDAO setV = new VentaDAO(conexion);
             int id = setV.insertarVenta(venta);
             
+            //Insertar detalle ventas y actualizar existencias en tienda
             for(DetalleVenta d: detalles) {
                 d.setIdVentas(id);
                 setV.insertarDetalleVenta(d);
             }
             
             conexion.commit();
+            
             //Venta Procesada
             this.closeModal();
             this.crearAlerta("Informacion", "La venta ha sido procesada por un total de Q." + venta.getTotalVenta() , mainView);
@@ -192,16 +202,62 @@ public class MainControl {
         //Listado para detallesPedidos
         List<Pedido> detalles = new ArrayList<>();
         productos.forEach((p) -> {
-            detalles.add(new Pedido(p.getCodigoProductos(), p.getStock(), p.getPrecio(), p.getSubTotal()));
+            detalles.add(new Pedido(p.getTiendasProductosId(), p.getCodigoProductos(), p.getStock(), p.getPrecio(), p.getSubTotal()));
         });
         
         double descuento = credito * -1;
         setNewPedido(cliente, nuevo, descuento, pedido, detalles);
     }
     
+    /**
+     * Metodo para insertar un nuevo pedido a la base de datos e ingresar o actualizar los datos del cliente que hace
+     * dicho pedido
+     * 
+     * @param cliente
+     * @param nuevo
+     * @param descuento
+     * @param pedido
+     * @param detalles 
+     */
     private void setNewPedido(Cliente cliente, boolean nuevo, double descuento, Pedido pedido, List<Pedido> detalles) {
-        //Write your code for transactioin Pedido
-        
+        //Write your code for transaction Pedido
+        Connection conexion = null;
+        try {
+            conexion = Conexion.getConnection();
+            conexion.setAutoCommit(false);
+            ClienteDAO operC = new ClienteDAO(conexion);
+            if(nuevo) {
+                operC.insertarCliente(cliente);
+            } else {
+                operC.updateCliente(cliente, descuento);
+            }
+            
+            PedidoDAO operP = new PedidoDAO(conexion);
+            int idPedido = operP.insertOrder(pedido);
+            
+            //Insertar detalle y actualizar existencias en tienda donde se hace el pedido
+            for(Pedido d : detalles) {
+                d.setId(idPedido);
+                operP.insertOrderDetail(d);
+            }
+            
+            conexion.commit();
+            
+            //Pedido procesado
+            this.closeModal();
+            double saldo = pedido.getTotalPedido() - pedido.getAnticipo();
+            this.crearAlerta("Informacion", "El codigo de su pedido es: " + idPedido + ", y tiene un saldo pendiente de Q" + saldo , mainView);
+            mainView.actualizarPedidos();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            try {
+                conexion.rollback();
+            } catch (SQLException ex1) {
+                ex.printStackTrace(System.out);
+            }
+        } finally {
+            Conexion.close(conexion);
+        }
     }
     
     public void setEmpleado(Empleado empleado) {
