@@ -13,6 +13,7 @@ public class Pedido {
     private String nitCliente;
     private int tiemposId;
     private java.sql.Date fechaPedido;
+    private double totalPedido;
     private double anticipo;
     private java.sql.Date fechaLlegada;
     private boolean entregado;
@@ -43,11 +44,12 @@ public class Pedido {
         this.anticipo = anticipo;
     }
     
-    public Pedido(String nitCliente, int tiemposId, Date fechaPedido, Date fechaLlegada, double anticipo) {
+    //Constructor para pedidos nuevos
+    public Pedido(String nitCliente, int tiemposId, Date fechaPedido, double totalPedido, double anticipo) {
         this.nitCliente = nitCliente;
         this.tiemposId = tiemposId;
         this.fechaPedido = fechaPedido;
-        this.fechaLlegada = fechaLlegada;
+        this.totalPedido = totalPedido;
         this.anticipo = anticipo;
     }
 
@@ -59,17 +61,11 @@ public class Pedido {
         this.anticipo = anticipo;
     }
     
-    //Constructores para detallesPedidos
-    public Pedido(int id, String codigoProducto, int cantidad, double subTotalPedido) {
-        this.id = id;
+    //Constructos para detallesPedidos
+    public Pedido(String codigoProducto, int cantidad, double precioVentaPedido, double subTotalPedido) {
         this.codigoProducto = codigoProducto;
         this.cantidad = cantidad;
-        this.subTotalPedido = subTotalPedido;
-    }
-
-    public Pedido(String codigoProducto, int cantidad, double subTotalPedido) {
-        this.codigoProducto = codigoProducto;
-        this.cantidad = cantidad;
+        this.precioVentaPedido = precioVentaPedido;
         this.subTotalPedido = subTotalPedido;
     }
 
@@ -103,6 +99,14 @@ public class Pedido {
 
     public void setFechaPedido(Date fechaPedido) {
         this.fechaPedido = fechaPedido;
+    }
+
+    public double getTotalPedido() {
+        return totalPedido;
+    }
+
+    public void setTotalPedido(double totalPedido) {
+        this.totalPedido = totalPedido;
     }
 
     public double getAnticipo() {

@@ -22,7 +22,7 @@ public class ClienteForPedido extends javax.swing.JPanel {
      */
     public ClienteForPedido() {
         initComponents();
-        anticipoText.setText("0");
+        anticipoEfectivoText.setText("0");
     }
 
     public void initializeControl(MainControl control, List<Producto> productosCliente, double total, double min, Tiempo tiempo) {
@@ -31,8 +31,8 @@ public class ClienteForPedido extends javax.swing.JPanel {
         this.total = total;
         this.min = min;
         this.tiempo = tiempo;
-        totalText.setText("Q. " + this.total);
-        minimoLabel.setText("Anticipo minimo: Q. " + this.min);
+        totalLabel.setText("Total: Q" + this.total);
+        minimoLabel.setText("Anticipo minimo: Q" + this.min);
     }
 
     private void setDatos() {
@@ -42,12 +42,14 @@ public class ClienteForPedido extends javax.swing.JPanel {
             dpiText.setText((cliente.getDpi() != null) ? cliente.getDpi() : "");
             emailText.setText((cliente.getEmail() != null) ? cliente.getEmail() : "");
             direccionText.setText((cliente.getDireccion() != null) ? cliente.getDireccion() : "");
+            creditoClienteLabel.setText("Credito Disponible: Q" + cliente.getCreditoCompra());
         } else {
             nombreText.setText("");
             telefonoText.setText("");
             dpiText.setText("");
             emailText.setText("");
             direccionText.setText("");
+            creditoClienteLabel.setText("Credito Disponible: Q0.00");
         }
     }
 
@@ -74,13 +76,15 @@ public class ClienteForPedido extends javax.swing.JPanel {
         direccionLabel = new javax.swing.JLabel();
         direccionText = new javax.swing.JTextField();
         totalLabel = new javax.swing.JLabel();
-        totalText = new javax.swing.JTextField();
         aceptarButton = new javax.swing.JButton();
         buscarButton = new javax.swing.JButton();
         cancelarButton = new javax.swing.JButton();
         anticipoLabel = new javax.swing.JLabel();
-        anticipoText = new javax.swing.JTextField();
+        anticipoEfectivoText = new javax.swing.JTextField();
         minimoLabel = new javax.swing.JLabel();
+        anticipoCreditoL = new javax.swing.JLabel();
+        anticipoCreditoText = new javax.swing.JTextField();
+        creditoClienteLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(248, 147, 31));
         setForeground(new java.awt.Color(0, 0, 0));
@@ -102,9 +106,9 @@ public class ClienteForPedido extends javax.swing.JPanel {
         nitLabel.setForeground(new java.awt.Color(0, 0, 0));
         nitLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         nitLabel.setText("NIT");
-        nitLabel.setMaximumSize(new java.awt.Dimension(90, 24));
-        nitLabel.setMinimumSize(new java.awt.Dimension(90, 24));
-        nitLabel.setPreferredSize(new java.awt.Dimension(90, 24));
+        nitLabel.setMaximumSize(new java.awt.Dimension(50, 24));
+        nitLabel.setMinimumSize(new java.awt.Dimension(50, 24));
+        nitLabel.setPreferredSize(new java.awt.Dimension(50, 24));
 
         nitText.setBackground(new java.awt.Color(255, 255, 255));
         nitText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
@@ -204,22 +208,14 @@ public class ClienteForPedido extends javax.swing.JPanel {
         direccionText.setPreferredSize(new java.awt.Dimension(402, 30));
 
         totalLabel.setBackground(new java.awt.Color(248, 147, 31));
-        totalLabel.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        totalLabel.setFont(new java.awt.Font("sansserif", 3, 16)); // NOI18N
         totalLabel.setForeground(new java.awt.Color(0, 0, 0));
-        totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         totalLabel.setText("Total");
-        totalLabel.setMaximumSize(new java.awt.Dimension(90, 24));
-        totalLabel.setMinimumSize(new java.awt.Dimension(90, 24));
-        totalLabel.setPreferredSize(new java.awt.Dimension(90, 24));
-
-        totalText.setEditable(false);
-        totalText.setBackground(new java.awt.Color(255, 255, 255));
-        totalText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        totalText.setForeground(new java.awt.Color(0, 0, 0));
-        totalText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        totalText.setText("Q. 0.00");
-        totalText.setMinimumSize(new java.awt.Dimension(150, 30));
-        totalText.setPreferredSize(new java.awt.Dimension(150, 30));
+        totalLabel.setToolTipText("");
+        totalLabel.setMaximumSize(new java.awt.Dimension(150, 24));
+        totalLabel.setMinimumSize(new java.awt.Dimension(150, 24));
+        totalLabel.setPreferredSize(new java.awt.Dimension(150, 24));
 
         aceptarButton.setBackground(new java.awt.Color(0, 0, 0));
         aceptarButton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
@@ -239,8 +235,9 @@ public class ClienteForPedido extends javax.swing.JPanel {
         buscarButton.setForeground(new java.awt.Color(248, 147, 31));
         buscarButton.setText("Buscar");
         buscarButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(248, 117, 12)));
-        buscarButton.setMinimumSize(new java.awt.Dimension(125, 32));
-        buscarButton.setPreferredSize(new java.awt.Dimension(125, 32));
+        buscarButton.setMaximumSize(new java.awt.Dimension(90, 25));
+        buscarButton.setMinimumSize(new java.awt.Dimension(90, 32));
+        buscarButton.setPreferredSize(new java.awt.Dimension(90, 32));
         buscarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarButtonActionPerformed(evt);
@@ -264,79 +261,112 @@ public class ClienteForPedido extends javax.swing.JPanel {
         anticipoLabel.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         anticipoLabel.setForeground(new java.awt.Color(0, 0, 0));
         anticipoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        anticipoLabel.setText("Anticipo");
+        anticipoLabel.setText("Anticipo Q.");
         anticipoLabel.setMaximumSize(new java.awt.Dimension(90, 24));
         anticipoLabel.setMinimumSize(new java.awt.Dimension(90, 24));
         anticipoLabel.setPreferredSize(new java.awt.Dimension(90, 24));
 
-        anticipoText.setBackground(new java.awt.Color(255, 255, 255));
-        anticipoText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        anticipoText.setForeground(new java.awt.Color(0, 0, 0));
-        anticipoText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        anticipoText.setMinimumSize(new java.awt.Dimension(150, 30));
-        anticipoText.setPreferredSize(new java.awt.Dimension(150, 30));
-        anticipoText.addKeyListener(new java.awt.event.KeyAdapter() {
+        anticipoEfectivoText.setBackground(new java.awt.Color(255, 255, 255));
+        anticipoEfectivoText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        anticipoEfectivoText.setForeground(new java.awt.Color(0, 0, 0));
+        anticipoEfectivoText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        anticipoEfectivoText.setMinimumSize(new java.awt.Dimension(150, 30));
+        anticipoEfectivoText.setPreferredSize(new java.awt.Dimension(150, 30));
+        anticipoEfectivoText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                anticipoTextKeyReleased(evt);
+                anticipoEfectivoTextKeyReleased(evt);
             }
         });
 
         minimoLabel.setBackground(new java.awt.Color(248, 147, 31));
         minimoLabel.setForeground(new java.awt.Color(255, 0, 0));
-        minimoLabel.setText("Minimo:");
-        minimoLabel.setMaximumSize(new java.awt.Dimension(150, 17));
-        minimoLabel.setMinimumSize(new java.awt.Dimension(150, 17));
-        minimoLabel.setPreferredSize(new java.awt.Dimension(150, 17));
+        minimoLabel.setText("Anticipo Minimo: Q");
+        minimoLabel.setMaximumSize(new java.awt.Dimension(240, 17));
+        minimoLabel.setMinimumSize(new java.awt.Dimension(240, 17));
+        minimoLabel.setPreferredSize(new java.awt.Dimension(240, 17));
+
+        anticipoCreditoL.setBackground(new java.awt.Color(248, 147, 31));
+        anticipoCreditoL.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        anticipoCreditoL.setForeground(new java.awt.Color(0, 0, 0));
+        anticipoCreditoL.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        anticipoCreditoL.setText("Ant. Credito");
+        anticipoCreditoL.setMaximumSize(new java.awt.Dimension(90, 24));
+        anticipoCreditoL.setMinimumSize(new java.awt.Dimension(90, 24));
+        anticipoCreditoL.setPreferredSize(new java.awt.Dimension(90, 24));
+
+        anticipoCreditoText.setBackground(new java.awt.Color(255, 255, 255));
+        anticipoCreditoText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        anticipoCreditoText.setForeground(new java.awt.Color(0, 0, 0));
+        anticipoCreditoText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        anticipoCreditoText.setMinimumSize(new java.awt.Dimension(150, 30));
+        anticipoCreditoText.setPreferredSize(new java.awt.Dimension(150, 30));
+        anticipoCreditoText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                anticipoCreditoTextKeyReleased(evt);
+            }
+        });
+
+        creditoClienteLabel.setBackground(new java.awt.Color(248, 147, 31));
+        creditoClienteLabel.setForeground(new java.awt.Color(255, 0, 0));
+        creditoClienteLabel.setText("Credito Disponible: Q");
+        creditoClienteLabel.setMaximumSize(new java.awt.Dimension(250, 17));
+        creditoClienteLabel.setMinimumSize(new java.awt.Dimension(250, 17));
+        creditoClienteLabel.setPreferredSize(new java.awt.Dimension(250, 17));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(informacionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                .addGap(150, 150, 150)
+                .addComponent(informacionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(telefonoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(direccionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(anticipoCreditoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(creditoClienteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(nitText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(nombreText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(emailText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(telefonoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(anticipoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dpiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dpiText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(direccionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(totalText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(anticipoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(minimoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(anticipoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                .addContainerGap(71, Short.MAX_VALUE))
+                                .addComponent(anticipoEfectivoText, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 35, Short.MAX_VALUE))
+                            .addComponent(minimoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(nitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(nitText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(telefonoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(direccionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(anticipoCreditoL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(nombreText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(emailText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(telefonoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(dpiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(dpiText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(direccionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +377,8 @@ public class ClienteForPedido extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nitText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -368,17 +399,19 @@ public class ClienteForPedido extends javax.swing.JPanel {
                     .addComponent(direccionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(totalText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(anticipoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(anticipoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(minimoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(anticipoCreditoL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(anticipoEfectivoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(anticipoCreditoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(creditoClienteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minimoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -396,52 +429,84 @@ public class ClienteForPedido extends javax.swing.JPanel {
         String dpi = dpiText.getText();
         String email = emailText.getText();
         String direccion = direccionText.getText();
-        String pago = anticipoText.getText();
+        String efectivoString = anticipoEfectivoText.getText();
+        String creditoString = anticipoCreditoText.getText();
         if (!nit.isEmpty() && !nombre.isEmpty() && !telefono.isEmpty()) {
-            double anticipo = getDescuentoDouble(pago);
-            if (anticipo >= this.min) {
-                if (anticipo <= this.total) {
-                    boolean nuevo = false;
-                    if (cliente != null) {
-                        cliente.setNombre(nombre);
-                        cliente.setTelefono(telefono);
-                        cliente.setDpi(!dpi.isEmpty() ? dpi : null);
-                        cliente.setEmail(!email.isEmpty() ? email : null);
-                        cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+            double efectivo = getNumberDouble(efectivoString);
+            double credito = getNumberDouble(creditoString);
+            if(credito >= 0) {
+                if(verificarCredito(credito)) {
+                    if(efectivo >= 0) {
+                        double totalAnticipo = efectivo + credito;
+                        if (totalAnticipo >= this.min) {
+                            if (totalAnticipo <= this.total) {
+                                boolean nuevo = false;
+                                if (cliente != null) {
+                                    cliente.setNombre(nombre);
+                                    cliente.setTelefono(telefono);
+                                    cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                                    cliente.setEmail(!email.isEmpty() ? email : null);
+                                    cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+                                } else {
+                                    cliente = new Cliente(nombre, telefono, 0);
+                                    cliente.setNit(nit);
+                                    cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                                    cliente.setEmail(!email.isEmpty() ? email : null);
+                                    cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+                                    nuevo = true;
+                                }
+                                //Enviar cliente y listado de productos para pedidos
+//                                System.out.println(cliente.toString());
+//                                System.out.println("Nuevo: " + nuevo);
+//                                System.out.println("Total: " +total);
+//                                System.out.println("Min: " + min);
+//                                System.out.println("AnticipoCredito " + credito);
+//                                System.out.println("AnticipoEfectivo " + efectivo);
+//                                System.out.println("AnticipoTotal " + totalAnticipo);
+//                                System.out.println("Tiempos: " + tiempo.toString());
+                                control.procesarPedido(cliente, nuevo, total, credito, efectivo, tiempo, productosCliente);
+                            } else {
+                                control.crearAlerta("Advertencia", "El anticipo(Q. " + totalAnticipo + ") no puede ser mayor que el total(Q. " + this.total + ")", null);
+                            }
+                        } else {
+                            control.crearAlerta("Error", "El anticipo minimo debe de ser: Q. " + this.min, null);
+                        }
                     } else {
-                        cliente = new Cliente(nombre, telefono, 0);
-                        cliente.setNit(nit);
-                        cliente.setDpi(!dpi.isEmpty() ? dpi : null);
-                        cliente.setEmail(!email.isEmpty() ? email : null);
-                        cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
-                        nuevo = true;
+                        control.crearAlerta("Error", "El valor ingresado para anticipo en efectivo no es valido", null);
+                        anticipoEfectivoText.setText("");
                     }
-                    //Enviar cliente y listado de productos para pedidos
-                    //control.procesarVenta(cliente, nuevo, descuento, total, productosCliente);
-                    System.out.println(cliente.toString());
-                    System.out.println("Total: " +total);
-                    System.out.println("Min: " + min);
-                    System.out.println("Anticipo " + anticipo);
-                    System.out.println("Tiempos: " + tiempo.toString());
                 } else {
-                    control.crearAlerta("Advertencia", "El anticipo(Q. " + anticipo + ") no puede ser mayor que el total(Q. " + this.total + ")", null);
+                    control.crearAlerta("Error", "El cliente no cuenta con credito sufuciente para esta transacción", null);
+                    anticipoCreditoText.setText("");            
                 }
-            } else {
-                control.crearAlerta("Error", "El anticipo minimo debe de ser: Q. " + this.min, null);
-                anticipoText.setText("");
+            }else {
+                control.crearAlerta("Error", "El valor ingresado para descuento por credito no es valido", null);
+                anticipoCreditoText.setText("");            
             }
         } else {
             control.crearAlerta("Error", "Debe llenar los campos nit, nombre y telefono", null);
         }
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
-    private double getDescuentoDouble(String descString) {
-        if (descString.isEmpty() || descString.isBlank()) {
+    private boolean verificarCredito(double credito) {
+        if(credito == 0) {
+            return true;
+        }
+        
+        if(cliente == null && credito > 0) {
+            return false;
+        }
+        
+        return cliente.getCreditoCompra() >= credito;
+    }
+    
+    private double getNumberDouble(String numberString) {
+        if (numberString.isEmpty() || numberString.isBlank()) {
             return 0;
         }
 
         try {
-            return Double.parseDouble(descString);
+            return Double.parseDouble(numberString);
         } catch (NumberFormatException e) {
             return -1;
         }
@@ -489,23 +554,30 @@ public class ClienteForPedido extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_nitTextKeyTyped
 
-    private void anticipoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_anticipoTextKeyReleased
+    private void anticipoEfectivoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_anticipoEfectivoTextKeyReleased
         // TODO add your handling code here:
-        String descuento = anticipoText.getText();
+        String descuento = anticipoEfectivoText.getText();
         Double credito = 0.0;
         try {
             credito = Double.parseDouble(descuento);
         } catch (NumberFormatException e) {
-            anticipoText.setText("");
+            anticipoEfectivoText.setText("");
         }
-    }//GEN-LAST:event_anticipoTextKeyReleased
+    }//GEN-LAST:event_anticipoEfectivoTextKeyReleased
+
+    private void anticipoCreditoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_anticipoCreditoTextKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_anticipoCreditoTextKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarButton;
+    private javax.swing.JLabel anticipoCreditoL;
+    private javax.swing.JTextField anticipoCreditoText;
+    private javax.swing.JTextField anticipoEfectivoText;
     private javax.swing.JLabel anticipoLabel;
-    private javax.swing.JTextField anticipoText;
     private javax.swing.JButton buscarButton;
     private javax.swing.JButton cancelarButton;
+    private javax.swing.JLabel creditoClienteLabel;
     private javax.swing.JLabel direccionLabel;
     private javax.swing.JTextField direccionText;
     private javax.swing.JLabel dpiLabel;
@@ -521,6 +593,5 @@ public class ClienteForPedido extends javax.swing.JPanel {
     private javax.swing.JLabel telefonoLabel;
     private javax.swing.JTextField telefonoText;
     private javax.swing.JLabel totalLabel;
-    private javax.swing.JTextField totalText;
     // End of variables declaration//GEN-END:variables
 }

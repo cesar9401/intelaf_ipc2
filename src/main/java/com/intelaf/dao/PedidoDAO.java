@@ -26,11 +26,11 @@ public class PedidoDAO {
      * @throws SQLException 
      */
     public void insertarPedido(Pedido pedido) throws SQLException {
-        String queryPedido = "INSERT INTO pedidos(id, clientesNit, tiemposId, fechaPedido, anticipo) "
+        String queryPedido = "INSERT INTO pedidos(id, clientesNit, tiemposId, fechaPedido, totalPedido, anticipo) "
                 + "VALUES (?, ?, "
                 + "(SELECT id FROM tiempos WHERE tiendasOrigen = ? AND tiendasDestino = ? LIMIT 1)"
-                + ", ?, ?)"
-                + " ON DUPLICATE KEY UPDATE id = id";
+                + ", ?, ?, ?)"
+                + " ON DUPLICATE KEY UPDATE totalPedido = totalPedido + ?";
         
         String queryDetallePedido = "INSERT INTO detallesPedidos(pedidosId, productosCodigo, cantidad, subTotalPedido) VALUES(?, ?, ?, ?)";
         
@@ -47,7 +47,9 @@ public class PedidoDAO {
             setPedido.setString(3, pedido.getTiendaOrigen());
             setPedido.setString(4, pedido.getTiendaDestino());
             setPedido.setDate(5, pedido.getFechaPedido());
-            setPedido.setDouble(6, pedido.getAnticipo());
+            setPedido.setDouble(6, pedido.getSubTotalPedido());
+            setPedido.setDouble(7, pedido.getAnticipo());
+            setPedido.setDouble(8, pedido.getSubTotalPedido());
             setPedido.executeUpdate();
                 
             setDetalleP = conexion.prepareStatement(queryDetallePedido);

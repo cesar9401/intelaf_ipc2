@@ -185,6 +185,25 @@ public class MainControl {
         }
     }
     
+    public void procesarPedido(Cliente cliente, boolean nuevo, double total, double credito, double efectivo, Tiempo tiempo, List<Producto> productos) {
+        //Crear pedido para tabla pedidos
+        Pedido pedido = new Pedido(cliente.getNit(), tiempo.getTiemposId(), this.date, total, (credito + efectivo));
+        
+        //Listado para detallesPedidos
+        List<Pedido> detalles = new ArrayList<>();
+        productos.forEach((p) -> {
+            detalles.add(new Pedido(p.getCodigoProductos(), p.getStock(), p.getPrecio(), p.getSubTotal()));
+        });
+        
+        double descuento = credito * -1;
+        setNewPedido(cliente, nuevo, descuento, pedido, detalles);
+    }
+    
+    private void setNewPedido(Cliente cliente, boolean nuevo, double descuento, Pedido pedido, List<Pedido> detalles) {
+        //Write your code for transactioin Pedido
+        
+    }
+    
     public void setEmpleado(Empleado empleado) {
         EmpleadoDAO operE = new EmpleadoDAO();
         int row = operE.createEmpleado(empleado);

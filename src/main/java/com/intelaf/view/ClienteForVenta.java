@@ -410,6 +410,7 @@ public class ClienteForVenta extends javax.swing.JPanel {
                     }
                 }else {
                     control.crearAlerta("Error", "El cliente no cuenta con credito sufuciente para esta transacción", null);
+                    descuentoText.setText("");
                 }
             } else {
                 control.crearAlerta("Error", "El valor ingresado para descuento no es valido", null);
