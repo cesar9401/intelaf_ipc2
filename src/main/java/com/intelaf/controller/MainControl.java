@@ -122,6 +122,13 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    public void modalOperacionesProducto(Producto producto) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationProducto(producto);
+        modal.setVisible(true);
+    }
+    
     public void closeModal() {
         modal.dispose();
     }    
@@ -321,6 +328,15 @@ public class MainControl {
         }
     }
     
+    public void updateProductos(Producto producto) {
+        ProductoDAO operP = new ProductoDAO();
+        operP.updateProducto(producto);
+        
+        this.crearAlerta("Informacion", "Se ha actualizado correctamente el producto " + producto.getCodigoProductos(), mainView);
+        this.closeModal();
+        mainView.actualizarProductos();
+    }
+    
     public void setUpdateTiempo(Tiempo tiempo) {
         Tiempo tmp = new Tiempo(tiempo.getTiendaDestino(), tiempo.getTiendaOrigen(), tiempo.getTiempoDias());
         Connection conexion = null;
@@ -412,6 +428,11 @@ public class MainControl {
     public List<Cliente> getClientes() {
         ClienteDAO operC = new ClienteDAO();
         return operC.getListCliente();
+    }
+    
+    public List<Producto> getProductos() {
+        ProductoDAO operP = new ProductoDAO();
+        return operP.getListProducto();
     }
     
     public List<Tienda> getTiendas() {

@@ -19,6 +19,7 @@ public class TiendasForModal extends javax.swing.JPanel {
      */
     public TiendasForModal() {
         initComponents();
+        isEdit = false;
     }
     
     public void initializeControl(MainControl control) {

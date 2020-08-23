@@ -60,6 +60,36 @@ public class ProductoDAO {
     }
     
     /**
+     * Metodo para obtener los productos en el inventario general o tabla productos
+     * @return 
+     */
+    public List<Producto> getListProducto() {
+        String query = "SELECT * FROM productos";
+        List<Producto> productos = new ArrayList<>();
+    
+        Connection conexion = null;
+        Statement getP = null;
+        ResultSet rs = null;
+        try { 
+            conexion = Conexion.getConnection();
+            getP = conexion.createStatement();
+            rs = getP.executeQuery(query);
+            
+            while(rs.next()) {
+                Producto tmp = new Producto(rs.getString("nombre"), rs.getString("fabricante"), rs.getString("codigo"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getInt("garantia"));
+                productos.add(tmp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getP);
+            Conexion.close(conexion);
+        }        
+        return productos;
+    }
+    
+    /**
      * Metodo para obtener un listado de productos según el codigo de tienda que se reciba como parametro
      * @param codigoTienda
      * @return 

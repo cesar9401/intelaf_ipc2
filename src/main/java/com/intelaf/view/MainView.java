@@ -20,10 +20,10 @@ public class MainView extends javax.swing.JFrame {
     private Empleado empleado;
     
     private MainPanel mainPanel;
-    //private VentaView venta;
     private UsuarioView usuario;
     private TiendaView tiendaView;
     private VentaPedidoView ventaPedido;
+    private ProductoView productoView;
     
     /**
      * Creates new form MainView
@@ -382,8 +382,21 @@ public class MainView extends javax.swing.JFrame {
     
     private void productosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productosButtonActionPerformed
         // TODO add your handling code here:
+        actualizarProductos();
     }//GEN-LAST:event_productosButtonActionPerformed
 
+    public void actualizarProductos() {
+        productoView = null;
+        productoView = new ProductoView();
+        
+       //Agregar al contenedor
+        this.contenedorPanel.removeAll();
+        this.contenedorPanel.setVisible(false);
+        productoView.initializeComponents(control);
+        this.contenedorPanel.add(productoView);
+        this.contenedorPanel.setVisible(true);       
+    }
+    
     private void reportesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_reportesButtonActionPerformed

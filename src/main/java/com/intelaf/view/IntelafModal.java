@@ -122,6 +122,16 @@ public class IntelafModal extends javax.swing.JDialog {
         this.contenedor.setVisible(true);
     }
     
+    public void initOperationProducto(Producto producto) {
+        ProductoForModal operP = new ProductoForModal();
+        operP.initializeControl(control);
+        operP.initializeProducto(producto);
+        this.contenedor.setVisible(false);
+        this.contenedor.removeAll();
+        this.contenedor.add(operP);
+        this.contenedor.setVisible(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedor;
     // End of variables declaration//GEN-END:variables
