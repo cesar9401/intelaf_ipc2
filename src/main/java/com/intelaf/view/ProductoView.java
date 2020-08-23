@@ -257,7 +257,8 @@ public class ProductoView extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = productosTable.getSelectedRow();
         if(row != -1) {
-            
+            control.modalOperacionesProductoStock(productos.get(row));
+            getDatosTienda();
         } else {
             control.crearAlerta("Error", "Debe seleccionar un producto para poder editarlo", null);
         }
@@ -268,6 +269,10 @@ public class ProductoView extends javax.swing.JPanel {
 
     private void tiendasComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tiendasComboItemStateChanged
         // TODO add your handling code here:
+        getDatosTienda();
+    }//GEN-LAST:event_tiendasComboItemStateChanged
+
+    private void getDatosTienda() {
         if(tiendasCombo.getSelectedIndex() != -1) {
             //Limpiar lista de productos
             productos.clear();
@@ -276,10 +281,10 @@ public class ProductoView extends javax.swing.JPanel {
             productos = control.getProductosTienda(tiendasCombo.getSelectedItem().toString());
 
             //Actualizar tabla por tienda
-            setTableByTienda();        
-        }
-    }//GEN-LAST:event_tiendasComboItemStateChanged
-
+            setTableByTienda();    
+        }    
+    }
+    
     private void productosTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosTableMouseClicked
         // TODO add your handling code here:
         int row = productosTable.getSelectedRow();

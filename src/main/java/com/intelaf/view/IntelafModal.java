@@ -15,12 +15,18 @@ public class IntelafModal extends javax.swing.JDialog {
     
     /**
      * Creates new form ClienteForVenta
+     * @param parent
+     * @param modal
      */
     public IntelafModal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setComponents();
+    }
+    
+    private void setComponents() {
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        this.setResizable(false);    
     }
     
     public void initializeControl(MainControl control) {
@@ -132,6 +138,16 @@ public class IntelafModal extends javax.swing.JDialog {
         this.contenedor.removeAll();
         this.contenedor.add(operP);
         this.contenedor.setVisible(true);
+    }
+    
+    public void initOperationStockProducto(Producto producto) {
+        ProductoStockModal operP = new ProductoStockModal();
+        operP.initializeControl(control);
+        operP.initializeProducto(producto);
+        this.contenedor.setVisible(false);
+        this.contenedor.removeAll();
+        this.contenedor.add(operP);
+        this.contenedor.setVisible(true);        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

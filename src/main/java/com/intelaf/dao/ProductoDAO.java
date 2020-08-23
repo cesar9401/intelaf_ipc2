@@ -225,7 +225,7 @@ public class ProductoDAO {
      * @return 
      */
     public int updateStockProductos(Producto producto) {
-        String query = "UPDATE tiendasProductos SET stockProductos = stockProductos + ? WHERE tiendasCodigo = ? AND productosCodigo = ?";
+        String query = "UPDATE tiendasProductos SET stockProductos = stockProductos + ? WHERE id = ?";
         int row = 0;
         
         Connection conexion = null;
@@ -234,8 +234,7 @@ public class ProductoDAO {
             conexion = Conexion.getConnection();
             updProd = conexion.prepareStatement(query);
             updProd.setInt(1, producto.getStock());
-            updProd.setString(2, producto.getCodigoTienda());
-            updProd.setString(3, producto.getCodigoProductos());
+            updProd.setInt(2, producto.getTiendasProductosId());
             
             row = updProd.executeUpdate();
         } catch (SQLException ex) {

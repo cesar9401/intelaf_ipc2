@@ -8,18 +8,18 @@ import com.intelaf.model.Producto;
  *
  * @author cesar31
  */
-public class ProductoForModal extends javax.swing.JPanel {
+public class ProductoStockModal extends javax.swing.JPanel {
 
     private MainControl control;
     private Producto producto;
-    private boolean isEdit;
+    private boolean isSetStock;
     
     /**
      * Creates new form createCliente
      */
-    public ProductoForModal() {
+    public ProductoStockModal() {
         initComponents();
-        isEdit = false;
+        isSetStock = false;
         informacionLabel.setText("Nuevo Producto");
     }
     
@@ -29,18 +29,18 @@ public class ProductoForModal extends javax.swing.JPanel {
     
     public void initializeProducto(Producto producto) {
         this.producto = producto;
-        isEdit = true;
+        isSetStock = true;
         setDatos();
     }
         
     private void setDatos() {
-        if(isEdit) {
-            codigoText.setEditable(false);
+        if(isSetStock) {
             informacionLabel.setText("Producto: " + producto.getCodigoProductos());
+            codigoLabel.setVisible(false);
+            productosCombo.setVisible(false);            
         }
         
         if(producto != null) {
-            codigoText.setText(producto.getCodigoProductos());
             nombreText.setText(producto.getNombre());
             fabricanteText.setText(producto.getFabricante());
             precioText.setText(String.valueOf(producto.getPrecio()));
@@ -59,8 +59,6 @@ public class ProductoForModal extends javax.swing.JPanel {
     private void initComponents() {
 
         informacionLabel = new javax.swing.JLabel();
-        codigoLabel = new javax.swing.JLabel();
-        codigoText = new javax.swing.JTextField();
         nombreLabel = new javax.swing.JLabel();
         nombreText = new javax.swing.JTextField();
         fabricanteLabel = new javax.swing.JLabel();
@@ -74,6 +72,10 @@ public class ProductoForModal extends javax.swing.JPanel {
         garantiaText = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionText = new javax.swing.JTextArea();
+        codigoLabel = new javax.swing.JLabel();
+        productosCombo = new javax.swing.JComboBox<>();
+        stockLabel = new javax.swing.JLabel();
+        stockText = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(248, 147, 31));
         setForeground(new java.awt.Color(0, 0, 0));
@@ -86,35 +88,9 @@ public class ProductoForModal extends javax.swing.JPanel {
         informacionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         informacionLabel.setText("Producto");
         informacionLabel.setToolTipText("");
-        informacionLabel.setMaximumSize(new java.awt.Dimension(300, 30));
-        informacionLabel.setMinimumSize(new java.awt.Dimension(300, 30));
-        informacionLabel.setPreferredSize(new java.awt.Dimension(300, 30));
-
-        codigoLabel.setBackground(new java.awt.Color(248, 147, 31));
-        codigoLabel.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
-        codigoLabel.setForeground(new java.awt.Color(0, 0, 0));
-        codigoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        codigoLabel.setText("Codigo");
-        codigoLabel.setMaximumSize(new java.awt.Dimension(90, 24));
-        codigoLabel.setMinimumSize(new java.awt.Dimension(90, 24));
-        codigoLabel.setPreferredSize(new java.awt.Dimension(90, 24));
-
-        codigoText.setBackground(new java.awt.Color(255, 255, 255));
-        codigoText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        codigoText.setForeground(new java.awt.Color(0, 0, 0));
-        codigoText.setMinimumSize(new java.awt.Dimension(150, 30));
-        codigoText.setPreferredSize(new java.awt.Dimension(150, 30));
-        codigoText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                codigoTextKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                codigoTextKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                codigoTextKeyTyped(evt);
-            }
-        });
+        informacionLabel.setMaximumSize(new java.awt.Dimension(516, 30));
+        informacionLabel.setMinimumSize(new java.awt.Dimension(516, 30));
+        informacionLabel.setPreferredSize(new java.awt.Dimension(516, 30));
 
         nombreLabel.setBackground(new java.awt.Color(248, 147, 31));
         nombreLabel.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
@@ -125,6 +101,7 @@ public class ProductoForModal extends javax.swing.JPanel {
         nombreLabel.setMinimumSize(new java.awt.Dimension(90, 24));
         nombreLabel.setPreferredSize(new java.awt.Dimension(90, 24));
 
+        nombreText.setEditable(false);
         nombreText.setBackground(new java.awt.Color(255, 255, 255));
         nombreText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         nombreText.setForeground(new java.awt.Color(0, 0, 0));
@@ -141,6 +118,7 @@ public class ProductoForModal extends javax.swing.JPanel {
         fabricanteLabel.setMinimumSize(new java.awt.Dimension(90, 24));
         fabricanteLabel.setPreferredSize(new java.awt.Dimension(90, 24));
 
+        fabricanteText.setEditable(false);
         fabricanteText.setBackground(new java.awt.Color(255, 255, 255));
         fabricanteText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         fabricanteText.setForeground(new java.awt.Color(0, 0, 0));
@@ -166,6 +144,7 @@ public class ProductoForModal extends javax.swing.JPanel {
         precioLabel.setMinimumSize(new java.awt.Dimension(90, 24));
         precioLabel.setPreferredSize(new java.awt.Dimension(90, 24));
 
+        precioText.setEditable(false);
         precioText.setBackground(new java.awt.Color(255, 255, 255));
         precioText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         precioText.setForeground(new java.awt.Color(0, 0, 0));
@@ -208,6 +187,7 @@ public class ProductoForModal extends javax.swing.JPanel {
         garantiaLabel.setMinimumSize(new java.awt.Dimension(90, 24));
         garantiaLabel.setPreferredSize(new java.awt.Dimension(90, 24));
 
+        garantiaText.setEditable(false);
         garantiaText.setBackground(new java.awt.Color(255, 255, 255));
         garantiaText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         garantiaText.setForeground(new java.awt.Color(0, 0, 0));
@@ -217,6 +197,7 @@ public class ProductoForModal extends javax.swing.JPanel {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(414, 80));
 
+        descriptionText.setEditable(false);
         descriptionText.setBackground(new java.awt.Color(255, 255, 255));
         descriptionText.setColumns(20);
         descriptionText.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -226,52 +207,88 @@ public class ProductoForModal extends javax.swing.JPanel {
         descriptionText.setPreferredSize(new java.awt.Dimension(414, 80));
         jScrollPane1.setViewportView(descriptionText);
 
+        codigoLabel.setBackground(new java.awt.Color(248, 147, 31));
+        codigoLabel.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        codigoLabel.setForeground(new java.awt.Color(0, 0, 0));
+        codigoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        codigoLabel.setText("Codigo");
+        codigoLabel.setMaximumSize(new java.awt.Dimension(90, 24));
+        codigoLabel.setMinimumSize(new java.awt.Dimension(90, 24));
+        codigoLabel.setPreferredSize(new java.awt.Dimension(90, 24));
+
+        productosCombo.setBackground(new java.awt.Color(0, 0, 0));
+        productosCombo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        productosCombo.setForeground(new java.awt.Color(248, 147, 31));
+        productosCombo.setPreferredSize(new java.awt.Dimension(150, 32));
+
+        stockLabel.setBackground(new java.awt.Color(248, 147, 31));
+        stockLabel.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        stockLabel.setForeground(new java.awt.Color(0, 0, 0));
+        stockLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        stockLabel.setText("+ Stock");
+        stockLabel.setMaximumSize(new java.awt.Dimension(90, 24));
+        stockLabel.setMinimumSize(new java.awt.Dimension(90, 24));
+        stockLabel.setPreferredSize(new java.awt.Dimension(90, 24));
+
+        stockText.setBackground(new java.awt.Color(255, 255, 255));
+        stockText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        stockText.setForeground(new java.awt.Color(0, 0, 0));
+        stockText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        stockText.setMinimumSize(new java.awt.Dimension(150, 30));
+        stockText.setPreferredSize(new java.awt.Dimension(150, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(144, 144, 144))
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(informacionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(informacionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(codigoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fabricanteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(descripcionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(codigoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(precioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(codigoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombreText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fabricanteText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(precioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(productosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(garantiaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(garantiaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41)
-                                .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(fabricanteText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nombreText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(precioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(stockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(stockText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(21, 21, 21)
                 .addComponent(informacionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(garantiaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(garantiaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(codigoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codigoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(productosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -280,23 +297,22 @@ public class ProductoForModal extends javax.swing.JPanel {
                     .addComponent(fabricanteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fabricanteText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(garantiaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(garantiaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(descripcionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(descripcionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(precioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(precioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(stockText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(stockLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                    .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -306,67 +322,34 @@ public class ProductoForModal extends javax.swing.JPanel {
      */
     private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
         // TODO add your handling code here:
-        String codigo = codigoText.getText();
-        String nombre = nombreText.getText();
-        String fabricante = fabricanteText.getText();
-        String garantiaString = garantiaText.getText();
-        String precioString = precioText.getText();
-        String description = descriptionText.getText();
-        
-        if(!codigo.isEmpty() && !nombre.isEmpty() && !fabricante.isEmpty() && !precioString.isEmpty()) {
-            double precio = getDouble(precioString);
-            if(precio > 0) {
-                int garantia = getInteger(garantiaString);
-                if(garantia >= 0) {
-                    if(isEdit) {
-                        producto.setNombre(nombre);
-                        producto.setFabricante(fabricante);
-                        producto.setPrecio(precio);
-                        producto.setGarantia(garantia);
-                        producto.setDescripcion(description.isEmpty() ? null : description);
-                        
-                        control.updateProductos(producto);
-                    } else {
-                        if(producto == null) {
-                            producto = new Producto(nombre, fabricante, codigo, precio, (description.isEmpty() || description.isBlank() ? null : description), garantia);
-                            control.insertProduct(producto);
-                        } else {
-                            control.crearAlerta("Advertencia", "El codigo del producto ingresado ya existe", null);
-                            codigoText.setText("");
-                        }
-                    }
+        String stockString = stockText.getText();
+        int stock = getInteger(stockString);
+        if(stock > 0) {
+            if(isSetStock) {
+                producto.setStock(stock);
+                int row = control.updatStockProduct(producto);
+                if(row > 0) {
+                    control.crearAlerta("Informacion", "Se han agregado exitosamente " + stock + " unidades al producto " + producto.getCodigoProductos(), null);
+                    control.closeModal();
                 } else {
-                    control.crearAlerta("Error", "El valor que indico para la garantia no es valido", null);
-                    garantiaText.setText("");
+                    control.crearAlerta("Error", "Algo ha fallado, intentalo mas tarde", null);
+                    control.closeModal();
                 }
-            }else {
-                control.crearAlerta("Error", "El valor que indico para el precio no es valido", null);
-                precioText.setText("");
+            } else {
+                //Write your code por new products here
             }
         } else {
-            control.crearAlerta("Error", "Debe llenar los campos codigo, nombre, telefono y precio", null);
+            control.crearAlerta("Error", "El valor indicado para agregar existencias no es valido", null);
         }
     }//GEN-LAST:event_aceptarButtonActionPerformed
-   
-    private double getDouble(String precioString) {
-        if(precioString.isEmpty() || precioString.isBlank()) {
-            return 0;
-        }
-        
-        try {
-            return Double.parseDouble(precioString);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
     
-    private int getInteger(String garantiaString) {
-        if(garantiaString.isEmpty() || garantiaString.isBlank()) {
+    private int getInteger(String stockString) {
+        if(stockString.isEmpty() || stockString.isBlank()) {
             return 0;
         }
         
         try {
-            return Integer.parseInt(garantiaString);
+            return Integer.parseInt(stockString);
         } catch (NumberFormatException e) {
             return -1;
         }        
@@ -377,32 +360,10 @@ public class ProductoForModal extends javax.swing.JPanel {
         control.closeModal();
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
-    private void codigoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTextKeyReleased
-        // TODO add your handling code here:
-        String codigo = codigoText.getText();
-        if(!codigo.isEmpty() && !codigo.isEmpty()) {
-            this.producto = control.getProducto(codigo);
-        } else {
-            this.producto = null;
-        }
-    }//GEN-LAST:event_codigoTextKeyReleased
-
-    private void codigoTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTextKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_codigoTextKeyPressed
-
-    private void codigoTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTextKeyTyped
-        // TODO add your handling code here:
-        if(codigoText.getText().length() == 10) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_codigoTextKeyTyped
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarButton;
     private javax.swing.JButton cancelarButton;
     private javax.swing.JLabel codigoLabel;
-    private javax.swing.JTextField codigoText;
     private javax.swing.JLabel descripcionLabel;
     private javax.swing.JTextArea descriptionText;
     private javax.swing.JLabel fabricanteLabel;
@@ -415,5 +376,8 @@ public class ProductoForModal extends javax.swing.JPanel {
     private javax.swing.JTextField nombreText;
     private javax.swing.JLabel precioLabel;
     private javax.swing.JTextField precioText;
+    private javax.swing.JComboBox<String> productosCombo;
+    private javax.swing.JLabel stockLabel;
+    private javax.swing.JTextField stockText;
     // End of variables declaration//GEN-END:variables
 }

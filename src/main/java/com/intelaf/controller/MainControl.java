@@ -129,6 +129,13 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    public void modalOperacionesProductoStock(Producto producto) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationStockProducto(producto);
+        modal.setVisible(true);
+    }
+    
     public void closeModal() {
         modal.dispose();
     }    
@@ -352,6 +359,11 @@ public class MainControl {
         this.crearAlerta("Informacion", "Se ha actualizado correctamente el producto " + producto.getCodigoProductos(), mainView);
         this.closeModal();
         mainView.actualizarProductos();
+    }
+    
+    public int updatStockProduct(Producto producto) {
+        ProductoDAO operP = new ProductoDAO();
+        return operP.updateStockProductos(producto);
     }
     
     public void setUpdateTiempo(Tiempo tiempo) {
