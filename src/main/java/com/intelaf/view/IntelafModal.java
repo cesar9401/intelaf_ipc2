@@ -125,7 +125,9 @@ public class IntelafModal extends javax.swing.JDialog {
     public void initOperationProducto(Producto producto) {
         ProductoForModal operP = new ProductoForModal();
         operP.initializeControl(control);
-        operP.initializeProducto(producto);
+        if(producto != null) {
+            operP.initializeProducto(producto);
+        }
         this.contenedor.setVisible(false);
         this.contenedor.removeAll();
         this.contenedor.add(operP);

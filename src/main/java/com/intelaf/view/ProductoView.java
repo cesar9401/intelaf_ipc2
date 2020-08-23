@@ -240,7 +240,7 @@ public class ProductoView extends javax.swing.JPanel {
             
     private void nuevoProductoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoProductoButtonActionPerformed
         // TODO add your handling code here:
-
+        control.modalOperacionesProducto(null);
     }//GEN-LAST:event_nuevoProductoButtonActionPerformed
 
     private void editarProductoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarProductoButtonActionPerformed

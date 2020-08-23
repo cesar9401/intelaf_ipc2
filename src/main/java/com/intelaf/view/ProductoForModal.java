@@ -20,7 +20,6 @@ public class ProductoForModal extends javax.swing.JPanel {
     public ProductoForModal() {
         initComponents();
         isEdit = false;
-        garantiaText.setText("0");
     }
     
     public void initializeControl(MainControl control) {
@@ -47,8 +46,6 @@ public class ProductoForModal extends javax.swing.JPanel {
             precioText.setText(String.valueOf(producto.getPrecio()));
             garantiaText.setText(String.valueOf(producto.getGarantia()));
             descriptionText.setText(producto.getDescripcion());
-        }else {
-
         }
     }
 
@@ -72,7 +69,6 @@ public class ProductoForModal extends javax.swing.JPanel {
         precioLabel = new javax.swing.JLabel();
         precioText = new javax.swing.JTextField();
         aceptarButton = new javax.swing.JButton();
-        buscarButton = new javax.swing.JButton();
         cancelarButton = new javax.swing.JButton();
         garantiaLabel = new javax.swing.JLabel();
         garantiaText = new javax.swing.JTextField();
@@ -174,7 +170,6 @@ public class ProductoForModal extends javax.swing.JPanel {
         precioText.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         precioText.setForeground(new java.awt.Color(0, 0, 0));
         precioText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        precioText.setText("Q. 0.00");
         precioText.setMinimumSize(new java.awt.Dimension(150, 30));
         precioText.setPreferredSize(new java.awt.Dimension(150, 30));
 
@@ -188,19 +183,6 @@ public class ProductoForModal extends javax.swing.JPanel {
         aceptarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aceptarButtonActionPerformed(evt);
-            }
-        });
-
-        buscarButton.setBackground(new java.awt.Color(0, 0, 0));
-        buscarButton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        buscarButton.setForeground(new java.awt.Color(248, 147, 31));
-        buscarButton.setText("Buscar");
-        buscarButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(248, 117, 12)));
-        buscarButton.setMinimumSize(new java.awt.Dimension(125, 32));
-        buscarButton.setPreferredSize(new java.awt.Dimension(125, 32));
-        buscarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarButtonActionPerformed(evt);
             }
         });
 
@@ -263,10 +245,7 @@ public class ProductoForModal extends javax.swing.JPanel {
                             .addComponent(precioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(codigoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(codigoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nombreText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(fabricanteText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -291,8 +270,7 @@ public class ProductoForModal extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(codigoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codigoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(codigoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -318,7 +296,7 @@ public class ProductoForModal extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -345,11 +323,17 @@ public class ProductoForModal extends javax.swing.JPanel {
                         producto.setFabricante(fabricante);
                         producto.setPrecio(precio);
                         producto.setGarantia(garantia);
-                        producto.setDescripcion(description);
+                        producto.setDescripcion(description.isEmpty() ? null : description);
                         
                         control.updateProductos(producto);
                     } else {
-                    
+                        if(producto == null) {
+                            producto = new Producto(nombre, fabricante, codigo, precio, (description.isEmpty() || description.isBlank() ? null : description), garantia);
+                            control.insertProduct(producto);
+                        } else {
+                            control.crearAlerta("Advertencia", "El codigo del producto ingresado ya existe", null);
+                            codigoText.setText("");
+                        }
                     }
                 } else {
                     control.crearAlerta("Error", "El valor que indico para la garantia no es valido", null);
@@ -393,13 +377,14 @@ public class ProductoForModal extends javax.swing.JPanel {
         control.closeModal();
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
-    private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
-        // TODO add your handling code here:
-        String codigo = codigoText.getText();
-    }//GEN-LAST:event_buscarButtonActionPerformed
-
     private void codigoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTextKeyReleased
         // TODO add your handling code here:
+        String codigo = codigoText.getText();
+        if(!codigo.isEmpty() && !codigo.isEmpty()) {
+            this.producto = control.getProducto(codigo);
+        } else {
+            this.producto = null;
+        }
     }//GEN-LAST:event_codigoTextKeyReleased
 
     private void codigoTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTextKeyPressed
@@ -415,7 +400,6 @@ public class ProductoForModal extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarButton;
-    private javax.swing.JButton buscarButton;
     private javax.swing.JButton cancelarButton;
     private javax.swing.JLabel codigoLabel;
     private javax.swing.JTextField codigoText;

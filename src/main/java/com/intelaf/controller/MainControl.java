@@ -328,6 +328,23 @@ public class MainControl {
         }
     }
     
+    /**
+     * Metodo para insertar productos nuevos a la tabla productos
+     * @param producto 
+     */
+    public void insertProduct(Producto producto) {
+        ProductoDAO operP = new ProductoDAO();
+        operP.insertProduct(producto);
+        
+        this.crearAlerta("Informacion", "Se ha agregado exitosamente el producto " + producto.getCodigoProductos(), mainView);
+        this.closeModal();
+        mainView.actualizarProductos();        
+    }
+    
+    /**
+     * Metodo para actualizar informacion de los productos en la base de datos
+     * @param producto 
+     */
     public void updateProductos(Producto producto) {
         ProductoDAO operP = new ProductoDAO();
         operP.updateProducto(producto);
@@ -433,6 +450,11 @@ public class MainControl {
     public List<Producto> getProductos() {
         ProductoDAO operP = new ProductoDAO();
         return operP.getListProducto();
+    }
+    
+    public Producto getProducto(String codigo) {
+        ProductoDAO operP = new ProductoDAO();
+        return operP.getProducto(codigo);
     }
     
     public List<Tienda> getTiendas() {

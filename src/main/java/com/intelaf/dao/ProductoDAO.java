@@ -60,6 +60,35 @@ public class ProductoDAO {
     }
     
     /**
+     * Metodo para insertar un nuevo producto al invetario general
+     * o tabla productos
+     * @param producto 
+     */
+    public void insertProduct(Producto producto) {
+        String query = "INSERT INTO productos(codigo, nombre, fabricante, precio, descripcion, garantia) VALUES(?, ?, ?, ?, ?, ?)";
+        
+        Connection conexion = null;
+        PreparedStatement setP = null;
+        try {
+            conexion = Conexion.getConnection();
+            setP = conexion.prepareStatement(query);
+            setP.setString(1, producto.getCodigoProductos());
+            setP.setString(2, producto.getNombre());
+            setP.setString(3, producto.getFabricante());
+            setP.setDouble(4, producto.getPrecio());
+            setP.setString(5, producto.getDescripcion());
+            setP.setInt(6, producto.getGarantia());
+            setP.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(setP);
+            Conexion.close(conexion);
+        }
+    }
+    
+    /**
      * Metodo para obtener los productos en el inventario general o tabla productos
      * @return 
      */
@@ -87,6 +116,36 @@ public class ProductoDAO {
             Conexion.close(conexion);
         }        
         return productos;
+    }
+    
+    /**
+     * Metodo para obtener un producto dependiendo de su codigo
+     * @param codigo
+     * @return 
+     */
+    public Producto getProducto(String codigo) {
+        String query = "SELECT * FROM productos WHERE codigo = ?";
+        Producto tmp = null;
+        
+        Connection conexion = null;
+        PreparedStatement getP = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getP = conexion.prepareStatement(query);
+            getP.setString(1, codigo);
+            rs = getP.executeQuery();
+            if(rs.next()) {
+                tmp = new Producto(rs.getString("nombre"), rs.getString("fabricante"), rs.getString("codigo"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getInt("garantia"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getP);
+            Conexion.close(conexion);
+        }
+        return tmp;
     }
     
     /**
