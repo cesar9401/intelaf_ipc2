@@ -3,6 +3,7 @@ package com.intelaf.view;
 
 import com.intelaf.controller.MainControl;
 import com.intelaf.model.Producto;
+import java.util.List;
 
 /**
  *
@@ -13,6 +14,8 @@ public class ProductoStockModal extends javax.swing.JPanel {
     private MainControl control;
     private Producto producto;
     private boolean isSetStock;
+    private List<Producto> notInStore;
+    private String store;
     
     /**
      * Creates new form createCliente
@@ -31,6 +34,16 @@ public class ProductoStockModal extends javax.swing.JPanel {
         this.producto = producto;
         isSetStock = true;
         setDatos();
+    }
+    
+    public void initializeStringStore(String store) {
+        this.store = store;
+        this.notInStore = control.getListProductsNotInStore(this.store);
+        this.notInStore.forEach((p) -> {
+            this.productosCombo.addItem(p.getCodigoProductos());
+            System.out.println(p.getCodigoProductos());
+            System.out.println("Store: " + this.store);
+        });
     }
         
     private void setDatos() {
@@ -337,6 +350,7 @@ public class ProductoStockModal extends javax.swing.JPanel {
                 }
             } else {
                 //Write your code por new products here
+                
             }
         } else {
             control.crearAlerta("Error", "El valor indicado para agregar existencias no es valido", null);

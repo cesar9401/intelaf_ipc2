@@ -264,9 +264,6 @@ public class ProductoView extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_agregarStockButtonActionPerformed
 
-    private void agregarProductoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarProductoTiendaActionPerformed
-    }//GEN-LAST:event_agregarProductoTiendaActionPerformed
-
     private void tiendasComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tiendasComboItemStateChanged
         // TODO add your handling code here:
         getDatosTienda();
@@ -299,7 +296,14 @@ public class ProductoView extends javax.swing.JPanel {
         actualizarDatos();
     }//GEN-LAST:event_tipoTransaccionItemStateChanged
 
-   
+    private void agregarProductoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarProductoTiendaActionPerformed
+        // TODO add your handling code here:
+        if(tiendasCombo.getSelectedIndex() != -1) {
+            String codigoTienda = tiendasCombo.getSelectedItem().toString();
+            control.modalOperacionesProductoStock(codigoTienda);
+        }
+    }//GEN-LAST:event_agregarProductoTiendaActionPerformed
+
     private void actualizarDatos() {
         //Limpiar listas
         productos.clear();

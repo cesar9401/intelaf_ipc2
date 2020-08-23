@@ -5,6 +5,8 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Producto;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -146,6 +148,35 @@ public class ProductoDAO {
             Conexion.close(conexion);
         }
         return tmp;
+    }
+    
+    public List<Producto> getListProductsNotInStore(String codigoTienda) {
+        List<Producto> productos = new ArrayList<>();
+        String query = "SELECT p.codigo, p.nombre, p.fabricante, p.precio, p.descripcion, p.garantia FROM productos AS p LEFT JOIN "
+                + "(SELECT * FROM tiendasProductos WHERE tiendasCodigo = ?) AS t ON p.codigo = t.productosCodigo WHERE productosCodigo IS NULL";
+        
+        Connection conexion = null;
+        PreparedStatement getP = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getP = conexion.prepareStatement(query);
+            getP.setString(1, codigoTienda);
+            rs = getP.executeQuery();
+            
+            while(rs.next()) {
+                Producto tmp = new Producto(rs.getString("nombre"), rs.getString("fabricante"), rs.getString("codigo"), rs.getDouble("precio"), rs.getString("descripcion"), rs.getInt("garantia"));
+                productos.add(tmp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getP);
+            Conexion.close(conexion);
+        }
+        
+        return productos;
     }
     
     /**

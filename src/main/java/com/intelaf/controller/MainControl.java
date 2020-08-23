@@ -136,6 +136,13 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    public void modalOperacionesProductoStock(String codigoTienda) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationStockProducto(codigoTienda);
+        modal.setVisible(true);    
+    }
+    
     public void closeModal() {
         modal.dispose();
     }    
@@ -502,6 +509,11 @@ public class MainControl {
     public List<Producto> getProductosTienda(String codigo) {
         ProductoDAO operaciones = new ProductoDAO();
         return operaciones.getListProductobyStore(codigo);
+    }
+    
+    public List<Producto> getListProductsNotInStore(String codigoTienda) {
+        ProductoDAO operP = new ProductoDAO();
+        return operP.getListProductsNotInStore(codigoTienda);
     }
     
     public Tienda getTienda(String codigo) {
