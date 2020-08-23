@@ -355,6 +355,17 @@ public class MainControl {
         mainView.actualizarProductos();        
     }
     
+    public void insertStockProducto(Producto producto) {
+        ProductoDAO operP = new ProductoDAO();
+        operP.insertStockProductos(producto);
+        
+        //Actualizar tabla de tienda
+        this.mainView.updateDateStore();
+        this.crearAlerta("Informacion", "Se ha ingresado correctamente " + producto.getStock() + " articulos del producto " + producto.getCodigoProductos(), mainView);
+        this.closeModal();
+        this.modalOperacionesProductoStock(producto.getCodigoTienda());
+    }
+    
     /**
      * Metodo para actualizar informacion de los productos en la base de datos
      * @param producto 

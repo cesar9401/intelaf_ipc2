@@ -42,7 +42,6 @@ public class ProductoStockModal extends javax.swing.JPanel {
         this.notInStore.forEach((p) -> {
             this.productosCombo.addItem(p.getCodigoProductos());
             System.out.println(p.getCodigoProductos());
-            System.out.println("Store: " + this.store);
         });
     }
         
@@ -233,6 +232,11 @@ public class ProductoStockModal extends javax.swing.JPanel {
         productosCombo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         productosCombo.setForeground(new java.awt.Color(248, 147, 31));
         productosCombo.setPreferredSize(new java.awt.Dimension(150, 32));
+        productosCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                productosComboItemStateChanged(evt);
+            }
+        });
 
         stockLabel.setBackground(new java.awt.Color(248, 147, 31));
         stockLabel.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
@@ -350,10 +354,19 @@ public class ProductoStockModal extends javax.swing.JPanel {
                 }
             } else {
                 //Write your code por new products here
-                
+                if(producto != null) {
+                    producto.setStock(stock);
+                    producto.setCodigoTienda(this.store);
+                    
+                    //Insertar a la base de datos
+                    control.insertStockProducto(producto);
+                } else {
+                    control.crearAlerta("Error", "Debe seleccionar un producto para poder proceder", null);
+                }
             }
         } else {
             control.crearAlerta("Error", "El valor indicado para agregar existencias no es valido", null);
+            stockText.setText("");
         }
     }//GEN-LAST:event_aceptarButtonActionPerformed
     
@@ -373,6 +386,15 @@ public class ProductoStockModal extends javax.swing.JPanel {
         // TODO add your handling code here:
         control.closeModal();
     }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void productosComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productosComboItemStateChanged
+        // TODO add your handling code here:
+        int selected = productosCombo.getSelectedIndex();
+        if(selected != -1) {
+            this.producto = notInStore.get(selected);
+            setDatos();
+        }
+    }//GEN-LAST:event_productosComboItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarButton;

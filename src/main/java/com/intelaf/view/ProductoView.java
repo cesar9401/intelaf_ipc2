@@ -344,6 +344,17 @@ public class ProductoView extends javax.swing.JPanel {
         }        
     }
     
+    public void updateDataStore() {
+        //Limpiar lista
+        productos.clear();
+        
+        //Actualizar lista de productos
+        productos = control.getProductosTienda(tiendasCombo.getSelectedItem().toString());
+            
+        //Actualizar tabla por tienda
+        setTableByTienda();    
+    }
+    
     /**
      * Metodo para agregar los productos de la tienda traidos de la base de datos a la tabla
      */

@@ -5,8 +5,6 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.model.Producto;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -86,6 +84,31 @@ public class ProductoDAO {
             ex.printStackTrace(System.out);
         } finally {
             Conexion.close(setP);
+            Conexion.close(conexion);
+        }
+    }
+    
+    /**
+     * Metodo para insertar nu nuevo producto a una tienda que ya este en el inventario general
+     * @param producto
+     */
+    public void insertStockProductos(Producto producto) {
+        String query = "INSERT INTO tiendasProductos (tiendasCodigo, productosCodigo, stockProductos) VALUES(?, ?, ?)";
+        
+        Connection conexion = null;
+        PreparedStatement setS = null;
+        try {
+            conexion = Conexion.getConnection();
+            setS = conexion.prepareStatement(query);
+            setS.setString(1, producto.getCodigoTienda());
+            setS.setString(2, producto.getCodigoProductos());
+            setS.setInt(3, producto.getStock());
+            
+            setS.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(setS);
             Conexion.close(conexion);
         }
     }

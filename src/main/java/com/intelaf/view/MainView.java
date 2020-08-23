@@ -397,6 +397,12 @@ public class MainView extends javax.swing.JFrame {
         this.contenedorPanel.setVisible(true);       
     }
     
+    public void updateDateStore() {
+        if(productoView != null) {
+            productoView.updateDataStore();
+        }
+    }
+    
     private void reportesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_reportesButtonActionPerformed
