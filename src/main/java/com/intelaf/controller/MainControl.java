@@ -19,6 +19,7 @@ public class MainControl {
     private Login login;
     private MainView mainView;
     private IntelafModal modal;    
+    private ProcesarPedidoModal procesarPedido;
   
     public MainControl() {
     }
@@ -141,6 +142,16 @@ public class MainControl {
         modal.initializeControl(this);
         modal.initOperationStockProducto(codigoTienda);
         modal.setVisible(true);    
+    }
+    
+    public void initProcesarPedidoModal(Pedido pedido, boolean isHoy, boolean isProcesar) {
+        procesarPedido = new ProcesarPedidoModal(mainView, true);
+        procesarPedido.initializeControl(this, pedido, isHoy, isProcesar);
+        procesarPedido.setVisible(true);
+    }
+    
+    public void closeProcesarPedido() {
+        procesarPedido.dispose();
     }
     
     public void closeModal() {
@@ -360,7 +371,7 @@ public class MainControl {
         operP.insertStockProductos(producto);
         
         //Actualizar tabla de tienda
-        this.mainView.updateDateStore();
+        this.mainView.updateDataStore();
         this.crearAlerta("Informacion", "Se ha ingresado correctamente " + producto.getStock() + " articulos del producto " + producto.getCodigoProductos(), mainView);
         this.closeModal();
         this.modalOperacionesProductoStock(producto.getCodigoTienda());
@@ -454,6 +465,16 @@ public class MainControl {
         }
     }
     
+    public void updatePedidoInStore(Pedido pedido) {
+        PedidoDAO operP = new PedidoDAO();
+        operP.updatePedidoInStore(pedido);
+        
+        //Write your code for update data on view
+        this.crearAlerta("Informacion", "Se ha procesado existosamente el pedido No. " + pedido.getId(), mainView);
+        this.closeProcesarPedido();
+        this.mainView.updateDataRegistro();
+    }
+    
     public void crearAlerta(String titulo, String mensaje, java.awt.Frame parent) {
         IntelafAlerta alert = new IntelafAlerta((parent != null) ? parent : mainView, true);
         alert.setTitulo(titulo);
@@ -530,6 +551,16 @@ public class MainControl {
     public Tienda getTienda(String codigo) {
         TiendaDAO operT = new TiendaDAO();
         return operT.getTienda(codigo);
+    }
+    
+    public List<Producto> getDetallesPedidoById(int idPedido) {
+        PedidoDAO operP = new PedidoDAO();
+        return operP.getDetallesPedidoById(idPedido);
+    }
+    
+    public List<Pedido> getOrderByArrivalDate(java.sql.Date date, boolean hoy) {
+        PedidoDAO operP = new PedidoDAO();
+        return operP.getOrderByArrivalDate(date, hoy);
     }
 
     public java.sql.Date getDate() {

@@ -17,6 +17,9 @@ public class Pedido {
     private double anticipo;
     private java.sql.Date fechaLlegada;
     private boolean entregado;
+    private boolean aTiempo;
+    private java.sql.Date arrivalDate;
+    private int dias;
 
     //Detalles
     private int idDetalle;
@@ -54,14 +57,16 @@ public class Pedido {
         this.anticipo = anticipo;
     }
 
-    public Pedido(int id, String nitCliente, int tiemposId, Date fechaPedido, double anticipo) {
+    //Constructor para obtener pedidos y validarlos
+    public Pedido(int id, String nitCliente, Date fechaPedido, double totalPedido, double anticipo, Date arrivalDate) {
         this.id = id;
         this.nitCliente = nitCliente;
-        this.tiemposId = tiemposId;
         this.fechaPedido = fechaPedido;
+        this.totalPedido = totalPedido;
         this.anticipo = anticipo;
+        this.arrivalDate = arrivalDate;
     }
-    
+
     //Constructor para detallesPedidos
     public Pedido(int tiendasProductosId, String codigoProducto, int cantidad, double precioVentaPedido, double subTotalPedido) {
         this.tiendasProductosId = tiendasProductosId;
@@ -135,6 +140,30 @@ public class Pedido {
         this.entregado = entregado;
     }
 
+    public boolean isaTiempo() {
+        return aTiempo;
+    }
+
+    public void setaTiempo(boolean aTiempo) {
+        this.aTiempo = aTiempo;
+    }
+
+    public Date getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(Date arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public int getDias() {
+        return dias;
+    }
+
+    public void setDias(int dias) {
+        this.dias = dias;
+    }
+    
     public int getIdDetalle() {
         return idDetalle;
     }

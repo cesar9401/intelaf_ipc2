@@ -24,6 +24,7 @@ public class MainView extends javax.swing.JFrame {
     private TiendaView tiendaView;
     private VentaPedidoView ventaPedido;
     private ProductoView productoView;
+    private RegistroView registroView;
     
     /**
      * Creates new form MainView
@@ -52,6 +53,7 @@ public class MainView extends javax.swing.JFrame {
         tiendasButton = new javax.swing.JButton();
         productosButton = new javax.swing.JButton();
         reportesButton = new javax.swing.JButton();
+        registroPedidos = new javax.swing.JButton();
         contenedorPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -111,9 +113,9 @@ public class MainView extends javax.swing.JFrame {
         });
 
         pedidosButton.setBackground(new java.awt.Color(255, 140, 0));
-        pedidosButton.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        pedidosButton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         pedidosButton.setForeground(new java.awt.Color(255, 255, 255));
-        pedidosButton.setText("Pedidos");
+        pedidosButton.setText("Nuevo Pedido");
         pedidosButton.setAlignmentY(0.0F);
         pedidosButton.setBorder(null);
         pedidosButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -201,6 +203,21 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        registroPedidos.setBackground(new java.awt.Color(255, 140, 0));
+        registroPedidos.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        registroPedidos.setForeground(new java.awt.Color(255, 255, 255));
+        registroPedidos.setText("Registro");
+        registroPedidos.setAlignmentY(0.0F);
+        registroPedidos.setBorder(null);
+        registroPedidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        registroPedidos.setMinimumSize(new java.awt.Dimension(120, 40));
+        registroPedidos.setPreferredSize(new java.awt.Dimension(120, 40));
+        registroPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registroPedidosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
         navPanel.setLayout(navPanelLayout);
         navPanelLayout.setHorizontalGroup(
@@ -216,7 +233,8 @@ public class MainView extends javax.swing.JFrame {
                     .addComponent(usuariosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tiendasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reportesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(reportesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(registroPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
         navPanelLayout.setVerticalGroup(
@@ -236,6 +254,8 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(tiendasButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(productosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(registroPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(reportesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -397,7 +417,7 @@ public class MainView extends javax.swing.JFrame {
         this.contenedorPanel.setVisible(true);       
     }
     
-    public void updateDateStore() {
+    public void updateDataStore() {
         if(productoView != null) {
             productoView.updateDataStore();
         }
@@ -407,12 +427,36 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_reportesButtonActionPerformed
 
+    private void registroPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroPedidosActionPerformed
+        // TODO add your handling code here:
+        actualizarRegistro();
+    }//GEN-LAST:event_registroPedidosActionPerformed
+
+    public void actualizarRegistro() {
+        registroView = null;
+        registroView = new RegistroView();
+        
+        //Agregar al contenendor
+        this.contenedorPanel.removeAll();
+        this.contenedorPanel.setVisible(false);
+        registroView.initializeComponents(control, tienda);
+        this.contenedorPanel.add(registroView);
+        this.contenedorPanel.setVisible(true);           
+    }
+    
+    public void updateDataRegistro() {
+        if(registroView != null) {
+            registroView.actualizarDatos();
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedorPanel;
     private javax.swing.JButton inicioButton;
     private javax.swing.JPanel navPanel;
     private javax.swing.JButton pedidosButton;
     private javax.swing.JButton productosButton;
+    private javax.swing.JButton registroPedidos;
     private javax.swing.JButton reportesButton;
     private javax.swing.JButton salirButton;
     private javax.swing.JButton setDateButton;
