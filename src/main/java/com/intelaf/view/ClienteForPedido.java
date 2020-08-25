@@ -10,6 +10,9 @@ import java.util.List;
  */
 public class ClienteForPedido extends javax.swing.JPanel {
 
+    private final double DOSX100 = 0.02; 
+    private final double CINCOX100 = 0.05; 
+
     private MainControl control;
     private Cliente cliente;
     private List<Producto> productosCliente;
@@ -17,12 +20,18 @@ public class ClienteForPedido extends javax.swing.JPanel {
     private double min;
     private Tiempo tiempo;
 
+    //Atributos procesar pedidos
+    private Pedido pedido;
+    private boolean isPedido;
+    private double saldo;
+    private double newCredito;
+
     /**
      * Creates new form createCliente
      */
     public ClienteForPedido() {
         initComponents();
-        anticipoEfectivoText.setText("0");
+        this.isPedido = false;
     }
 
     public void initializeControl(MainControl control, List<Producto> productosCliente, double total, double min, Tiempo tiempo) {
@@ -35,8 +44,60 @@ public class ClienteForPedido extends javax.swing.JPanel {
         minimoLabel.setText("Anticipo minimo: Q" + this.min);
     }
 
+    public void initializeControlForPedido(MainControl control, Pedido pedido, Cliente cliente) {
+        this.control = control;
+        this.pedido = pedido;
+        this.cliente = cliente;
+        this.isPedido = true;
+
+        this.saldo = this.pedido.getTotalPedido() - this.pedido.getAnticipo();
+        this.saldo = Math.round(this.saldo*100)/100D;
+
+        //Ocultar elementos no necesarios
+        this.minimoLabel.setVisible(false);
+        this.nitText.setEditable(false);
+        if(this.cliente.getCreditoCompra() == 0 ) {
+            this.anticipoCreditoText.setEnabled(false);
+        }
+        
+        this.newCredito = getCredito();
+
+        this.anticipoCreditoL.setText("Credito Q.");
+        this.anticipoLabel.setText("Efectivo Q.");
+        this.totalLabel.setText("Saldo: Q" + this.saldo);
+        this.anticipoEfectivoText.setText(String.valueOf(this.saldo));
+        
+        
+        this.setDatos();
+    }
+  
+    private double getCredito() {
+        double credit = 0;
+        boolean dos = true;
+        if(!pedido.isaTiempo()) {
+            if(this.saldo > 0) {
+                //Write your code for 2%
+                credit = pedido.getTotalPedido() * DOSX100; 
+            } else {
+                //Write your code for 5%
+                credit = pedido.getTotalPedido() * CINCOX100;
+                dos = false;
+            }
+        }
+        credit = Math.round(credit * 100)/100D;
+        if(credit > 0) {
+            String msj = "Ganancia del " + (dos ? "2%" : "5%") +  " = " + credit;
+            informacionLabel.setText(msj);
+        }
+        
+        return credit;
+    }    
+
     private void setDatos() {
         if (cliente != null) {
+            if (isPedido) {
+                nitText.setText(cliente.getNit());
+            }
             nombreText.setText(cliente.getNombre());
             telefonoText.setText(cliente.getTelefono());
             dpiText.setText((cliente.getDpi() != null) ? cliente.getDpi() : "");
@@ -434,46 +495,73 @@ public class ClienteForPedido extends javax.swing.JPanel {
         if (!nit.isEmpty() && !nombre.isEmpty() && !telefono.isEmpty()) {
             double efectivo = getNumberDouble(efectivoString);
             double credito = getNumberDouble(creditoString);
-            if(credito >= 0) {
-                if(verificarCredito(credito)) {
-                    if(efectivo >= 0) {
-                        double totalAnticipo = efectivo + credito;
-                        if (totalAnticipo >= this.min) {
-                            if (totalAnticipo <= this.total) {
-                                boolean nuevo = false;
-                                if (cliente != null) {
-                                    cliente.setNombre(nombre);
-                                    cliente.setTelefono(telefono);
-                                    cliente.setDpi(!dpi.isEmpty() ? dpi : null);
-                                    cliente.setEmail(!email.isEmpty() ? email : null);
-                                    cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+            if (credito >= 0) {
+                if (verificarCredito(credito)) {
+                    if (efectivo >= 0) {
+                        if(!isPedido){
+                            double totalAnticipo = efectivo + credito;
+                            if (totalAnticipo >= this.min) {
+                                if (totalAnticipo <= this.total) {
+                                    boolean nuevo = false;
+                                    if (cliente != null) {
+                                        cliente.setNombre(nombre);
+                                        cliente.setTelefono(telefono);
+                                        cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                                        cliente.setEmail(!email.isEmpty() ? email : null);
+                                        cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+                                    } else {
+                                        cliente = new Cliente(nombre, telefono, 0);
+                                        cliente.setNit(nit);
+                                        cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                                        cliente.setEmail(!email.isEmpty() ? email : null);
+                                        cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+                                        nuevo = true;
+                                    }
+                                    //Enviar cliente y listado de productos para pedidos
+                                    control.procesarPedido(cliente, nuevo, total, credito, efectivo, tiempo, productosCliente);
                                 } else {
-                                    cliente = new Cliente(nombre, telefono, 0);
-                                    cliente.setNit(nit);
-                                    cliente.setDpi(!dpi.isEmpty() ? dpi : null);
-                                    cliente.setEmail(!email.isEmpty() ? email : null);
-                                    cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
-                                    nuevo = true;
+                                    control.crearAlerta("Advertencia", "El anticipo(Q. " + totalAnticipo + ") no puede ser mayor que el total(Q. " + this.total + ")", null);
                                 }
-                                //Enviar cliente y listado de productos para pedidos
-                                control.procesarPedido(cliente, nuevo, total, credito, efectivo, tiempo, productosCliente);
                             } else {
-                                control.crearAlerta("Advertencia", "El anticipo(Q. " + totalAnticipo + ") no puede ser mayor que el total(Q. " + this.total + ")", null);
+                                control.crearAlerta("Error", "El anticipo minimo debe de ser: Q. " + this.min, null);
                             }
                         } else {
-                            control.crearAlerta("Error", "El anticipo minimo debe de ser: Q. " + this.min, null);
+                            //Write your code for order here
+                            credito = Math.round(credito*100)/100D;
+                            double pendiente = efectivo + credito;
+                            pendiente = Math.round(pendiente*100)/100D;
+                            
+                            if(pendiente == this.saldo) {
+                                cliente.setNombre(nombre);
+                                cliente.setTelefono(telefono);
+                                cliente.setDpi(!dpi.isEmpty() ? dpi : null);
+                                cliente.setEmail(!email.isEmpty() ? email : null);
+                                cliente.setDireccion(!direccion.isEmpty() ? direccion : null);
+                                
+                                //Credito para modificar al credito original
+                                cliente.setCreditoCompra(this.newCredito - credito);
+                                
+                                //Pedido entregado
+                                this.pedido.setEntregado(true);
+                                
+                                //Enviar informacionde cliente y pedido para procesar como venta
+                                control.procesarPedidoHaciaVenta(this.pedido, this.cliente, credito);
+                                
+                            }else {
+                                control.crearAlerta("Advertencia", "El cliente tiene un saldo pendiente de " + this.saldo, null);
+                            }
                         }
                     } else {
-                        control.crearAlerta("Error", "El valor ingresado para anticipo en efectivo no es valido", null);
+                        control.crearAlerta("Error", "El valor ingresado no es valido", null);
                         anticipoEfectivoText.setText("");
                     }
                 } else {
                     control.crearAlerta("Error", "El cliente no cuenta con credito sufuciente para esta transacción", null);
-                    anticipoCreditoText.setText("");            
+                    anticipoCreditoText.setText("");
                 }
-            }else {
+            } else {
                 control.crearAlerta("Error", "El valor ingresado para descuento por credito no es valido", null);
-                anticipoCreditoText.setText("");            
+                anticipoCreditoText.setText("");
             }
         } else {
             control.crearAlerta("Error", "Debe llenar los campos nit, nombre y telefono", null);
@@ -481,17 +569,17 @@ public class ClienteForPedido extends javax.swing.JPanel {
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private boolean verificarCredito(double credito) {
-        if(credito == 0) {
+        if (credito == 0) {
             return true;
         }
-        
-        if(cliente == null && credito > 0) {
+
+        if (cliente == null && credito > 0) {
             return false;
         }
-        
+
         return cliente.getCreditoCompra() >= credito;
     }
-    
+
     private double getNumberDouble(String numberString) {
         if (numberString.isEmpty() || numberString.isBlank()) {
             return 0;
@@ -559,6 +647,20 @@ public class ClienteForPedido extends javax.swing.JPanel {
 
     private void anticipoCreditoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_anticipoCreditoTextKeyReleased
         // TODO add your handling code here:
+        if (isPedido) {
+            String creditoString = anticipoCreditoText.getText();
+            double credito;
+            try {
+                credito = Double.parseDouble(creditoString);
+                if (credito <= this.saldo) {
+                    double diff = this.saldo - credito;
+                    diff = Math.round(diff * 100) / 100D;
+                    anticipoEfectivoText.setText(String.valueOf(diff));
+                }
+            } catch (NumberFormatException e) {
+                anticipoEfectivoText.setText("");
+            }
+        }
     }//GEN-LAST:event_anticipoCreditoTextKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

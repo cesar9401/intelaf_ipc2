@@ -51,6 +51,30 @@ public class VentaDAO {
         return id;
     }
     
+    public void inserVentaFromOrder(Venta venta) throws SQLException {
+        String query = "INSERT INTO ventas(pedidos_id, clientesNit, fechaVenta, totalVenta, descuentoPorCredito) VALUES(?, ?, ?, ?, ?)";
+        
+        Connection conexion = null;
+        PreparedStatement setVenta = null;
+        try {
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
+            setVenta = conexion.prepareStatement(query);
+            setVenta.setInt(1, venta.getPedidosId());
+            setVenta.setString(2, venta.getNitCliente());
+            setVenta.setDate(3, venta.getFechaVenta());
+            setVenta.setDouble(4, venta.getTotalVenta());
+            setVenta.setDouble(5, venta.getDescuentoCredito());
+            
+            setVenta.executeUpdate();
+            
+        } finally {
+            Conexion.close(setVenta);
+            if(this.transaction == null) {
+                Conexion.close(conexion);
+            }
+        }    
+    }
+    
     public int setVenta(Venta venta) {
         try {
             return insertarVenta(venta);

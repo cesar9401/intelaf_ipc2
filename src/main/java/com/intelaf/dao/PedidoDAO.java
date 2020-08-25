@@ -5,6 +5,8 @@ import com.intelaf.conexion.Conexion;
 import com.intelaf.model.*;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -218,6 +220,12 @@ public class PedidoDAO {
         return detallesPedido;
     }
     
+    /**
+     * Lista los pedidos segun la tienda de destino y segun el parametro para verifcar cuales ya fueron entregados y cuales no.
+     * @param codigoTienda
+     * @param entregado
+     * @return 
+     */
     public List<Pedido> getListPedidoByDelivered(String codigoTienda, boolean entregado) {
         List<Pedido> pedidos = new ArrayList<>();
         String query = "SELECT p.id, p.clientesNit, p.tiemposId, p.fechaPedido, p.totalPedido, p.anticipo, p.fechaLlegada, p.llegadaATiempo, p.entregado, "
@@ -258,25 +266,35 @@ public class PedidoDAO {
     /**
      * Metodo para registrar los pedidos que ya estan en tienda en la base de datos
      * @param pedido 
+     * @throws java.sql.SQLException 
      */
-    public void updatePedidoInStore(Pedido pedido) {
-        String query = "UPDATE pedidos SET fechaLlegada = ?, llegadaATiempo = ? WHERE id = ?";
+    public void updatePedidoInStore(Pedido pedido) throws SQLException {
+        String query = "UPDATE pedidos SET fechaLlegada = ?, llegadaATiempo = ?, entregado = ? WHERE id = ?";
         
         Connection conexion = null;
         PreparedStatement operP = null;
         try {
-            conexion = Conexion.getConnection();
+            conexion = (this.transaction != null) ? this.transaction : Conexion.getConnection();
             operP = conexion.prepareStatement(query);
             operP.setDate(1, pedido.getFechaLlegada());
             operP.setBoolean(2, pedido.isaTiempo());
-            operP.setInt(3, pedido.getId());
+            operP.setBoolean(3, pedido.isEntregado());
+            operP.setInt(4, pedido.getId());
             
             operP.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
         } finally {
             Conexion.close(operP);
-            Conexion.close(conexion);
+            if(this.transaction == null) {
+                Conexion.close(conexion);
+            }
         }      
+    }
+    
+    public void updatePedidoInStoreEx(Pedido pedido) {
+        try {
+            updatePedidoInStore(pedido);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
     }
 }

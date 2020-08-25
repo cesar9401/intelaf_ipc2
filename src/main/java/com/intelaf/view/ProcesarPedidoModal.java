@@ -278,11 +278,13 @@ public class ProcesarPedidoModal extends javax.swing.JDialog {
             //Write your code to process order here
             pedido.setaTiempo(isATiempo);
             pedido.setFechaLlegada(control.getDate());
+            //Asegurarnos que se ingrese como no entregado
+            pedido.setEntregado(false);
 
             //Procesar pedido para que ingrese a tienda
             control.updatePedidoInStore(pedido);
         } else {
-            System.out.println("isProcesar = " + isProcesar);
+            control.modalOperacionesDeliverOrder(pedido, cliente);
         }
     }//GEN-LAST:event_procesarButtonActionPerformed
     

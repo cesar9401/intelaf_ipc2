@@ -7,6 +7,8 @@ import com.intelaf.model.*;
 import com.intelaf.view.*;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -142,6 +144,13 @@ public class MainControl {
         modal.initializeControl(this);
         modal.initOperationStockProducto(codigoTienda);
         modal.setVisible(true);    
+    }
+    
+    public void modalOperacionesDeliverOrder(Pedido pedido, Cliente cliente) {
+        modal = new IntelafModal(mainView, true);
+        modal.initializeControl(this);
+        modal.initOperationDeliverOrder(pedido, cliente);
+        modal.setVisible(true);
     }
     
     public void initProcesarPedidoModal(Pedido pedido, boolean isATiempo, boolean isProcesar) {
@@ -286,6 +295,46 @@ public class MainControl {
                 conexion.rollback();
             } catch (SQLException ex1) {
                 ex.printStackTrace(System.out);
+            }
+        } finally {
+            Conexion.close(conexion);
+        }
+    }
+    
+    public void procesarPedidoHaciaVenta(Pedido pedido, Cliente cliente, double descuento) {
+        //Crear objeto para insertar en la tabla ventas
+        Venta venta = new Venta(pedido.getId(), cliente.getNit(), this.getDate(), pedido.getTotalPedido(), descuento);
+        Connection conexion = null;
+        try {
+            conexion = Conexion.getConnection();
+            conexion.setAutoCommit(false);
+
+            //Actualizar estado de pedido
+            PedidoDAO operP = new PedidoDAO(conexion);
+            operP.updatePedidoInStore(pedido);
+
+            //Insertar venta
+            VentaDAO operV = new VentaDAO(conexion);
+            operV.inserVentaFromOrder(venta);
+            
+            //Actualizar informacion del cliente
+            ClienteDAO operC = new ClienteDAO(conexion);
+            operC.updateCliente(cliente, cliente.getCreditoCompra());
+
+            conexion.commit();
+            
+            //Se hizo commit, actualizar informacion en tablas
+            this.closeModal();
+            this.closeProcesarPedido();
+            this.crearAlerta("Informacion", "Se proceso con exito el pedido " + pedido.getId(), mainView);
+            this.mainView.updateDataRegistro();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            try {
+                conexion.rollback();
+            } catch (SQLException ex1) {
+                ex1.printStackTrace(System.out);
             }
         } finally {
             Conexion.close(conexion);
@@ -467,7 +516,7 @@ public class MainControl {
     
     public void updatePedidoInStore(Pedido pedido) {
         PedidoDAO operP = new PedidoDAO();
-        operP.updatePedidoInStore(pedido);
+        operP.updatePedidoInStoreEx(pedido);
         
         //Write your code for update data on view
         this.crearAlerta("Informacion", "Se ha procesado existosamente el pedido No. " + pedido.getId(), mainView);
