@@ -257,7 +257,7 @@ public class RegistroView extends javax.swing.JPanel {
             registrarButton.setVisible(true);    
             procesarButton.setVisible(false);
             
-            this.pedidos = control.getOrderByArrivalDate(control.getDate(), isHoy);
+            this.pedidos = control.getOrderByArrivalDate(control.getDate(), isHoy, this.tienda.getCodigo());
             setTableArrival();
         }else {
             hoyRadio.setVisible(false);

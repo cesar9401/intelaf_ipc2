@@ -141,18 +141,19 @@ public class PedidoDAO {
     }
     
     /**
-     * Obtener pedidos segun la fecha de llegada
+     * Obtener pedidos segun la fecha de llegada y tienda de Destino
      * @param date
      * @param hoy
+     * @param codigoTienda
      * @return 
      */
-    public List<Pedido> getOrderByArrivalDate(java.sql.Date date, boolean hoy) {
+    public List<Pedido> getOrderByArrivalDate(java.sql.Date date, boolean hoy, String codigoTienda) {
         List<Pedido> pedidos = new ArrayList<>();
         String tiempo = (hoy ? "=" : "<");
         
         String query = "SELECT * FROM (SELECT p.id, p.clientesNit, p.fechaPedido, p.totalPedido, p.anticipo, p.fechaLlegada, t.tiendasOrigen, t.tiendasDestino, t.tiempoDias, "
                 + "DATE_ADD(p.fechaPedido, INTERVAL t.tiempoDias DAY) AS arrivalDate FROM pedidos AS p INNER JOIN tiempos AS t ON p.tiemposId = t.id) AS r "
-                + "WHERE r.fechaLlegada IS NULL AND r.arrivalDate " + tiempo + " ? ORDER BY r.arrivalDate";
+                + "WHERE r.fechaLlegada IS NULL AND r.arrivalDate " + tiempo + " ? AND r.tiendasDestino = ? ORDER BY r.arrivalDate";
         
         Connection conexion = null;
         PreparedStatement getP = null;
@@ -161,6 +162,7 @@ public class PedidoDAO {
             conexion = Conexion.getConnection();
             getP = conexion.prepareStatement(query);
             getP.setDate(1, date);
+            getP.setString(2, codigoTienda);
             rs = getP.executeQuery();
             
             while(rs.next()) {

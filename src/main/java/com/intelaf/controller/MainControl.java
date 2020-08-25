@@ -607,9 +607,9 @@ public class MainControl {
         return operP.getDetallesPedidoById(idPedido);
     }
     
-    public List<Pedido> getOrderByArrivalDate(java.sql.Date date, boolean hoy) {
+    public List<Pedido> getOrderByArrivalDate(java.sql.Date date, boolean hoy, String codigoTienda) {
         PedidoDAO operP = new PedidoDAO();
-        return operP.getOrderByArrivalDate(date, hoy);
+        return operP.getOrderByArrivalDate(date, hoy, codigoTienda);
     }
     
     public List<Pedido> getListPedidoByDelivered(String codigoTienda, boolean entregado) {
