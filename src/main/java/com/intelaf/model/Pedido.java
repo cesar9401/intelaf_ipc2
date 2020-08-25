@@ -34,6 +34,9 @@ public class Pedido {
     
     //Articulo
     private String codigoProducto;
+    
+    //Reporte
+    private String nombreCliente;
             
     //Constructor para carga de Archivos
     public Pedido(int id, String tiendaOrigen, String tiendaDestino, Date fechaPedido, String nitCliente, String codigoProducto, int cantidad, double subTotalPedido, double anticipo) {
@@ -238,6 +241,14 @@ public class Pedido {
         this.codigoProducto = codigoProducto;
     }
 
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+    
     @Override
     public String toString() {
         return "Pedido{" + "id=" + id + ", tiendaOrigen=" + tiendaOrigen + ", tiendaDestino=" + tiendaDestino + ", fechaPedido=" + fechaPedido + ", nitCliente=" + nitCliente + ", codigoArticulo=" + codigoProducto + ", cantidad=" + cantidad + ", subTotalPedido=" + subTotalPedido + ", anticipo=" + anticipo + '}';

@@ -1,6 +1,7 @@
 
 package com.intelaf.model;
 
+import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -23,6 +24,15 @@ public class Producto {
 
     //Para compras y pedidos
     private double subTotal;
+    
+    //Para reporte
+    private int id;
+    private String clientesNit;
+    private String nombreCliente;
+    private java.sql.Date fechaVenta;
+    private Double totalVenta;
+    private String concatInStore;
+    private String concatDates;
     
     public Producto(String codigoProductos) {
         this.codigoProductos = codigoProductos;
@@ -140,6 +150,62 @@ public class Producto {
     public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getClientesNit() {
+        return clientesNit;
+    }
+
+    public void setClientesNit(String clientesNit) {
+        this.clientesNit = clientesNit;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public Date getFechaVenta() {
+        return fechaVenta;
+    }
+
+    public void setFechaVenta(Date fechaVenta) {
+        this.fechaVenta = fechaVenta;
+    }
+
+    public Double getTotalVenta() {
+        return totalVenta;
+    }
+
+    public void setTotalVenta(Double totalVenta) {
+        this.totalVenta = totalVenta;
+    }  
+
+    public String getConcatInStore() {
+        return concatInStore;
+    }
+
+    public void setConcatInStore(String concatInStore) {
+        this.concatInStore = concatInStore;
+    }
+
+    public String getConcatDates() {
+        return concatDates;
+    }
+
+    public void setConcatDates(String concatDates) {
+        this.concatDates = concatDates;
+    }
     
     @Override
     public int hashCode() {
@@ -147,7 +213,7 @@ public class Producto {
         hash = 37 * hash + Objects.hashCode(this.codigoProductos);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
