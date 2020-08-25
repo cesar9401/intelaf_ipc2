@@ -67,6 +67,16 @@ public class Pedido {
         this.arrivalDate = arrivalDate;
     }
 
+    public Pedido(int id, String nitCliente, Date fechaPedido, double totalPedido, double anticipo, Date fechaLlegada, boolean aTiempo) {
+        this.id = id;
+        this.nitCliente = nitCliente;
+        this.fechaPedido = fechaPedido;
+        this.totalPedido = totalPedido;
+        this.anticipo = anticipo;
+        this.fechaLlegada = fechaLlegada;
+        this.aTiempo = aTiempo;
+    }    
+    
     //Constructor para detallesPedidos
     public Pedido(int tiendasProductosId, String codigoProducto, int cantidad, double precioVentaPedido, double subTotalPedido) {
         this.tiendasProductosId = tiendasProductosId;

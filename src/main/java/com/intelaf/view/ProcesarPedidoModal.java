@@ -15,7 +15,7 @@ public class ProcesarPedidoModal extends javax.swing.JDialog {
     private MainControl control;
     private Pedido pedido;
     private boolean isProcesar;
-    private boolean isHoy;
+    private boolean isATiempo;
     private Cliente cliente;
     private List<Producto> detallesPedido;
     private String[][] listDetalles;
@@ -37,10 +37,10 @@ public class ProcesarPedidoModal extends javax.swing.JDialog {
         this.setResizable(false);    
     }
     
-    public void initializeControl(MainControl control, Pedido pedido, boolean isHoy, boolean isProcesar) {
+    public void initializeControl(MainControl control, Pedido pedido, boolean isATiempo, boolean isProcesar) {
         this.control = control;
         this.pedido = pedido;
-        this.isHoy = isHoy;
+        this.isATiempo = isATiempo;
         this.isProcesar = isProcesar;
         initializeComponents();
     }
@@ -52,7 +52,7 @@ public class ProcesarPedidoModal extends javax.swing.JDialog {
     }
 
     private void setDetails() {
-        if(!isHoy) {
+        if(!isATiempo) {
             pedidoLabel.setForeground(Color.red);
             pedidoLabel.setText("(R)Pedido No. " + pedido.getId());
         } else {
@@ -274,12 +274,16 @@ public class ProcesarPedidoModal extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void procesarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesarButtonActionPerformed
-        //Write your code to process order here
-        pedido.setaTiempo(isHoy);
-        pedido.setFechaLlegada(control.getDate());
-        
-        //Procesar pedido para que ingrese a tienda
-        control.updatePedidoInStore(pedido);
+        if(isProcesar) {
+            //Write your code to process order here
+            pedido.setaTiempo(isATiempo);
+            pedido.setFechaLlegada(control.getDate());
+
+            //Procesar pedido para que ingrese a tienda
+            control.updatePedidoInStore(pedido);
+        } else {
+            System.out.println("isProcesar = " + isProcesar);
+        }
     }//GEN-LAST:event_procesarButtonActionPerformed
     
     private void setTableDetalles() {

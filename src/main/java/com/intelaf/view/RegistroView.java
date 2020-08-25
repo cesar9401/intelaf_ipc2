@@ -38,8 +38,8 @@ public class RegistroView extends javax.swing.JPanel {
         scrollTiendas = new javax.swing.JScrollPane();
         pedidosTable = new javax.swing.JTable();
         sucursalesLabel = new javax.swing.JLabel();
-        editarButton = new javax.swing.JButton();
-        agregarButton = new javax.swing.JButton();
+        registrarButton = new javax.swing.JButton();
+        procesarButton = new javax.swing.JButton();
         tipoPedidosCombo = new javax.swing.JComboBox<>();
         hoyRadio = new javax.swing.JRadioButton();
         atrasadosRadio = new javax.swing.JRadioButton();
@@ -80,33 +80,33 @@ public class RegistroView extends javax.swing.JPanel {
         sucursalesLabel.setMinimumSize(new java.awt.Dimension(150, 36));
         sucursalesLabel.setPreferredSize(new java.awt.Dimension(150, 36));
 
-        editarButton.setBackground(new java.awt.Color(0, 0, 0));
-        editarButton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        editarButton.setForeground(new java.awt.Color(248, 147, 31));
-        editarButton.setText("Registrar...");
-        editarButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(248, 103, 27), 1, true));
-        editarButton.setFocusPainted(false);
-        editarButton.setMaximumSize(new java.awt.Dimension(125, 32));
-        editarButton.setMinimumSize(new java.awt.Dimension(125, 32));
-        editarButton.setPreferredSize(new java.awt.Dimension(125, 32));
-        editarButton.addActionListener(new java.awt.event.ActionListener() {
+        registrarButton.setBackground(new java.awt.Color(0, 0, 0));
+        registrarButton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        registrarButton.setForeground(new java.awt.Color(248, 147, 31));
+        registrarButton.setText("Registrar...");
+        registrarButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(248, 103, 27), 1, true));
+        registrarButton.setFocusPainted(false);
+        registrarButton.setMaximumSize(new java.awt.Dimension(125, 32));
+        registrarButton.setMinimumSize(new java.awt.Dimension(125, 32));
+        registrarButton.setPreferredSize(new java.awt.Dimension(125, 32));
+        registrarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editarButtonActionPerformed(evt);
+                registrarButtonActionPerformed(evt);
             }
         });
 
-        agregarButton.setBackground(new java.awt.Color(0, 0, 0));
-        agregarButton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        agregarButton.setForeground(new java.awt.Color(248, 147, 31));
-        agregarButton.setText("Agregar...");
-        agregarButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(248, 103, 27), 1, true));
-        agregarButton.setFocusPainted(false);
-        agregarButton.setMaximumSize(new java.awt.Dimension(125, 32));
-        agregarButton.setMinimumSize(new java.awt.Dimension(125, 32));
-        agregarButton.setPreferredSize(new java.awt.Dimension(125, 32));
-        agregarButton.addActionListener(new java.awt.event.ActionListener() {
+        procesarButton.setBackground(new java.awt.Color(0, 0, 0));
+        procesarButton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        procesarButton.setForeground(new java.awt.Color(248, 147, 31));
+        procesarButton.setText("Procesar Venta");
+        procesarButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(248, 103, 27), 1, true));
+        procesarButton.setFocusPainted(false);
+        procesarButton.setMaximumSize(new java.awt.Dimension(125, 32));
+        procesarButton.setMinimumSize(new java.awt.Dimension(125, 32));
+        procesarButton.setPreferredSize(new java.awt.Dimension(150, 32));
+        procesarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregarButtonActionPerformed(evt);
+                procesarButtonActionPerformed(evt);
             }
         });
 
@@ -162,9 +162,9 @@ public class RegistroView extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(registrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(agregarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(procesarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(scrollTiendas, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
                         .addGap(42, 42, 42))))
         );
@@ -185,9 +185,9 @@ public class RegistroView extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(scrollTiendas, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(agregarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(registrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(procesarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(191, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -209,20 +209,27 @@ public class RegistroView extends javax.swing.JPanel {
      * Metodo para editar la informacion de un empleado
      * @param evt 
      */
-    private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
+    private void registrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarButtonActionPerformed
         // TODO add your handling code here:
         int row = pedidosTable.getSelectedRow();
         if(row != -1) {
             Pedido tmp = pedidos.get(row);
-            control.initProcesarPedidoModal(tmp, isHoy,true);
+            control.initProcesarPedidoModal(tmp, isHoy, true);
         } else {
             control.crearAlerta("Alerta", "Debe seleccionar una tienda para poder editarla", null);
         }
-    }//GEN-LAST:event_editarButtonActionPerformed
+    }//GEN-LAST:event_registrarButtonActionPerformed
 
-    private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
+    private void procesarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesarButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_agregarButtonActionPerformed
+        int row = pedidosTable.getSelectedRow();
+        if(row != -1) {
+            Pedido tmp = pedidos.get(row);
+            control.initProcesarPedidoModal(tmp, tmp.isaTiempo(), false);
+        } else {
+            control.crearAlerta("Alerta", "Debe seleccionar una tienda para poder editarla", null);
+        }        
+    }//GEN-LAST:event_procesarButtonActionPerformed
 
     private void tipoPedidosComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoPedidosComboItemStateChanged
         // TODO add your handling code here:
@@ -245,10 +252,20 @@ public class RegistroView extends javax.swing.JPanel {
     public void actualizarDatos() {
         pedidos.clear();
         if(isRegistrar) {
+            hoyRadio.setVisible(true);
+            atrasadosRadio.setVisible(true);
+            registrarButton.setVisible(true);    
+            procesarButton.setVisible(false);
+            
             this.pedidos = control.getOrderByArrivalDate(control.getDate(), isHoy);
             setTableArrival();
         }else {
-            //Obtener listado de productos que ya estan en tienda
+            hoyRadio.setVisible(false);
+            atrasadosRadio.setVisible(false);
+            registrarButton.setVisible(false);
+            procesarButton.setVisible(true);
+            
+            this.pedidos = control.getListPedidoByDelivered(this.tienda.getCodigo(), false);
             setTableOrdersByStore();
         }
     }
@@ -286,24 +303,24 @@ public class RegistroView extends javax.swing.JPanel {
             listPedidos[i][3] = String.valueOf(pedidos.get(i).getTotalPedido());
             listPedidos[i][4] = pedidos.get(i).getTiendaOrigen();
             listPedidos[i][5] = String.valueOf(pedidos.get(i).getFechaLlegada());
-            listPedidos[i][6] = String.valueOf(pedidos.get(i).isaTiempo());
+            listPedidos[i][6] = pedidos.get(i).isaTiempo() ? "A Tiempo" : "Atrasado";
         }
         pedidosTable.setPreferredSize(new java.awt.Dimension(700, 36*pedidos.size()));
         pedidosTable.setModel(new javax.swing.table.DefaultTableModel(
             listPedidos,
             new String [] {
-                "Cliente", "FechaP", "Anticipo", "Total", "Origen", "Fecha LLegada", "Atrasado"
+                "Cliente", "FechaP", "Anticipo", "Total", "Origen", "Fecha LLegada", "Puntualidad"
             }
         ));    
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton agregarButton;
     private javax.swing.JRadioButton atrasadosRadio;
-    private javax.swing.JButton editarButton;
     private javax.swing.JRadioButton hoyRadio;
     private javax.swing.JTable pedidosTable;
+    private javax.swing.JButton procesarButton;
     private javax.swing.ButtonGroup radioButtonGroup;
+    private javax.swing.JButton registrarButton;
     private javax.swing.JScrollPane scrollTiendas;
     private javax.swing.JLabel sucursalesLabel;
     private javax.swing.JComboBox<String> tipoPedidosCombo;

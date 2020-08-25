@@ -218,6 +218,43 @@ public class PedidoDAO {
         return detallesPedido;
     }
     
+    public List<Pedido> getListPedidoByDelivered(String codigoTienda, boolean entregado) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String query = "SELECT p.id, p.clientesNit, p.tiemposId, p.fechaPedido, p.totalPedido, p.anticipo, p.fechaLlegada, p.llegadaATiempo, p.entregado, "
+                + "t.tiendasOrigen, t.tiendasDestino, t.tiempoDias FROM pedidos AS p INNER JOIN tiempos AS t ON p.tiemposId = t.id "
+                + "WHERE p.fechaLlegada IS NOT NULL AND p.entregado = ? AND t.tiendasDestino = ?";
+        
+        Connection conexion = null;
+        PreparedStatement getP = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getP = conexion.prepareStatement(query);
+            getP.setBoolean(1, entregado);
+            getP.setString(2, codigoTienda);
+            rs = getP.executeQuery();
+            
+            while(rs.next()) {
+                Pedido tmp = new Pedido(rs.getInt("id"), rs.getString("clientesNit"), rs.getDate("fechaPedido"), rs.getDouble("totalPedido"), rs.getDouble("anticipo"), rs.getDate("fechaLlegada"), rs.getBoolean("llegadaATiempo"));
+                tmp.setTiemposId(rs.getInt("tiemposId"));
+                tmp.setEntregado(rs.getBoolean("entregado"));
+                tmp.setTiendaOrigen(rs.getString("tiendasOrigen"));
+                tmp.setTiendaDestino(rs.getString("tiendasDestino"));
+                tmp.setDias(rs.getInt("tiempoDias"));
+                
+                pedidos.add(tmp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getP);
+            Conexion.close(conexion);
+        }          
+        
+        return pedidos;
+    }
+    
     /**
      * Metodo para registrar los pedidos que ya estan en tienda en la base de datos
      * @param pedido 

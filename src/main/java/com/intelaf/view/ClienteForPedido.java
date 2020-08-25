@@ -456,14 +456,6 @@ public class ClienteForPedido extends javax.swing.JPanel {
                                     nuevo = true;
                                 }
                                 //Enviar cliente y listado de productos para pedidos
-//                                System.out.println(cliente.toString());
-//                                System.out.println("Nuevo: " + nuevo);
-//                                System.out.println("Total: " +total);
-//                                System.out.println("Min: " + min);
-//                                System.out.println("AnticipoCredito " + credito);
-//                                System.out.println("AnticipoEfectivo " + efectivo);
-//                                System.out.println("AnticipoTotal " + totalAnticipo);
-//                                System.out.println("Tiempos: " + tiempo.toString());
                                 control.procesarPedido(cliente, nuevo, total, credito, efectivo, tiempo, productosCliente);
                             } else {
                                 control.crearAlerta("Advertencia", "El anticipo(Q. " + totalAnticipo + ") no puede ser mayor que el total(Q. " + this.total + ")", null);

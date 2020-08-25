@@ -144,9 +144,9 @@ public class MainControl {
         modal.setVisible(true);    
     }
     
-    public void initProcesarPedidoModal(Pedido pedido, boolean isHoy, boolean isProcesar) {
+    public void initProcesarPedidoModal(Pedido pedido, boolean isATiempo, boolean isProcesar) {
         procesarPedido = new ProcesarPedidoModal(mainView, true);
-        procesarPedido.initializeControl(this, pedido, isHoy, isProcesar);
+        procesarPedido.initializeControl(this, pedido, isATiempo, isProcesar);
         procesarPedido.setVisible(true);
     }
     
@@ -561,6 +561,11 @@ public class MainControl {
     public List<Pedido> getOrderByArrivalDate(java.sql.Date date, boolean hoy) {
         PedidoDAO operP = new PedidoDAO();
         return operP.getOrderByArrivalDate(date, hoy);
+    }
+    
+    public List<Pedido> getListPedidoByDelivered(String codigoTienda, boolean entregado) {
+        PedidoDAO operP = new PedidoDAO();
+        return operP.getListPedidoByDelivered(codigoTienda, entregado);
     }
 
     public java.sql.Date getDate() {
