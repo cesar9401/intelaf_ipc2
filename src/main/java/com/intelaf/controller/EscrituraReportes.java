@@ -29,7 +29,6 @@ public class EscrituraReportes {
             PrintWriter salida = new PrintWriter(archivo);
             salida.println(data);
             salida.close();
-            System.out.println("Se ha escrito la informacino al archivo");
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.out);
         }

@@ -2,6 +2,7 @@
 package com.intelaf.view;
 
 import com.intelaf.controller.*;
+import com.intelaf.model.Tienda;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +50,12 @@ public class ArchivosView extends javax.swing.JFrame {
         buttonIntelaf = new javax.swing.JButton();
         datosScroll = new javax.swing.JScrollPane();
         datosTable = new javax.swing.JTable();
+        aceptarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Intelaf");
         setBackground(new java.awt.Color(235, 235, 235));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(800, 500));
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(248, 147, 31));
@@ -92,25 +93,43 @@ public class ArchivosView extends javax.swing.JFrame {
         datosTable.setSelectionForeground(new java.awt.Color(248, 147, 31));
         datosScroll.setViewportView(datosTable);
 
+        aceptarButton.setBackground(new java.awt.Color(0, 0, 0));
+        aceptarButton.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        aceptarButton.setForeground(new java.awt.Color(248, 147, 31));
+        aceptarButton.setText("Aceptar");
+        aceptarButton.setBorder(null);
+        aceptarButton.setMaximumSize(new java.awt.Dimension(120, 30));
+        aceptarButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        aceptarButton.setPreferredSize(new java.awt.Dimension(150, 36));
+        aceptarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonIntelaf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(datosScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(buttonIntelaf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(datosScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(26, 26, 26)
                 .addComponent(buttonIntelaf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(datosScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(aceptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,7 +176,19 @@ public class ArchivosView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonIntelafActionPerformed
 
+    private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
+        // TODO add your handling code here:
+        List<Tienda> tiendas = control.getTiendas();
+        if(!tiendas.isEmpty()) {
+            control.closeArchivos();
+            control.showLogin();
+        } else {
+            control.crearAlerta("Error", "No hay datos para iniciar el sistema", this);
+        }
+    }//GEN-LAST:event_aceptarButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aceptarButton;
     private javax.swing.JButton buttonIntelaf;
     private javax.swing.JScrollPane datosScroll;
     private javax.swing.JTable datosTable;

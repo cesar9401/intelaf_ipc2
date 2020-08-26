@@ -184,6 +184,40 @@ public class PedidoDAO {
         return pedidos;
     }
     
+    public List<Pedido> getOrderByCliente(String nitCliente) {
+        List<Pedido> pedidos = new ArrayList<>();
+        
+        String query = "SELECT * FROM (SELECT p.id, p.clientesNit, p.fechaPedido, p.totalPedido, p.anticipo, p.fechaLlegada, t.tiendasOrigen, t.tiendasDestino, t.tiempoDias, "
+                + "DATE_ADD(p.fechaPedido, INTERVAL t.tiempoDias DAY) AS arrivalDate FROM pedidos AS p INNER JOIN tiempos AS t ON p.tiemposId = t.id) AS r "
+                + "WHERE r.fechaLlegada IS NULL AND r.clientesNit = ?ORDER BY r.arrivalDate";
+        
+        Connection conexion = null;
+        PreparedStatement getP = null;
+        ResultSet rs = null;
+        try {
+            conexion = Conexion.getConnection();
+            getP = conexion.prepareStatement(query);
+            getP.setString(1, nitCliente);
+            rs = getP.executeQuery();
+            
+            while(rs.next()) {
+                Pedido tmp = new Pedido(rs.getInt("id"), rs.getString("clientesNit"), rs.getDate("fechaPedido"), rs.getDouble("totalPedido"), rs.getDouble("anticipo"), rs.getDate("arrivalDate"));
+                tmp.setTiendaOrigen(rs.getString("tiendasOrigen"));
+                tmp.setTiendaDestino(rs.getString("tiendasDestino"));
+                tmp.setDias(rs.getInt("tiempoDias"));
+                
+                pedidos.add(tmp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(getP);
+            Conexion.close(conexion);
+        }
+        return pedidos;
+    }    
+    
     /**
      * Obtener los detalles de cada pedido(Productos) segun el id del pedido
      * @param pedidoId

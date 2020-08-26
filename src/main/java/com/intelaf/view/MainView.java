@@ -32,7 +32,6 @@ public class MainView extends javax.swing.JFrame {
      */
     public MainView() {
         initComponents();
-        initCalendar();
     }
 
     /**
@@ -287,8 +286,8 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void initCalendar() {
-        calendario = new JDateChooser(new Date());
+    public void initCalendar(java.util.Date date) {
+        calendario = new JDateChooser(date);
         calendario.setBackground(Color.ORANGE);
         calendario.setForeground(Color.black);
         calendario.setBounds(40, 40, 120, 30);

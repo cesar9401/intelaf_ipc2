@@ -19,12 +19,16 @@ public class MainControl {
     private List<Tienda> tiendas;
     private Login login;
     private MainView mainView;
+    private ClienteView clienteView;
     private IntelafModal modal;    
     private ProcesarPedidoModal procesarPedido;
   
     public MainControl() {
     }
     
+    /**
+     * Verifar si la base de datos esta vacia
+     */
     public void initDB() {
         tiendas = this.getTiendas();
         if(tiendas.isEmpty()) {
@@ -37,10 +41,11 @@ public class MainControl {
         }
     }
     
+    /**
+     * Mensajes para estados en la carga de los archivos
+     */
     public void cargaCompleta() {
         this.crearAlerta("Informacion", "Carga de datos con exito", archivos);
-        this.closeArchivos();
-        this.showLogin();
     }
     
     public void cargaIncompleta() {
@@ -55,6 +60,9 @@ public class MainControl {
         archivos.dispose();
     }
     
+    /**
+     * Para mostrar el login
+     */
     public void showLogin() {
         tiendas = this.getTiendas();
         List<String> codigos = new ArrayList<>();
@@ -68,26 +76,33 @@ public class MainControl {
         login.setVisible(true);
     }
     
+    /**
+     * Para iniciar sesion en la vista principal o del cliente
+     * @param codigo
+     * @param empleado
+     * @param codigoTienda 
+     */
     public void iniciarSesion(String codigo, boolean empleado, String codigoTienda) {
         if(empleado) {
             EmpleadoDAO opeE = new EmpleadoDAO();
             Empleado e = opeE.getEmpleado(codigo);
             if(e != null) {
+                //Iniciar fecha
+                if(this.date == null) {
+                    setInitialDate();
+                }
+                
                 //Mostrar ventana principal para empleados
                 TiendaDAO opeT = new TiendaDAO();
                 Tienda t = opeT.getTienda(codigoTienda);
-                System.out.println(e.toString());
-                System.out.println(t.toString());
-                
+
                 mainView = new MainView();
                 mainView.initializeComponents(this, t, e);
+                initCalendar();
                 login.setVisible(false);
                 login.dispose();
                 mainView.setLocationRelativeTo(null);
                 mainView.setVisible(true);
-                if(this.date == null) {
-                    setInitialDate();
-                }
                 
             } else {
                 //Enviar codigo incorrecto a ventana login
@@ -99,7 +114,12 @@ public class MainControl {
             Cliente c = opeC.getCliente(codigo);
             if(c != null) {
                 //Mostrar ventana principal para clientes
-                System.out.println(c.toString());
+                clienteView = new ClienteView();
+                clienteView.initializeControl(this, c);
+                login.setVisible(false);
+                login.dispose();
+                clienteView.setLocationRelativeTo(null);
+                clienteView.setVisible(true);
                 
             } else {
                 crearAlerta("Advertencia", "El nit ingresado es incorrecto", login);
@@ -107,13 +127,23 @@ public class MainControl {
         }
     }
     
+    //Establecer la fecha en el calendario
+    private void initCalendar() {
+        java.util.Date fecha = new java.util.Date(getDate().getTime());
+        mainView.initCalendar(fecha);
+    }
+    
     private void setInitialDate() {
         java.util.Date fecha = new java.util.Date();
         java.sql.Date today = new java.sql.Date(fecha.getTime());
         setDate(today);
-        this.crearAlerta("Informacion", "La fecha actual es: " + getDate(), mainView);
     }
         
+    /**
+     * Modales para las distintas interacciones con los datos del cliente
+     * @param productosCliente
+     * @param total 
+     */
     public void modalOperacionesCliente(List<Producto> productosCliente, double total) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
@@ -121,6 +151,13 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    /**
+     * Modal para informacion del cliente cuando se hace un pedido
+     * @param productosC
+     * @param total
+     * @param min
+     * @param tiempo 
+     */
     public void modalOperacionesPedido(List<Producto> productosC, double total, double min, Tiempo tiempo) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
@@ -135,6 +172,10 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    /**
+     * Modal para informacion de las tiendas
+     * @param tienda 
+     */
     public void modalOperacionesTienda(Tienda tienda) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
@@ -142,6 +183,10 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    /**
+     * Para editar tiempos
+     * @param tienda 
+     */
     public void modalOperacionesTiempo(Tienda tienda) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
@@ -149,6 +194,10 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    /**
+     * Para registro de productos
+     * @param producto 
+     */
     public void modalOperacionesProducto(Producto producto) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
@@ -156,6 +205,10 @@ public class MainControl {
         modal.setVisible(true);
     }
     
+    /**
+     * Para agregar stock
+     * @param producto 
+     */
     public void modalOperacionesProductoStock(Producto producto) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
@@ -170,19 +223,33 @@ public class MainControl {
         modal.setVisible(true);    
     }
     
+    /**
+     * Para entregar pedidos
+     * @param pedido
+     * @param cliente 
+     */
     public void modalOperacionesDeliverOrder(Pedido pedido, Cliente cliente) {
         modal = new IntelafModal(mainView, true);
         modal.initializeControl(this);
         modal.initOperationDeliverOrder(pedido, cliente);
         modal.setVisible(true);
     }
-    
+
+    /**
+     * Para detalles de pedidos
+     * @param pedido
+     * @param isATiempo
+     * @param isProcesar 
+     */
     public void initProcesarPedidoModal(Pedido pedido, boolean isATiempo, boolean isProcesar) {
         procesarPedido = new ProcesarPedidoModal(mainView, true);
         procesarPedido.initializeControl(this, pedido, isATiempo, isProcesar);
         procesarPedido.setVisible(true);
     }
     
+    /**
+     * Para cerrar los modales
+     */
     public void closeProcesarPedido() {
         procesarPedido.dispose();
     }
@@ -260,6 +327,16 @@ public class MainControl {
         }
     }
     
+    /**
+     * Recibe la informacion del pedido y la procesar para enviar a la base de datos
+     * @param cliente
+     * @param nuevo
+     * @param total
+     * @param credito
+     * @param efectivo
+     * @param tiempo
+     * @param productos 
+     */
     public void procesarPedido(Cliente cliente, boolean nuevo, double total, double credito, double efectivo, Tiempo tiempo, List<Producto> productos) {
         //Crear pedido para tabla pedidos
         Pedido pedido = new Pedido(cliente.getNit(), tiempo.getTiemposId(), this.date, total, (credito + efectivo));
@@ -325,6 +402,12 @@ public class MainControl {
         }
     }
     
+    /**
+     * Para entregar pedidos a los clientes y procesarlo como una venta
+     * @param pedido
+     * @param cliente
+     * @param descuento 
+     */
     public void procesarPedidoHaciaVenta(Pedido pedido, Cliente cliente, double descuento) {
         //Crear objeto para insertar en la tabla ventas
         Venta venta = new Venta(pedido.getId(), cliente.getNit(), this.getDate(), pedido.getTotalPedido(), descuento);
@@ -365,18 +448,30 @@ public class MainControl {
         }
     }
     
+    /**
+     * Metodos para ingresar empleados a la base de datos
+     * @param empleado 
+     */
     public void setEmpleado(Empleado empleado) {
         EmpleadoDAO operE = new EmpleadoDAO();
         int row = operE.createEmpleado(empleado);
         updateViewUsuarios(row, "Se ha ingresado correctamente al empleado: " + empleado.getCodigo());
     }
     
+    /**
+     * Ingresar clientes a la base de datos
+     * @param cliente 
+     */
     public void setCliente(Cliente cliente) {
         ClienteDAO operC = new ClienteDAO();
         int row = operC.createCliente(cliente);
         updateViewUsuarios(row, "Se ha ingresado correctamente al cliente: " + cliente.getNit());
     }
     
+    /**
+     * Almacenar ventas en la base de datos
+     * @param tienda 
+     */
     public void setTienda(Tienda tienda) {
         Connection conexion = null;
         try {
@@ -403,6 +498,10 @@ public class MainControl {
         }
     }
     
+    /**
+     * Metodo para ingresar tiempos a la base de datos
+     * @param tiempo 
+     */
     public void setTiempo(Tiempo tiempo) {
         Tiempo tmp = new Tiempo(tiempo.getTiendaDestino(), tiempo.getTiendaOrigen(), tiempo.getTiempoDias());
         Connection conexion = null;
@@ -439,6 +538,10 @@ public class MainControl {
         mainView.actualizarProductos();        
     }
     
+    /**
+     * Agregar un nuevo producto que ya este en el inventario general
+     * @param producto 
+     */
     public void insertStockProducto(Producto producto) {
         ProductoDAO operP = new ProductoDAO();
         operP.insertStockProductos(producto);
@@ -463,11 +566,20 @@ public class MainControl {
         mainView.actualizarProductos();
     }
     
+    /**
+     * Agregar stock de un producto
+     * @param producto
+     * @return 
+     */
     public int updatStockProduct(Producto producto) {
         ProductoDAO operP = new ProductoDAO();
         return operP.updateStockProductos(producto);
     }
     
+    /**
+     * Actualizar tiempo entre tiendas
+     * @param tiempo 
+     */
     public void setUpdateTiempo(Tiempo tiempo) {
         Tiempo tmp = new Tiempo(tiempo.getTiendaDestino(), tiempo.getTiendaOrigen(), tiempo.getTiempoDias());
         Connection conexion = null;
@@ -491,8 +603,11 @@ public class MainControl {
         }
     }
     
+    /**
+     * Actualizar informacion en las tablas del usuario
+     * @param tiempo 
+     */
     private void updateTablesTiempos(Tiempo tiempo) {
-
         //Write code for update Store
         this.crearAlerta("Informacion", "Se ha actualizado correctamente el tiempo a: " + tiempo.getTiempoDias(), mainView);
         this.closeModal();
@@ -500,6 +615,10 @@ public class MainControl {
         this.modalOperacionesTiempo(tmp);
     }
     
+    /**
+     * Actualizar empleado y cliente
+     * @param empleado 
+     */
     public void setUpdateEmpleado(Empleado empleado) {
         EmpleadoDAO operE = new EmpleadoDAO();
         int row = operE.updateEmpleado(empleado);
@@ -512,7 +631,11 @@ public class MainControl {
         updateViewUsuarios(row, "Se actualizo al cliente: " + cliente.getNit());
     }
     
-    
+    /**
+     * Actualizar vistas de clientes y usuarios
+     * @param row
+     * @param message 
+     */
     private void updateViewUsuarios(int row, String message) {
         if(row > 0) {
             this.closeModal();
@@ -524,6 +647,10 @@ public class MainControl {
         }          
     }
     
+    /**
+     * Actualizar informacion de una tienda
+     * @param tienda 
+     */
     public void setUpdateTienda(Tienda tienda) {
         TiendaDAO operT = new TiendaDAO();
         int row = operT.updateTienda(tienda);
@@ -538,6 +665,10 @@ public class MainControl {
         }
     }
     
+    /**
+     * Procesar pedidos
+     * @param pedido 
+     */
     public void updatePedidoInStore(Pedido pedido) {
         PedidoDAO operP = new PedidoDAO();
         operP.updatePedidoInStoreEx(pedido);
@@ -548,6 +679,12 @@ public class MainControl {
         this.mainView.updateDataRegistro();
     }
     
+    /**
+     * Para mostrar las distinas alertas que puedan necesitarse
+     * @param titulo
+     * @param mensaje
+     * @param parent 
+     */
     public void crearAlerta(String titulo, String mensaje, java.awt.Frame parent) {
         IntelafAlerta alert = new IntelafAlerta((parent != null) ? parent : mainView, true);
         alert.setTitulo(titulo);
@@ -555,12 +692,28 @@ public class MainControl {
         alert.setVisible(true);
     }
     
+    /**
+     * Metodo para cerrar sesion del cliente
+     */
+    public void cerrarSesionCliente() {
+        this.clienteView.setVisible(false);
+        clienteView.dispose();
+        showLogin();
+    }
+    
+    /**
+     * Cerrar sesion del empleado
+     */
     public void cerrarSesion() {
         this.mainView.setVisible(false);
         mainView.dispose();
         showLogin();
     }
     
+    /**
+     * Obtener elementos de la base de datos
+     * @return 
+     */
     public List<Empleado> getEmpleados() {
         EmpleadoDAO operE = new EmpleadoDAO();
         return operE.getListEmpleado();
@@ -636,11 +789,20 @@ public class MainControl {
         return operP.getOrderByArrivalDate(date, hoy, codigoTienda);
     }
     
+    public List<Pedido> getOrderByCliente(String nitCliente) {
+        PedidoDAO operP = new PedidoDAO();
+        return operP.getOrderByCliente(nitCliente);
+    }
+    
     public List<Pedido> getListPedidoByDelivered(String codigoTienda, boolean entregado) {
         PedidoDAO operP = new PedidoDAO();
         return operP.getListPedidoByDelivered(codigoTienda, entregado);
     }
 
+    /**
+     * Fecha para el manejo de operaciones
+     * @return 
+     */
     public java.sql.Date getDate() {
         return date;
     }

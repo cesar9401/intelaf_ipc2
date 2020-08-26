@@ -376,7 +376,6 @@ public class VentaPedidoView extends javax.swing.JPanel {
     private void getTiempo() {
         this.tiempo = control.getTiempo(this.tiendasCombo.getSelectedItem().toString(), this.tienda.getCodigo());
         tiempoLabel.setText("Dias: " + tiempo.getTiempoDias());
-        System.out.println(tiempo.toString());
     }
     
     /**
@@ -544,7 +543,6 @@ public class VentaPedidoView extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = productosClienteTable.getSelectedRow();
         if(row != -1) {
-            System.out.println("Stock: " + productosCliente.get(row).getStock());
             String opcion = JOptionPane.showInputDialog(this, "Cantidad", "Editar", JOptionPane.QUESTION_MESSAGE);
             int count = -1;
             try {

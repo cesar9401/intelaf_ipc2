@@ -41,7 +41,7 @@ public class ReporteDAO {
                 tmp.setTiendaOrigen(rs.getString("tiendasOrigen"));
                 tmp.setTiendaDestino(rs.getString("tiendasDestino"));
                 tmp.setDias(rs.getInt("tiempoDias"));
-                System.out.println(tmp.toString());
+                //System.out.println(tmp.toString());
                 
                 pedidos.add(tmp);            
             }
@@ -93,8 +93,7 @@ public class ReporteDAO {
                 tmp.setDias(rs.getInt("tiempoDias"));
                 tmp.setFechaLlegada(rs.getDate("fechaLlegada"));
                 
-                System.out.println(tmp.toString());
-                
+                //System.out.println(tmp.toString());
                 pedidos.add(tmp);            
             }
             
@@ -140,8 +139,7 @@ public class ReporteDAO {
                 tmp.setDias(rs.getInt("tiempoDias"));
                 tmp.setFechaLlegada(rs.getDate("fechaLlegada"));
                 
-                System.out.println(tmp.toString());
-                
+                //System.out.println(tmp.toString());
                 pedidos.add(tmp);            
             }
             
@@ -231,8 +229,7 @@ public class ReporteDAO {
                 tmp.setTiendaDestino(rs.getString("tiendasDestino"));
                 tmp.setDias(rs.getInt("tiempoDias"));
                 
-                System.out.println(tmp.toString());
-                
+                //System.out.println(tmp.toString());
                 pedidos.add(tmp);            
             }
             
@@ -277,8 +274,6 @@ public class ReporteDAO {
                 tmp.setConcatInStore(rs.getString("inStore"));
                 tmp.setConcatDates(rs.getString("dates"));
                 
-                System.out.println(tmp.getConcatDates());
-                System.out.println(tmp.toString());
                 productos.add(tmp);
             }
             
@@ -318,8 +313,6 @@ public class ReporteDAO {
                 tmp.setStock(rs.getInt("quantity"));
                 tmp.setConcatInStore(rs.getString("inStore"));
                 
-                System.out.println(tmp.getConcatInStore());
-                System.out.println(tmp.toString());
                 productos.add(tmp);
             }
             
@@ -364,9 +357,7 @@ public class ReporteDAO {
                 tmp.setFabricante(rs.getString("fabricante"));
                 tmp.setStock(rs.getInt("quantity"));
                 tmp.setConcatDates(rs.getString("dates"));
-                
-                System.out.println(tmp.getConcatDates());
-                System.out.println(tmp.toString());
+
                 productos.add(tmp);
             }
             
@@ -405,9 +396,7 @@ public class ReporteDAO {
                 tmp.setNombre(rs.getString("nombre"));
                 tmp.setFabricante(rs.getString("fabricante"));
                 tmp.setStock(rs.getInt("quantity"));
-                
-                System.out.println(tmp.getStock());
-                System.out.println(tmp.toString());
+
                 productos.add(tmp);
             }
             
@@ -448,8 +437,6 @@ public class ReporteDAO {
                 tmp.setStock(rs.getInt("stockProductos"));
                 tmp.setCodigoTienda(rs.getString("tiendasCodigo"));
                 
-                System.out.println(tmp.getStock());
-                System.out.println(tmp.toString());
                 productos.add(tmp);
             }
             
