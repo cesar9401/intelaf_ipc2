@@ -18,12 +18,21 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.21</version>
         </dependency>    
+        
         <!--JCalendar-->
         <!-- https://mvnrepository.com/artifact/com.toedter/jcalendar -->
         <dependency>
             <groupId>com.toedter</groupId>
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
+        </dependency>
+        
+        <!--J2HTML-->
+        <!-- https://mvnrepository.com/artifact/com.j2html/j2html -->
+        <dependency>
+            <groupId>com.j2html</groupId>
+            <artifactId>j2html</artifactId>
+            <version>1.3.0</version>
         </dependency>
     </dependencies>
 </project>
