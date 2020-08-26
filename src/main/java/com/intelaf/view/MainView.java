@@ -25,6 +25,7 @@ public class MainView extends javax.swing.JFrame {
     private VentaPedidoView ventaPedido;
     private ProductoView productoView;
     private RegistroView registroView;
+    private ReportesView reportesView;
     
     /**
      * Creates new form MainView
@@ -425,6 +426,14 @@ public class MainView extends javax.swing.JFrame {
     
     private void reportesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesButtonActionPerformed
         // TODO add your handling code here:
+        reportesView = null;
+        reportesView = new ReportesView();
+        
+        this.contenedorPanel.removeAll();
+        this.contenedorPanel.setVisible(false);
+        reportesView.initializeControl(control);
+        this.contenedorPanel.add(reportesView);
+        this.contenedorPanel.setVisible(true);          
     }//GEN-LAST:event_reportesButtonActionPerformed
 
     private void registroPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroPedidosActionPerformed

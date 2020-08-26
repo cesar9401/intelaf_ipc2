@@ -7,8 +7,6 @@ import com.intelaf.model.*;
 import com.intelaf.view.*;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,6 +14,7 @@ import java.util.logging.Logger;
  */
 public class MainControl {
     
+    private ArchivosView archivos;
     private java.sql.Date date;
     private List<Tienda> tiendas;
     private Login login;
@@ -26,13 +25,38 @@ public class MainControl {
     public MainControl() {
     }
     
-    private void iniciarComponentes() {
-        TiendaDAO storeOp = new TiendaDAO();
-        tiendas = storeOp.getTiendas();
+    public void initDB() {
+        tiendas = this.getTiendas();
+        if(tiendas.isEmpty()) {
+            archivos = new ArchivosView();
+            archivos.initializeControl(this);
+            archivos.setLocationRelativeTo(null);
+            archivos.setVisible(true);
+        } else {
+            showLogin();
+        }
+    }
+    
+    public void cargaCompleta() {
+        this.crearAlerta("Informacion", "Carga de datos con exito", archivos);
+        this.closeArchivos();
+        this.showLogin();
+    }
+    
+    public void cargaIncompleta() {
+        this.crearAlerta("Error", "Verifique que los datos esten correctos", archivos);
+    }
+    
+    public void setDB(String line) {
+        archivos.setInfo(line);
+    }
+    
+    public void closeArchivos() {
+        archivos.dispose();
     }
     
     public void showLogin() {
-        iniciarComponentes();
+        tiendas = this.getTiendas();
         List<String> codigos = new ArrayList<>();
         
         tiendas.forEach((t) -> {

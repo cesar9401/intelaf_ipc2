@@ -1,9 +1,13 @@
 
 package com.intelaf.view;
 
-import com.intelaf.controller.LecturaArchivos;
+import com.intelaf.controller.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
+
+
 
 /**
  *
@@ -11,12 +15,25 @@ import javax.swing.JFileChooser;
  */
 public class ArchivosView extends javax.swing.JFrame {
 
+    private MainControl control;
+    private List<String> datos;
+    private String [][] listDatos;
+    
     /**
      * Creates new form ArchivosView
      */
     public ArchivosView() {
         initComponents();
-        this.setLocationRelativeTo(null);
+    }
+    
+    public void initializeControl(MainControl control) {
+        this.control = control;
+        datos = new ArrayList<>();
+    }
+    
+    public void setInfo(String line){
+        datos.add(line);
+        updateTable();
     }
 
     /**
@@ -28,49 +45,106 @@ public class ArchivosView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mainPanel = new javax.swing.JPanel();
         buttonIntelaf = new javax.swing.JButton();
+        datosScroll = new javax.swing.JScrollPane();
+        datosTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Intelaf");
         setBackground(new java.awt.Color(235, 235, 235));
-        setMinimumSize(new java.awt.Dimension(400, 400));
-        setPreferredSize(new java.awt.Dimension(400, 400));
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(800, 500));
         setResizable(false);
 
-        buttonIntelaf.setBackground(new java.awt.Color(255, 140, 0));
+        mainPanel.setBackground(new java.awt.Color(248, 147, 31));
+        mainPanel.setPreferredSize(new java.awt.Dimension(800, 500));
+
+        buttonIntelaf.setBackground(new java.awt.Color(0, 0, 0));
         buttonIntelaf.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        buttonIntelaf.setForeground(new java.awt.Color(255, 255, 255));
-        buttonIntelaf.setText("Intelaf");
+        buttonIntelaf.setForeground(new java.awt.Color(248, 147, 31));
+        buttonIntelaf.setText("Cargar Datos..");
         buttonIntelaf.setBorder(null);
         buttonIntelaf.setMaximumSize(new java.awt.Dimension(120, 30));
         buttonIntelaf.setMinimumSize(new java.awt.Dimension(120, 40));
-        buttonIntelaf.setPreferredSize(new java.awt.Dimension(120, 40));
+        buttonIntelaf.setPreferredSize(new java.awt.Dimension(150, 36));
         buttonIntelaf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonIntelafActionPerformed(evt);
             }
         });
 
+        datosTable.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        datosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        datosTable.setPreferredSize(new java.awt.Dimension(750, 144));
+        datosTable.setRowHeight(36);
+        datosTable.setSelectionBackground(new java.awt.Color(0, 0, 0));
+        datosTable.setSelectionForeground(new java.awt.Color(248, 147, 31));
+        datosScroll.setViewportView(datosTable);
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonIntelaf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datosScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(buttonIntelaf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(datosScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(157, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(buttonIntelaf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140))
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(buttonIntelaf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(200, 200, 200))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void updateTable() {
+        listDatos = new String[datos.size()][1];
+        
+        for (int i = 0; i < datos.size(); i++) {
+            listDatos[i][0] = datos.get(i);
+        }
+        
+        datosTable.setPreferredSize(new java.awt.Dimension(750, 36*datos.size()));
+        datosTable.setModel(new javax.swing.table.DefaultTableModel(
+            listDatos,
+            new String [] {
+                "DATO"
+            }
+        ));
+    }
+    
     private void buttonIntelafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIntelafActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
@@ -78,47 +152,15 @@ public class ArchivosView extends javax.swing.JFrame {
         if(seleccion == JFileChooser.APPROVE_OPTION) {
             File data = fileChooser.getSelectedFile();
             String path = data.getAbsolutePath();
-            LecturaArchivos lectura = new LecturaArchivos();
+            LecturaArchivos lectura = new LecturaArchivos(this.control);
             lectura.readData(path);
         }
     }//GEN-LAST:event_buttonIntelafActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ArchivosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ArchivosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ArchivosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ArchivosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ArchivosView().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonIntelaf;
+    private javax.swing.JScrollPane datosScroll;
+    private javax.swing.JTable datosTable;
+    private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }

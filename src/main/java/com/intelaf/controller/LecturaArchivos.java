@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class LecturaArchivos {
     
+    private MainControl control;
     List<Tienda> tiendas;
     List<Tiempo> tiempos;
     List<Producto> productos;
@@ -19,7 +20,8 @@ public class LecturaArchivos {
     List<Cliente> clientes;
     List<Pedido> pedidos;
     
-    public LecturaArchivos() {
+    public LecturaArchivos(MainControl control) {
+        this.control = control;
         this.tiendas = new ArrayList<>();
         this.tiempos = new ArrayList<>();
         this.productos = new ArrayList<>();
@@ -34,12 +36,14 @@ public class LecturaArchivos {
             BufferedReader br = new BufferedReader(new FileReader(archivo));
             String line = br.readLine();
             while(line != null) {
+                control.setDB(line);
                 clasificacionData(line);
                 line = br.readLine();
             }
             br.close();
             
             EscrituraDB setData = new EscrituraDB(tiendas, tiempos, productos, empleados, clientes, pedidos);
+            setData.initializeControl(control);
             setData.createData();
 
         } catch (FileNotFoundException ex) {

@@ -6,8 +6,6 @@ import com.intelaf.dao.ReporteDAO;
 import com.intelaf.model.*;
 import java.io.*;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,8 +20,8 @@ public class EscrituraReportes {
             + "\ntable { width: 100%; border: 1px solid #000; }"
             + "\nth { font-size: 22px; font-weight: bold; background-color: #ff8800; }"
             + "\ntd, th { width: auto; text-align: center; border-collapse: collapse; padding: 10px; border: 1px solid #000; }"
-            + "\n td { font-size: 18px; }"
-            + "tr:hover { font-size: 20px; background-color: #EB984E; cursor: pointer; }";
+            + "\ntd { font-size: 18px; }"
+            + "\ntr:hover { font-size: 20px; background-color: #EB984E; cursor: pointer; }";
 
     public void escribirArchivo(String nombre, String data) {
         File archivo = new File(nombre);
@@ -119,7 +117,7 @@ public class EscrituraReportes {
                             div(
                                     h1(h1),
                                     h2(tiendaDestino),
-                                    h3(String.valueOf(date)),
+                                    h2(String.valueOf(date)),
                                     table(
                                             tbody(
                                                     tr(

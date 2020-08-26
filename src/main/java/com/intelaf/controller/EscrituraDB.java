@@ -11,13 +11,19 @@ import java.util.List;
  * @author cesar31
  */
 public class EscrituraDB {
-    
+   
+    private MainControl control;
     List<Tienda> tiendas;
     List<Tiempo> tiempos;
     List<Producto> productos;
     List<Empleado> empleados;
     List<Cliente> clientes;
     List<Pedido> pedidos;
+    
+    public void initializeControl(MainControl control) {
+        this.control = control; 
+    }
+    
     
     public EscrituraDB(List<Tienda> tiendas, List<Tiempo> tiempos, List<Producto> productos, List<Empleado> empleados, List<Cliente> clientes, List<Pedido> pedidos) {
         this.tiendas = tiendas;
@@ -38,44 +44,41 @@ public class EscrituraDB {
             for(Tienda t : tiendas) {
                 setTiendas.insertarTienda(t);
                 setTiendas.insertarDestino(t);
-                System.out.println(t.toString());
             }
             
             TiempoDAO setTiempos = new TiempoDAO(conexion);
             for(Tiempo t : tiempos) {
                 setTiempos.insertarTiempo(t);
-                System.out.println(t.toString());
             }
             
             ProductoDAO setProducto = new ProductoDAO(conexion);
             for(Producto p : productos) {
                 setProducto.insertarProductos(p);
-                System.out.println(p.toString());
             }
             
             EmpleadoDAO setEmpleados = new EmpleadoDAO(conexion);
             for(Empleado e : empleados) {
                 setEmpleados.insertarEmpleado(e);
-                System.out.println(e.toString());
             }
             
             ClienteDAO setClientes = new ClienteDAO(conexion);
             for(Cliente c : clientes) {
                 setClientes.insertarCliente(c);
-                System.out.println(c.toString());
             }
             
             PedidoDAO setPedidos = new PedidoDAO(conexion);
             for(Pedido p : pedidos) {
                 setPedidos.insertarPedido(p);
-                System.out.println(p.toString());
             }
             
             conexion.commit();
+            control.cargaCompleta();
+            
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
             try {
                 conexion.rollback();
+                control.cargaIncompleta();
             } catch (SQLException ex1) {
                 ex1.printStackTrace(System.out);
             }

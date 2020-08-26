@@ -11,6 +11,6 @@ public class Intelaf {
     public static void main(String[] args) {
         //Write your code here
         MainControl control = new MainControl();
-        control.showLogin();
+        control.initDB();
     }
 }
